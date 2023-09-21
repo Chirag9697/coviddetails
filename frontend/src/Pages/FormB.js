@@ -13,6 +13,8 @@ import {
   GridItem,
   HStack,
   Button,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 
@@ -73,6 +75,20 @@ const FormB = () => {
             <FormControl isRequired>
               <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
               <Input type="phone" placeholder="Enter your phone number" />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Gender</FormLabel>
+              <RadioGroup defaultValue="Itachi">
+                <HStack spacing="24px">
+                  <Radio value="Male">Male</Radio>
+                  <Radio value="Female">Female</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Date Of Birth</FormLabel>
+              <Input type="date" value="date" placeholder="Select Date" />
             </FormControl>
             <FormControl isRequired>
               <FormLabel alignSelf="flex-start">Email</FormLabel>
