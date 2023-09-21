@@ -1,12 +1,14 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { Signin } from './features/googlesigninemail/Signin';
+import Display from './components/display/display';
+import { Route, Routes } from "react-router-dom"
+
 function App() {
   return (
-    <>
-      <Signin/>
-      {/* helo */}
-    </>
+    <Routes>
+      <Route path="/display" element={<Display />} />
+      
+    </Routes>
   );
 }
 
