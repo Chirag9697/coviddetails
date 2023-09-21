@@ -8,6 +8,7 @@ function App() {
         <Signin />
       </div>
     </>
+>>>>>>> d31e05c1aaf974c087ecba3f6a703f7656d0154a
   );
 }
 
