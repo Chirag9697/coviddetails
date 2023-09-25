@@ -1,14 +1,22 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { Signin } from "./features/googlesigninemail/Signin";
-function App() {
-  return (
-    <>
-      <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"100vh"}}>
-        <Signin />
-      </div>
-    </>
 
+import './App.css';
+import Display from './components/display/display';
+import { Route, Routes } from 'react-router-dom';
+import { Signin } from "./features/googlesigninemail/Signin";
+import { useState } from 'react';
+import Typewriter from "typewriter-effect";
+import Nav from './components/nav';
+function App() {
+
+  return (
+    <div>
+    <Nav/>
+    <Routes>
+      <Route path="/display" element={<Display />} />
+      <Route path="/signin" element={<Signin/>}></Route>
+    </Routes>
+    </div>
+  
   );
 }
 
