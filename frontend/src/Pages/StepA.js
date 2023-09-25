@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "./Form";
 import {
   Box,
   Step,
@@ -20,31 +21,34 @@ const steps = [
 ];
 
 const StepA = () => {
-  const { activeStep } = useSteps({
-    index: 1,
+  const { activeStep, setActiveStep } = useSteps({
+    index: 0,
     count: steps.length,
   });
   return (
-    <Stepper index={activeStep}>
-      {steps.map((step, index) => (
-        <Step key={index}>
-          <StepIndicator>
-            <StepStatus
-              complete={<StepIcon />}
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
+    <Box>
+      <Stepper size="lg" index={activeStep}>
+        {steps.map((step, index) => (
+          <Step key={index} onClick={() => setActiveStep(index)}>
+            <StepIndicator>
+              <StepStatus
+                complete={<StepIcon />}
+                incomplete={<StepNumber />}
+                active={<StepNumber />}
+              />
+            </StepIndicator>
 
-          <Box flexShrink="0">
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>{step.description}</StepDescription>
-          </Box>
+            <Box flexShrink="0">
+              <StepTitle>{step.title}</StepTitle>
+              <StepDescription>{step.description}</StepDescription>
+            </Box>
 
-          <StepSeparator />
-        </Step>
-      ))}
-    </Stepper>
+            <StepSeparator />
+          </Step>
+        ))}
+      </Stepper>
+      <Form />
+    </Box>
   );
 };
 
