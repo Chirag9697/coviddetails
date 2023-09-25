@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useState} from 'react'
 import "./display.css"
+import axios from 'axios'
 import {
     Table,
     Thead,
@@ -10,12 +11,48 @@ import {
     Td,
     TableCaption,
     TableContainer,
-    Button, ButtonGroup 
+    Button, ButtonGroup,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    FormControl,
+    FormLabel,
+    Input,
+    FormHelperText,
+   
   } from '@chakra-ui/react'
 
+  
+
 const Display = () => {
+ 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [email,setEmail] = useState('')
+  
+    // Function to open the modal
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    // Function to close the modal
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
+
+    const sendInvite = axios.post("http://localhost:5000/send-mail",{
+        sender: localStorage.getItem("email"),
+        receiver:email,
+    })
+    
   return (
+    <>
+     <Button colorScheme='green' onClick={openModal} className='invButton'>Invite</Button>
     <div className='main'>
+     
         <TableContainer>
             <Table variant='simple'>
                
@@ -45,6 +82,30 @@ const Display = () => {
         </TableContainer>
       
     </div>
+    {/* Modal */}
+    <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Invite other users</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          <FormControl>
+            <FormLabel>Email address</FormLabel>
+            <Input type='email'name="email" id="email" placeholder='email' value={email} onChange={(e)=>{setEmail
+              (e.target.value)}}/>
+            <FormHelperText>We'll never share your email.</FormHelperText>
+          </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={sendInvite}>
+              send
+            </Button>
+           
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 

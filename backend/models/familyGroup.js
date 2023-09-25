@@ -11,6 +11,7 @@ const familySchema = new mongoose.Schema({
          age: { type: Number },
          address: { type: String },
          covidStatus: { type: String, required: true },
+         vaccineStatus:{type: String, required: true},
       }
    ]
 
