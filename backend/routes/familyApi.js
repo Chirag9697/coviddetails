@@ -6,9 +6,9 @@ const Family = mongoose.model('family')
 //Family Group Management
 
 router.post("/families/create",async(req,res)=>{
-    const {groupName,members} = req.body;
+    const {groupName,members, email} = req.body;
     try{
-        const newFamily = new Family({groupName, members});
+        const newFamily = new Family({groupName, members, email});
         await newFamily.save();
         res.status(201).json(newFamily)
     }catch(err){

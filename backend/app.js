@@ -11,6 +11,7 @@ require("./models/familyGroup")
 
 app.use(express.json())
 app.use(require("./routes/familyApi"));
+app.use(require("./routes/userLogin"));
 
 mongoose.connect("mongodb+srv://ashimcsit17:ashimbarca100@cluster0.k0wu9w0.mongodb.net/?retryWrites=true&w=majority")
 mongoose.connection.on("connected",()=>{
