@@ -72,7 +72,7 @@ const Form = () => {
 
             <FormControl isRequired>
               <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
-              <Input type="phone" placeholder="Enter your phone number" />
+              <Input type="phone" placeholder="Enter your phone number" value={}/>
             </FormControl>
             <FormControl isRequired>
               <FormLabel alignSelf="flex-start">Email</FormLabel>
