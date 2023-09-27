@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  fullname: "",
+  group: "",
   address: "",
   phone: "",
   gender: "",
   dob: "",
   email: "",
-  
+ 
+ 
 };
 
 export const StepperhandleData = createSlice({
@@ -25,12 +26,21 @@ export const StepperhandleData = createSlice({
       state.dob = action.payload.dob;
       state.email = action.payload.email;
     },
-    
+    secondstepformcompleted: (state, action) => {
+      console.log("dataoffamilydetails", action.payload);
+      state.fullname = action.payload.fullname;
+      state.group = action.payload.group;
+      state.address = action.payload.address;
+      state.phone = action.payload.phone;
+      state.gender = action.payload.gender;
+      state.dob = action.payload.dob;
+      state.email = action.payload.email;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { firststepformcompleted } =
+export const { firststepformcompleted, secondstepformcompleted } =
   StepperhandleData.actions;
 
 export default StepperhandleData.reducer;

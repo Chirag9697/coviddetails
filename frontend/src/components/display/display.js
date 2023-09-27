@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import "./display.css"
 import axios from 'axios'
 import {
@@ -32,6 +32,7 @@ const Display = () => {
  
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [email,setEmail] = useState('')
+    const [details1,setDetails1] = useState([]);
   
     // Function to open the modal
     const openModal = () => {
@@ -42,6 +43,23 @@ const Display = () => {
     const closeModal = () => {
       setIsModalOpen(false);
     };
+
+    useEffect(()=>{
+      const getAllDetails = async()=>{
+        const email = localStorage.getItem("email")
+        try{
+          const details = await axios.get(`http://localhost:5000/families/${email}`)
+          if(details){
+            console.log(details.data);
+            setDetails1(details.data.allfamily1);
+            console.log(details1);
+          }
+        }catch(err){
+          console.log(err)
+        }
+      }
+      getAllDetails()
+    },[])
 
     const sendInvite = ()=>{
     const sendInvite1 = axios.post("http://localhost:5000/send-mail",{
@@ -74,13 +92,17 @@ const Display = () => {
                 </Thead>
                 <Tbody>
                 <Tr>
-                    <Td style={{ textAlign: 'center'  }}>AP</Td>
-                    <Td style={{ textAlign: 'center'  }} isNumeric>25</Td>
-                    <Td style={{ textAlign: 'center'  }}>Buddhanagar</Td>
-                    <Td style={{ textAlign: 'center'  }}>Poudyal</Td>
-                    <Td style={{ textAlign: 'center'  }}>Positive</Td>
-                    <Td style={{ textAlign: 'center'  }}><Button colorScheme='blue'>Edit</Button></Td>
-                    <Td style={{ textAlign: 'center'  }}><Button colorScheme='red'>Delete</Button></Td>
+                  {
+                    details1.map((item)=>{
+                      return(<>
+                      <Td style={{ textAlign: 'center'  }}>{item.groupName}</Td>
+                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
+                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
+                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
+                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
+                      </>)
+                  })
+                  }
                 </Tr>
                 </Tbody>
             </Table>

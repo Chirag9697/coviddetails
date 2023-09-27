@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   FormControl,
@@ -17,21 +17,20 @@ import {
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { firststepformcompleted } from "../features/stepperhandling/StepperDataHandle";
+import { firststepformcompleted } from "../features/stepperhandling/Stepperhandledata";
 import { firststepcompleted } from "../features/stepperhandling/StepperhandleSlice";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const select = useSelector((state) => state.stepperdatahandling);
   const formik = useFormik({
     initialValues: {
-      firstname: `${select.firstname}`,
-      lastname: `${select.lastname}`,
-      address: `${select.address}`,
-      phone: `${select.phone}`,
+      firstname: "",
+      lastname: "",
+      address: "",
+      phone: "",
       gender: "",
-      dob: `${select.dob}`,
-      email: `${select.email}`,
+      dob: "",
+      email: "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("Required"),
@@ -44,14 +43,15 @@ const Form = () => {
     }),
     onSubmit: (values) => {
       // dispatch(firststepcompleted());
-      const data = { values };
-      console.log("first");
-      dispatch(firststepformcompleted(data));
+      const data = { ...formik.values };
+     
       dispatch(firststepcompleted());
     },
   });
 
-
+  const handleNext = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <Formik

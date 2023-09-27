@@ -8,12 +8,10 @@ const familySchema = new mongoose.Schema({
    members: [
       {
          fullName: { type: String, required: true },
-         group: { type: String, required: true },
          address: { type: String, required: true },
          phone: { type: Number },
          gender: { type: String },
          dob: { type: Date, required: true },
-         email:{type: String, required: true},
          covidStatus:{type: String, required: true},
          vaccineStatus:{type: String, required: true},
          infectedTimes:{type: String, required: true},

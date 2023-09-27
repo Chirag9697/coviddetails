@@ -17,7 +17,7 @@ import {
 const steps = [
   { title: "First", description: "Your Details" },
   { title: "Second", description: "Family Details" },
- 
+  { title: "Third", description: "Health Status" },
 ];
 
 const StepA = () => {

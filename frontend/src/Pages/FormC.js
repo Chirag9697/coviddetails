@@ -1,105 +1,149 @@
 import React from "react";
-import { Field, Formik } from "formik";
-import Yup from "yup";
 
 import {
   FormControl,
   FormLabel,
-  FormHelperText,
   Input,
   VStack,
   Heading,
   SimpleGrid,
   GridItem,
-  HStack,
   Button,
   Select,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { Field, Formik, useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const FormC = () => {
-  const dispatch = useDispatch;
+  const newData = useSelector((state) => state.stepperformhander);
+  console.log(newData);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch();
-  };
+  const formik2 = useFormik({
+    initialValues: {
+      covidstatus: "",
+      vaccinestatus: "",
+      quarantine: "",
+      infected: "",
+    },
+    validationSchema: Yup.object({
+      covidstatus: Yup.string().required("Required"),
+      vaccinestatus: Yup.string().required("Required"),
+      quarantine: Yup.string().required("Required"),
+      infected: Yup.string().required("Required"),
+    }),
+    onSubmit: async (values) => {
+      const formData = {
+        groupName: newData.group,
+        email: localStorage.getItem("email"),
+        members:[{
+          fullName: newData.fullname,
+          address: newData.address,
+          phone: newData.phone,
+          gender: newData.gender,
+          dob: newData.dob,
+          covidStatus:values.covidstatus,
+          vaccineStatus:values.vaccinestatus,
+          infectedTimes:values.infected,
+        }]
+      }
+      
+      const response2 = await axios.post(
+        `http://localhost:5000/families/create`,
+        formData
+      );
+      console.log(response2)
+    },
+
+  });
+
   return (
     <Formik
-      initialValues={{
-        firstname: "",
-        lastname: "",
-        address: "",
-        dob: "",
-        email: "",
-        phone: "",
-      }}
-      // validationSchema={Yup.object({
-      //   firstName: Yup.string().required("Required"),
-      //   lastName: Yup.string().required("Required"),
-      //   address: Yup.string().required("Required"),
-      //   address: Yup.string().required("Required"),
-      //   dob: Yup.date().required("Required"),
-      //   email: Yup.required("Required"),
-      //   phone: Yup.number().required("Required"),
-      // })}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      initialValues={formik2.initialValues}
+      validationSchema={formik2.validationSchema}
     >
-      <form>
+      <form onSubmit={formik2.handleSubmit}>
         <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
           <VStack spacing={2} align="flex-start">
-            <Heading>Health Status</Heading>
+            <Heading color="var(--chakra-colors-blue-500);">
+              Health Status
+            </Heading>
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
-              <FormControl isRequired>
+              <FormControl
+                isInvalid={formik2.errors.lastname && formik2.touched.lastname}
+              >
                 <FormLabel>Covid Status</FormLabel>
-                <Select>
+                <Field
+                  as={Select}
+                  name="covidstatus"
+                  value={formik2.values.covidstatus}
+                  onChange={formik2.handleChange}
+                >
+                  <option>Select</option>
                   <option> Positive</option>
                   <option> Negative</option>
-                </Select>
+                </Field>
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl isRequired>
+              <FormControl
+                isInvalid={
+                  formik2.errors.vaccinestatus && formik2.touched.vaccinestatus
+                }
+              >
                 <FormLabel>Vaccine Status</FormLabel>
-                <Select>
+                <Field
+                  as={Select}
+                  name="vaccinestatus"
+                  value={formik2.values.vaccinestatus}
+                  onChange={formik2.handleChange}
+                >
+                  <option>Select</option>
                   <option> Positive</option>
                   <option> Negative</option>
-                </Select>
+                </Field>
               </FormControl>
             </GridItem>
 
-            <FormControl isRequired>
+            <FormControl
+              isInvalid={
+                formik2.errors.quarantine && formik2.touched.quarantine
+              }
+            >
               <FormLabel alignSelf="flex-start">
                 Quarantine for 15 days if covid infected
               </FormLabel>
-              <Select>
+              <Field
+                as={Select}
+                name="quarantine"
+                value={formik2.values.quarantine}
+                onChange={formik2.handleChange}
+              >
+                <option>Select</option>
                 <option> Yes</option>
                 <option> No</option>
-              </Select>
+              </Field>
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl
+              isInvalid={formik2.errors.infected && formik2.touched.infected}
+            >
               <FormLabel alignSelf="flex-start">
                 If infected before, mention when was it
               </FormLabel>
-              <Input type="phone" placeholder="Enter your phone number" />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel alignSelf="flex-start">
-                Appointment if necessary
-              </FormLabel>
-              <Input
-                sx={{ width: "800px" }}
-                type="phone"
-                placeholder="Enter your email address"
+              <Field
+                as={Input}
+                name="infected"
+                value={formik2.values.infected}
+                onChange={formik2.handleChange}
+                placeholder="how many days ago?"
               />
             </FormControl>
           </SimpleGrid>
-          <Button onSubmit={handleSubmit} type="submit" colorScheme="blue">
+          <Button type="submit" colorScheme="blue">
             Submit
           </Button>
         </VStack>

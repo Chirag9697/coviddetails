@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   FormControl,
@@ -9,148 +9,182 @@ import {
   SimpleGrid,
   GridItem,
   Button,
-  Select,
-  Flex,
+  HStack,
+  RadioGroup,
+  Radio,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { backfromsecondstep } from "../features/stepperhandling/StepperhandleSlice";
+import { secondstepcompleted } from "../features/stepperhandling/StepperhandleSlice";
+import { secondstepformcompleted } from "../features/stepperhandling/Stepperhandledata";
+import { useDispatch } from "react-redux";
 
 const FormB = () => {
-  const dispatch = useDispatch();
-
-  const newData = useSelector((state) => state.stepperformhander);
-  console.log(newData);
-
-  const formik2 = useFormik({
+  const formik1 = useFormik({
     initialValues: {
-      covidstatus: "",
-      vaccinestatus: "",
-      quarantine: "",
-      infected: "",
+      fullname: "",
+      group: "",
+      address: "",
+      phone: "",
+      gender: "",
+      dob: "",
+      email: "",
     },
     validationSchema: Yup.object({
-      covidstatus: Yup.string().required("Required"),
-      vaccinestatus: Yup.string().required("Required"),
-      quarantine: Yup.string().required("Required"),
-      infected: Yup.string().required("Required"),
+      fullname: Yup.string().required("Required"),
+      group: Yup.string().required("Required"),
+      address: Yup.string().required("Required"),
+      phone: Yup.number().min(10).positive().integer().required("Required"),
+      gender: Yup.string().required("Required"),
+      dob: Yup.date().required("Required"),
+      email: Yup.string().email(),
     }),
-    onSubmit: async (values) => {
-      const formData = {
-        groupName: newData.group
-      }
-      console.log(newData.group)
-      const newdata2 = { ...newData, ...formik2.values };
-      
-      // const response2 = await axios.post(
-      //   `http://localhost:5000/families/create`,
-      //   newdata2
-      // );
-   
+    onSubmit: (values) => {
+      const data = { ...values };
+      dispatch(secondstepformcompleted(data));
+      dispatch(secondstepcompleted());
     },
   });
 
-  
-  const handleBefore = (e) => {
-    e.preventDefault();
-    dispatch(backfromsecondstep());
-  };
+  const dispatch = useDispatch();
+
+ 
 
   return (
     <Formik
-      initialValues={formik2.initialValues}
-      validationSchema={formik2.validationSchema}
+      initialValues={formik1.initialValues}
+      validationSchema={formik1.validationSchema}
     >
-      <form onSubmit={formik2.handleSubmit}>
+      <form onSubmit={formik1.handleSubmit}>
         <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
           <VStack spacing={2} align="flex-start">
             <Heading color="var(--chakra-colors-blue-500);">
-              Health Status
+              Family Details
             </Heading>
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
               <FormControl
-                isInvalid={formik2.errors.lastname && formik2.touched.lastname}
+                isInvalid={
+                  formik1.errors.fullname && formik1.touched.fullname
+                }
               >
-                <FormLabel>Covid Status</FormLabel>
+                <FormLabel>First name</FormLabel>
                 <Field
-                  as={Select}
-                  name="covidstatus"
-                  value={formik2.values.covidstatus}
-                  onChange={formik2.handleChange}
-                >
-                  <option>Select</option>
-                  <option> Positive</option>
-                  <option> Negative</option>
-                </Field>
+                  as={Input}
+                  name="fullname"
+                  placeholder="First name"
+                  value={formik1.values.fullname}
+                  onChange={formik1.handleChange}
+                />
+                <FormErrorMessage>{formik1.errors.fullname}</FormErrorMessage>
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
               <FormControl
                 isInvalid={
-                  formik2.errors.vaccinestatus && formik2.touched.vaccinestatus
+                  formik1.errors.group && formik1.touched.group
                 }
               >
-                <FormLabel>Vaccine Status</FormLabel>
+                <FormLabel>Last name</FormLabel>
                 <Field
-                  as={Select}
-                  name="vaccinestatus"
-                  value={formik2.values.vaccinestatus}
-                  onChange={formik2.handleChange}
-                >
-                  <option>Select</option>
-                  <option> Positive</option>
-                  <option> Negative</option>
-                </Field>
+                  as={Input}
+                  name="group"
+                  placeholder="Last name"
+                  onChange={formik1.handleChange}
+                  value={formik1.values.group}
+                />
+                <FormErrorMessage>{formik1.errors.group}</FormErrorMessage>
               </FormControl>
             </GridItem>
 
             <FormControl
-              isInvalid={
-                formik2.errors.quarantine && formik2.touched.quarantine
-              }
+              isInvalid={formik1.errors.address && formik1.touched.address}
             >
-              <FormLabel alignSelf="flex-start">
-                Quarantine for 15 days if covid infected
-              </FormLabel>
+              <FormLabel alignSelf="flex-start">Address</FormLabel>
               <Field
-                as={Select}
-                name="quarantine"
-                value={formik2.values.quarantine}
-                onChange={formik2.handleChange}
-              >
-                <option>Select</option>
-                <option> Yes</option>
-                <option> No</option>
-              </Field>
+                as={Input}
+                name="address"
+                placeholder="Enter your address"
+                onChange={formik1.handleChange}
+                value={formik1.values.address}
+              />
+              <FormErrorMessage>{formik1.errors.address}</FormErrorMessage>
             </FormControl>
 
             <FormControl
-              isInvalid={formik2.errors.infected && formik2.touched.infected}
+              isInvalid={formik1.errors.phone && formik1.touched.phone}
             >
-              <FormLabel alignSelf="flex-start">
-                If infected before, mention when was it
-              </FormLabel>
+              <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
               <Field
                 as={Input}
-                name="infected"
-                value={formik2.values.infected}
-                onChange={formik2.handleChange}
-                placeholder="how many days ago?"
+                name="phone"
+                placeholder="Enter your phone number"
+                onChange={formik1.handleChange}
+                value={formik1.values.phone}
               />
+              <FormErrorMessage>{formik1.errors.phone}</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={formik1.errors.gender && formik1.touched.gender}
+            >
+              <FormLabel>Gender</FormLabel>
+              <RadioGroup defaultValue="Itachi">
+                <HStack spacing="24px">
+                  <Field
+                    as={Radio}
+                    name="gender"
+                    value="Male"
+                    onChange={formik1.handleChange}
+                  >
+                    Male
+                  </Field>
+                  <Field
+                    as={Radio}
+                    name="gender"
+                    value="Female"
+                    onChange={formik1.handleChange}
+                  >
+                    Female
+                  </Field>
+                </HStack>
+              </RadioGroup>
+              <FormErrorMessage>{formik1.errors.gender}</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={formik1.errors.dob && formik1.touched.dob}
+            >
+              <FormLabel>Date Of Birth</FormLabel>
+              <Field
+                as={Input}
+                name="dob"
+                placeholder="Select Date and Time"
+                size="md"
+                type="date"
+                onChange={formik1.handleChange}
+                value={formik1.values.dob}
+              />
+              <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={formik1.errors.email && formik1.touched.email}
+            >
+              <FormLabel alignSelf="flex-start">Email</FormLabel>
+              <Field
+                as={Input}
+                sx={{ width: "800px" }}
+                name="email"
+                placeholder="Enter your email address"
+                onChange={formik1.handleChange}
+                value={formik1.values.email}
+              />
+              <FormErrorMessage>{formik1.errors.email}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
-          <Flex>
-            <Button colorScheme="blue" onClick={handleBefore} marginRight={4}>
-              Back
-            </Button>
-            <Button type="submit" colorScheme="blue">
-              Submit
-            </Button>
-          </Flex>
+          <Button type="submit" colorScheme="blue" onClick={formik1.handleNext}>
+            Next
+          </Button>
         </VStack>
       </form>
     </Formik>
