@@ -43,10 +43,15 @@ const Display = () => {
       setIsModalOpen(false);
     };
 
-    const sendInvite = axios.post("http://localhost:5000/send-mail",{
+    const sendInvite = ()=>{
+    const sendInvite1 = axios.post("http://localhost:5000/send-mail",{
         sender: localStorage.getItem("email"),
         receiver:email,
     })
+    if(sendInvite1){
+      console.log("email sent")
+    }
+  }
     
   return (
     <>

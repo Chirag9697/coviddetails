@@ -9,38 +9,50 @@ import {
   Stepper,
   useSteps,
   Stack,
+  StepNumber,
+  Box,
+  StepTitle,
+  StepDescription,
 } from "@chakra-ui/react";
+import FormB from "./FormB";
 
 const steps = [
   { title: "First", description: "Your Details" },
   { title: "Second", description: "Family Details" },
-  { title: "Third", description: "Health Status" },
+
 ];
 
-const StepA = () => {
+const StepB = () => {
   const { activeStep, setActiveStep } = useSteps({
     index: 1,
     count: steps.length,
   });
-  const activeStepText = steps[activeStep].description;
 
   return (
-    <Stack>
-      <Stepper size="sm" index={activeStep} gap="0">
+    <Box padding={5}>
+      <Stepper size="lg" index={activeStep} >
         {steps.map((step, index) => (
-          <Step key={index} gap="0">
+          <Step key={index}>
             <StepIndicator>
-              <StepStatus complete={<StepIcon />} />
+              <StepStatus
+                complete={<StepIcon />}
+                incomplete={<StepNumber />}
+                active={<StepNumber />}
+              />
             </StepIndicator>
-            <StepSeparator _horizontal={{ ml: "0" }} />
+
+            <Box flexShrink="0">
+              <StepTitle>{step.title}</StepTitle>
+              <StepDescription>{step.description}</StepDescription>
+            </Box>
+
+            <StepSeparator />
           </Step>
         ))}
       </Stepper>
-      <Text>
-        Step {activeStep + 1}: <b>{activeStepText}</b>
-      </Text>
-    </Stack>
+      <FormB />
+    </Box>
   );
 };
 
-export default StepA;
+export default StepB;

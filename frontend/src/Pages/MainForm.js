@@ -12,31 +12,27 @@ import {
 } from "../features/stepperhandling/StepperhandleSlice";
 
 export const MainForm = () => {
-  const first = useSelector((state) => state.steppethandling.first);
-  const second = useSelector((state) => state.steppethandling.second);
-  const third = useSelector((state) => state.steppethandling.third);
+  const first = useSelector((state) => state.stepperhandling.first);
+  const second = useSelector((state) => state.stepperhandling.second);
+  const third = useSelector((state) => state.stepperhandling.third);
 
   return (
     <>
       {first && (
         <div>
           <StepA />
-          <Form />
         </div>
       )}
       {second && (
         <div>
           <StepB />
-          <FormB />
         </div>
       )}
       {third && (
         <div>
           <StepC />
-          <FormC />
         </div>
       )}
-      
     </>
   );
 };

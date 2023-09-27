@@ -6,12 +6,14 @@ import { Signin } from "./features/googlesigninemail/Signin";
 import { useState } from 'react';
 import Typewriter from "typewriter-effect";
 import Nav from './components/nav';
+import { MainForm } from './Pages/MainForm';
 function App() {
 
   return (
     <div>
     <Nav/>
     <Routes>
+      <Route path="/" element={<MainForm/>}></Route>
       <Route path="/display" element={<Display />} />
       <Route path="/signin" element={<Signin/>}></Route>
     </Routes>

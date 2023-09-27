@@ -1,27 +1,40 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   first: true,
-  second:false,
-  third:false
-}
+  second: false,
+  third: false,
+};
 
 export const StepperhandleSlice = createSlice({
-  name: 'stepperhandling',
+  name: "stepperhandling",
   initialState,
-  reducers: { 
+  reducers: {
     firststepcompleted: (state) => {
       state.first = false;
-      state.second=true;
+      state.second = true;
     },
-    secondstepcompleted:(state)=>{
-        state.second=false;
-        state.third=true;
-    }
+    secondstepcompleted: (state) => {
+      state.second = false;
+      state.third = true;
+    },
+    backfromsecondstep: (state) => {
+      state.first = true;
+      state.second = false;
+    },
+    backfromthirdstep: (state) => {
+      state.second = true;
+      state.third = false;
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { firststepcompleted,secondstepcompleted } = StepperhandleSlice.actions
+export const {
+  firststepcompleted,
+  secondstepcompleted,
+  backfromsecondstep,
+  backfromthirdstep,
+} = StepperhandleSlice.actions;
 
-export default StepperhandleSlice.reducer
+export default StepperhandleSlice.reducer;

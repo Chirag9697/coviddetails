@@ -8,7 +8,7 @@ const nodemailer=require('nodemailer');
 router.post("/families/create",async(req,res)=>{
     const {groupName,members, email} = req.body;
     try{
-        const newFamily = new Family({groupName, members, email});
+        const newFamily = new Family({groupName,email,members});
         await newFamily.save();
         res.status(201).json(newFamily)
     }catch(err){
@@ -28,11 +28,25 @@ router.get('/families',async(req,res)=>{
         console.log(err)
     }
 })
-router.get('/confirminvitation/:sender/:receiver',(req,res)=>{
-    const{sender,receiver}=req.params;
-    // console.log('')
-    res.send("invitation accepted");
-})
+router.get('/families/:sender/:receiver', async (req, res) => {
+    const {sender, receiver} = req.params;
+
+    try {
+        const familyList = await Invite.find({email: sender});
+
+        const allFamilyDetails = [];
+        for (let i = 0; i < familyList.length; i++) {
+            const familyDetail = await Family.findById({ _id: familyList[i].familyId });
+            allFamilyDetails.push(familyDetail);
+        }
+
+        console.log(allFamilyDetails);
+        res.json({ allfamily1: allFamilyDetails });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
+});//explain this code
 router.post('/send-mail',async(req,res)=>{
     const{sender,receiver}=req.body;
     console.log(sender);

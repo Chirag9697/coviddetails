@@ -7,7 +7,7 @@ import { removeemailid, setemailid } from '../features/googlesigninemail/Googles
 
 const Nav = () => {
   const navigate = useNavigate();
-  const loggedIn = useSelector((state) => state.signin.value); // Use Redux state
+  const loggedIn = localStorage.getItem("email") // Use Redux state
 
   const dispatch = useDispatch();
 
