@@ -37,7 +37,7 @@ export const Signin = () => {
       })
       .then((response) => {
         console.log(response);
-        navigate("/display");
+        navigate("/");
       })
       
       .catch((error) => {

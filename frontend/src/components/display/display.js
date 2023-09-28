@@ -32,7 +32,7 @@ const Display = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [details1, setDetails1] = useState([]);
-
+  
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,7 +42,6 @@ const Display = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-useEffect(()=>{
   const getAllDetails = async () => {
     const email = localStorage.getItem("email");
     try {
@@ -58,13 +57,11 @@ useEffect(()=>{
       console.log(err);
     }
   };
+useEffect(()=>{
   getAllDetails()
-},[])
+},[details1])
  
-
-
-  //Delete the data
-  const deleteData = async (id) => {
+ const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
         `http://localhost:5000/deleteRoute/${id}`
@@ -72,11 +69,15 @@ useEffect(()=>{
       if (deleteAll) {
         console.log("deleted");
       }
+      getAllDetails();
       
     } catch (err) {
       console.log(err);
     }
   };
+
+  //Delete the data
+ 
 
   const sendInvite = () => {
     const sendInvite1 = axios.post("http://localhost:5000/send-mail", {

@@ -42,16 +42,12 @@ const Nav = () => {
       <ul className='nav-menu'>
         {loggedIn ? (
           <>
-            <Link to='/followingpost'>
-              <li>My Following Post</li>
+            <Link to='/display'>
+              <li>Display</li>
             </Link>
 
-            <Link to='/profile'>
-              <li>Profile</li>
-            </Link>
-
-            <Link to='/createPost'>
-              <li>Create Post</li>
+            <Link to='/'>
+              <li>Create</li>
             </Link>
 
             <li>

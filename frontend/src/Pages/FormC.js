@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormLabel,
@@ -17,6 +17,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const FormC = () => {
+  const navigate = useNavigate()
   const newData = useSelector((state) => state.stepperformhander);
   console.log(newData);
 
@@ -54,6 +55,7 @@ const FormC = () => {
         formData
       );
       console.log(response2)
+      navigate('/display')
     },
 
   });
