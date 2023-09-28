@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   FormControl,
@@ -22,15 +22,16 @@ import { firststepcompleted } from "../features/stepperhandling/StepperhandleSli
 
 const Form = () => {
   const dispatch = useDispatch();
+  const select = useSelector((state) => state.stepperformhander);
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      address: "",
-      phone: "",
+      firstname: `${select.firstname}`,
+      lastname: `${select.lastname}`,
+      address: `${select.address}`,
+      phone: `${select.phone}`,
       gender: "",
-      dob: "",
-      email: "",
+      dob: `${select.dob}`,
+      email: `${select.email}`,
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("Required"),
@@ -44,6 +45,7 @@ const Form = () => {
     onSubmit: (values) => {
       // dispatch(firststepcompleted());
       const data = { ...formik.values };
+      console.log("first");
       dispatch(firststepformcompleted(data));
       dispatch(firststepcompleted());
     },

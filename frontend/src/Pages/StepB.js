@@ -29,10 +29,10 @@ const StepB = () => {
   });
 
   return (
-    <Box>
-      <Stepper size="lg" index={activeStep}>
+    <Box padding={5}>
+      <Stepper size="lg" index={activeStep} >
         {steps.map((step, index) => (
-          <Step key={index} onClick={() => setActiveStep(index)}>
+          <Step key={index}>
             <StepIndicator>
               <StepStatus
                 complete={<StepIcon />}

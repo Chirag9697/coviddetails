@@ -1,19 +1,18 @@
-import { Box, Steps, StepSeparator, Stepper, Step } from "@chakra-ui/react";
 import "./App.css";
-import Form from "./Pages/Form";
-import FormB from "./Pages/FormB";
-import FormC from "./Pages/FormC";
-import StepA from "./Pages/StepA";
-import StepB from "./Pages/StepB";
-import StepC from "./Pages/StepC";
-import { MainForm } from "./Pages/MainForm";
-import setAction from "./Pages/action";
-import SetAction from "./Pages/action";
-
+import Display from "./components/display/display";
+import { Route, Routes } from "react-router-dom";
+import { Signin } from "./features/googlesigninemail/Signin";
+import Nav from "./components/nav";
+import CreatePost from "./Pages/createPost";
 function App() {
   return (
     <div>
-      <MainForm />
+      <Nav/>
+      <Routes>
+        <Route path="/display" element={<Display />} />
+        <Route path="/signin" element={<Signin />}></Route>
+        <Route path="/createpost" element={<CreatePost />} />
+      </Routes>
     </div>
   );
 }

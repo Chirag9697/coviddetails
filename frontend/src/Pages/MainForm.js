@@ -15,7 +15,7 @@ export const MainForm = () => {
   const first = useSelector((state) => state.stepperhandling.first);
   const second = useSelector((state) => state.stepperhandling.second);
   const third = useSelector((state) => state.stepperhandling.third);
-
+  const fourth = useSelector((state) => state.stepperhandling.fourth);
   return (
     <>
       {first && (
@@ -33,6 +33,7 @@ export const MainForm = () => {
           <StepC />
         </div>
       )}
+      {fourth && <div>Thanks for Submitting</div>}
     </>
   );
 };

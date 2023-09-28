@@ -13,23 +13,28 @@ import {
   RadioGroup,
   Radio,
   FormErrorMessage,
+  Flex,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { secondstepcompleted } from "../features/stepperhandling/StepperhandleSlice";
+import {
+  backfromsecondstep,
+  secondstepcompleted,
+} from "../features/stepperhandling/StepperhandleSlice";
 import { secondstepformcompleted } from "../features/stepperhandling/Stepperhandledata";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const FormB = () => {
+  const select = useSelector((state) => state.stepperformhander);
   const formik1 = useFormik({
     initialValues: {
-      firstname1: "",
-      lastname1: "",
-      address1: "",
-      phone1: "",
+      firstname1: `${select.firstname1}`,
+      lastname1: `${select.lastname1}`,
+      address1: `${select.address1}`,
+      phone1: `${select.phone1}`,
       gender1: "",
-      dob1: "",
-      email1: "",
+      dob1: `${select.dob1}`,
+      email1: `${select.email1}`,
     },
     validationSchema: Yup.object({
       firstname1: Yup.string().required("Required"),
@@ -47,6 +52,10 @@ const FormB = () => {
     },
   });
 
+  const handleBefore = (e) => {
+    e.preventDefault();
+    dispatch(backfromsecondstep());
+  };
   const dispatch = useDispatch();
 
   const handleNext = (e) => {
@@ -183,9 +192,23 @@ const FormB = () => {
               <FormErrorMessage>{formik1.errors.email1}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
-          <Button type="submit" colorScheme="blue" onClick={formik1.handleNext}>
-            Next
-          </Button>
+          <Flex>
+            <Button
+              type="submit"
+              colorScheme="blue"
+              marginRight="4"
+              onClick={handleBefore}
+            >
+              Back
+            </Button>
+            <Button
+              type="submit"
+              colorScheme="blue"
+              onClick={formik1.handleNext}
+            >
+              Next
+            </Button>
+          </Flex>
         </VStack>
       </form>
     </Formik>

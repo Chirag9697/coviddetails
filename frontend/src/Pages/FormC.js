@@ -10,11 +10,16 @@ import {
   GridItem,
   Button,
   Select,
+  Flex,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  backfromthirdstep,
+  thirdstepcompleted,
+} from "../features/stepperhandling/StepperhandleSlice";
 
 const FormC = () => {
   const newData = useSelector((state) => state.stepperformhander);
@@ -41,10 +46,21 @@ const FormC = () => {
         `http://localhost:5000/families/create`,
         newdata2
       );
-      console.log(response2)
+      console.log(response2);
     },
-
   });
+
+  const dispatch = useDispatch();
+
+  const handleBefore = (e) => {
+    e.preventDefault();
+    dispatch(backfromthirdstep());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(thirdstepcompleted(e));
+  };
 
   return (
     <Formik
@@ -131,9 +147,14 @@ const FormC = () => {
               />
             </FormControl>
           </SimpleGrid>
-          <Button type="submit" colorScheme="blue">
-            Submit
-          </Button>
+          <Flex>
+            <Button colorScheme="blue" onClick={handleBefore} marginRight={4}>
+              Back
+            </Button>
+            <Button type="submit" onClick={handleSubmit} colorScheme="blue">
+              Submit
+            </Button>
+          </Flex>
         </VStack>
       </form>
     </Formik>
