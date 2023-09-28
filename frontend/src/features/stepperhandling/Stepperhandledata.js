@@ -36,11 +36,22 @@ export const StepperhandleData = createSlice({
       state.dob = action.payload.dob;
       state.email = action.payload.email;
     },
+    updateformcompleted:(state,action)=>{
+      state.fullname = action.payload.fullName;
+      state.groupName = action.payload.groupName;
+      state.address = action.payload.address;
+      state.phone = action.payload.phone;
+      state.gender = action.payload.gender;
+      state.dob = action.payload.dob;
+      state.email = action.payload.email;
+      console.log(state.fullName)
+    }
+  
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { firststepformcompleted, secondstepformcompleted } =
+export const { firststepformcompleted, secondstepformcompleted, updateformcompleted} =
   StepperhandleData.actions;
 
 export default StepperhandleData.reducer;
