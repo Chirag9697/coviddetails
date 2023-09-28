@@ -14,13 +14,13 @@ import {
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { clearform } from "../features/stepperhandling/StepperhandleSlice";
 const FormC = () => {
   const navigate = useNavigate()
   const newData = useSelector((state) => state.stepperformhander);
   console.log(newData);
-
+  const dispatch = useDispatch()
   const formik2 = useFormik({
     initialValues: {
       covidstatus: "",
@@ -55,6 +55,7 @@ const FormC = () => {
         formData
       );
       console.log(response2)
+      dispatch(clearform())
       navigate('/display')
     },
 

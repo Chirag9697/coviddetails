@@ -26,6 +26,11 @@ export const StepperhandleSlice = createSlice({
       state.second = true;
       state.third = false;
     },
+    clearform:(state)=>{
+      state.first = true;
+      state.second = false;
+      state.third = false;
+    }
   },
 });
 
@@ -35,6 +40,7 @@ export const {
   secondstepcompleted,
   backfromsecondstep,
   backfromthirdstep,
+  clearform,
 } = StepperhandleSlice.actions;
 
 export default StepperhandleSlice.reducer;

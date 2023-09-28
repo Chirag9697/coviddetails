@@ -8,7 +8,7 @@ const initialState = {
   gender: "",
   dob: "",
   email: "",
- 
+  covidstatus: "",
  
 };
 
@@ -38,13 +38,15 @@ export const StepperhandleData = createSlice({
     },
     updateformcompleted:(state,action)=>{
       state.fullname = action.payload.fullName;
-      state.groupName = action.payload.groupName;
+      state.group = action.payload.groupName;
       state.address = action.payload.address;
       state.phone = action.payload.phone;
       state.gender = action.payload.gender;
       state.dob = action.payload.dob;
       state.email = action.payload.email;
-      console.log(state.fullName)
+      state.covidstatus = action.payload.covidStatus;
+      state.vaccineStatus = action.payload.vaccineStatus;
+      
     }
   
   },

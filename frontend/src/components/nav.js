@@ -7,31 +7,29 @@ import { removeemailid, setemailid } from '../features/googlesigninemail/Googles
 
 const Nav = () => {
   const navigate = useNavigate();
-  const loggedIn = localStorage.getItem("email") // Use Redux state
-
+  const loggedIn = localStorage.getItem("email") 
+  const clearForm = useSelector((state) => state.stepperhandling.clearform);
   const dispatch = useDispatch();
 
-  const [isLoggedOut, setIsLoggedOut] = useState(false); // Local state to trigger re-render
-
+  const [isLoggedOut, setIsLoggedOut] = useState(false); 
   const handleLogout = () => {
-    // Implement your logout logic here
-    // For example, clear Redux state and navigate to the login page
-    dispatch(removeemailid()); // Clear the Redux state
-    localStorage.removeItem('email'); // Clear localStorage
-    setIsLoggedOut(true); // Set the local state to trigger a re-render
-    navigate('/signin'); // Navigate to the login page
+   
+    dispatch(removeemailid()); 
+    localStorage.removeItem('email'); 
+    setIsLoggedOut(true); 
+    navigate('/signin'); 
   };
 
-  // Use useEffect to watch for changes in isLoggedOut and re-render the component
+  
   useEffect(() => {
     if (isLoggedOut) {
-      setIsLoggedOut(false); // Reset isLoggedOut
+      setIsLoggedOut(false); 
     }
   }, [isLoggedOut]);
 
-  // Conditional rendering of the navbar
+
   if (!loggedIn) {
-    return null; // Hide the entire navbar when not logged in
+    return null; 
   }
   
   return (

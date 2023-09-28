@@ -107,7 +107,7 @@ router.post('/send-mail',async(req,res)=>{
 router.delete("/deleteRoute/:id",async(req,res)=>{
     console.log("hey")
     try{
-    const familyResult=await Invite.deleteOne({familyId:req.params.id})
+    const familyResult=await Invite.deleteMany({familyId:req.params.id})
     if(familyResult.ok === 1){
         const inviteResult=await Family.deleteOne({_id:req.params.id})
         if(inviteResult.ok===1){
