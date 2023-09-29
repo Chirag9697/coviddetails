@@ -49,23 +49,21 @@ const Display = () => {
         `http://localhost:5000/families/${email}`
       );
       if (details) {
-        console.log(details.data);
-        setDetails1(details.data.allfamily1);
+        console.log("hello",details.data.allFamilyDetails);
+        // console.log(details.data.allfamily1);
+        setDetails1(details.data.allFamilyDetails);
         console.log("details", details1);
       }
     } catch (err) {
       console.log(err);
     }
   };
-useEffect(()=>{
-  getAllDetails()
-},[details1])
- 
- const deleteData = async (id) => {
+  
+  const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
         `http://localhost:5000/deleteRoute/${id}`
-      );
+        );
       if (deleteAll) {
         console.log("deleted");
       }
@@ -75,7 +73,10 @@ useEffect(()=>{
       console.log(err);
     }
   };
-
+  
+  useEffect(()=>{
+    getAllDetails()
+  },[])
   //Delete the data
  
 

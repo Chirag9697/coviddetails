@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Nav from './components/nav';
 import { MainForm } from './Pages/MainForm';
 import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
+import { Mapdata } from './Pages/Mapdata';
 function App() {
 const navigate = useNavigate()
 const loggedin = localStorage.getItem("email")
@@ -31,9 +32,9 @@ console.log(loggedin);
             <Route path="/" element={<MainForm />} />
             <Route path="/display" element={<Display />} />
             <Route path="/update/:id" element={<MainFormUpdate />} />
-        
           <Route path="/signin" element={<Signin />} />
        
+          <Route path='/map' element={<Mapdata/>}/>
       </Routes>
     </div>
   
