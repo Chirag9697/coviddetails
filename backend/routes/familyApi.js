@@ -40,26 +40,59 @@ router.get('/families/:email',async(req,res)=>{
     const {email} = req.params;
 
     try {
+        const currdate=new Date();
+        let curryear=currdate.getFullYear();
+        let currmonth=currdate.getMonth();
+        let currday=currdate.getDate();
+        let currvalue=curryear+currmonth/12+(currday/30)/12;
+        console.log("currdate",currvalue);
         const familyListofuser = await Family.find({email: email});
         const allinvitedemail=await relation.find({sender:email}).select('receiver').exec();
         const allinvitetomeemail=await relation.find({receiver:email}).select('sender').exec();
         
         const allFamilyDetails = [];
+        let findvalue=4/12;
         for (let i = 0; i < allinvitedemail.length; i++) {
             const familyDetail = await Family.find({ email: allinvitedemail[i].receiver});
             // allFamilyDetails.push(familyDetail);
             for(let j=0;j<familyDetail.length;j++){
-                allFamilyDetails.push(familyDetail[i]);
+                let year=familyDetail[i].members[0].dob.getFullYear();
+                let month=familyDetail[i].members[0].dob.getMonth();
+                let day=familyDetail[i].members[0].dob.getDate();
+                // let year=familyDetail[i].members[0].dob.getFullYear();
+                // let month=familyDetail[i].members[0].dob.getMonth();
+                // let day=familyDetail[i].members[0].dob.getDate();
+                let value=year+(month/12)+(day/30)/12;
+                if(currvalue-value<=findvalue){
+                    allFamilyDetails.push(familyDetail[i]);
+                }
+                // allFamilyDetails.push(familyDetail[i]);
             }
         }
         for (let i = 0; i < allinvitetomeemail.length; i++) {
             const familyDetail = await Family.find({ email: allinvitetomeemail[i].sender});
             for(let j=0;j<familyDetail.length;j++){
-                allFamilyDetails.push(familyDetail[i]);
+                let year=familyDetail[i].members[0].dob.getFullYear();
+                let month=familyDetail[i].members[0].dob.getMonth();
+                let day=familyDetail[i].members[0].dob.getDate();
+                let value=year+(month/12)+(day/30)/12;
+                if(currvalue-value<=findvalue){
+                    allFamilyDetails.push(familyDetail[i]);
+                }
             }
         }
         for(let j=0;j<familyListofuser.length;j++){
-            allFamilyDetails.push(familyListofuser[j]);
+            let year=familyListofuser[j].members[0].dob.getFullYear();
+            let month=familyListofuser[j].members[0].dob.getMonth();
+            let day=familyListofuser[j].members[0].dob.getDate();
+            console.log("record date",month);
+            let value=year+(month/12)+(day/30)/12;
+            console.log("vaueof records",value);
+            if(currvalue-value<=findvalue){
+                allFamilyDetails.push(familyListofuser[j]);
+                // allFamilyDetails.push(familyDetail[i]);
+            }
+
         }
         // allFamilyDetails.push(familyListofuser);
 

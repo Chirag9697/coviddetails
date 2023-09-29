@@ -28,11 +28,11 @@ import {
 } from "@chakra-ui/react";
 
 const Display = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [details1, setDetails1] = useState([]);
-  
+
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -48,37 +48,35 @@ const Display = () => {
       const details = await axios.get(
         `http://localhost:5000/families/${email}`
       );
-      if (details) {
-        console.log("hello",details.data.allFamilyDetails);
-        // console.log(details.data.allfamily1);
-        setDetails1(details.data.allFamilyDetails);
-        console.log("details", details1);
-      }
+      // if (details) {
+      // console.log("hello",details.data.allFamilyDetails);
+      // console.log(details.data.allfamily1);
+      setDetails1(details.data.allFamilyDetails);
+      // console.log("details", details1);
+      // }
     } catch (err) {
       console.log(err);
     }
   };
-  
+
   const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
         `http://localhost:5000/deleteRoute/${id}`
-        );
+      );
       if (deleteAll) {
         console.log("deleted");
       }
       getAllDetails();
-      
     } catch (err) {
       console.log(err);
     }
   };
-  
-  useEffect(()=>{
-    getAllDetails()
-  },[])
+
+  useEffect(() => {
+    getAllDetails();
+  },[]);
   //Delete the data
- 
 
   const sendInvite = () => {
     const sendInvite1 = axios.post("http://localhost:5000/send-mail", {
@@ -91,19 +89,33 @@ const Display = () => {
   };
 
   //Update Query
-  const updateDetails = async(email,id)=>{
-    navigate(`/update/${id}`)
+  const handleChange=(e)=>{
+    console.log(e.target.value);
   }
-
- 
-
-
+  const updateDetails = async (email, id) => {
+    navigate(`/update/${id}`);
+  };
 
   return (
     <>
-      <Button colorScheme="green" onClick={openModal} className="invButton">
-        Invite
-      </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <form >
+          <div style={{display:"flex"}}>
+            <select onChange={handleChange}>
+              <option value="1">month before</option>
+              <option value="2">2 month before</option>
+              <option value="12">year before</option>
+              <option value="24">2 year before</option>
+            </select>
+            <Button type="submit" colorScheme="green" className="invButton">
+              search
+            </Button>
+          </div>
+        </form>
+        <Button colorScheme="green" onClick={openModal} className="invButton">
+          Invite
+        </Button>
+      </div>
       <div className="main">
         <TableContainer>
           <Table variant="simple">
@@ -122,37 +134,42 @@ const Display = () => {
             </Thead>
             <Tbody>
               {details1.map((item, id) => {
-                if(item && item.members && item.members[0]){
-                // return(<>'
-                return (
-                  <Tr>
-                    <Td style={{ textAlign: "center" }}>
-                      {item.members[0].fullName}
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>{item.groupName}</Td>
-                    <Td style={{ textAlign: "center" }}>
-                      {item.members[0].address}
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>
-                      {item.members[0].gender}
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>
-                      {item.members[0].covidStatus}
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>
-                      <Button colorScheme="yellow" onClick={()=>updateDetails(email,item._id)}>Edit</Button>
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => deleteData(item._id)}
-                      >
-                        Delete
-                      </Button>
-                    </Td>
-                    {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
-                  </Tr>
-                );
+                if (item && item.members && item.members[0]) {
+                  // return(<>'
+                  return (
+                    <Tr>
+                      <Td style={{ textAlign: "center" }}>
+                        {item.members[0].fullName}
+                      </Td>
+                      <Td style={{ textAlign: "center" }}>{item.groupName}</Td>
+                      <Td style={{ textAlign: "center" }}>
+                        {item.members[0].address}
+                      </Td>
+                      <Td style={{ textAlign: "center" }}>
+                        {item.members[0].gender}
+                      </Td>
+                      <Td style={{ textAlign: "center" }}>
+                        {item.members[0].covidStatus}
+                      </Td>
+                      <Td style={{ textAlign: "center" }}>
+                        <Button
+                          colorScheme="yellow"
+                          onClick={() => updateDetails(email, item._id)}
+                        >
+                          Edit
+                        </Button>
+                      </Td>
+                      <Td style={{ textAlign: "center" }}>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => deleteData(item._id)}
+                        >
+                          Delete
+                        </Button>
+                      </Td>
+                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
+                    </Tr>
+                  );
                 }
               })}
             </Tbody>
