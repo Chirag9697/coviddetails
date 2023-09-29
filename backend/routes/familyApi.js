@@ -176,7 +176,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
     let curryear = currdate.getFullYear();
     let currmonth = currdate.getMonth();
     let currday = currdate.getDate();
-    let currvalue = curryear + currmonth / 12 + currday / 30 / 12;
+    let currvalue = curryear + currmonth / 12 + (currday / 30)/ 12;
     console.log("currdate", currvalue);
 
     const currentDate = new Date();
@@ -193,23 +193,6 @@ router.get("/count-data/:email/:value", async (req, res) => {
     const oneYear = new Date(currentDate);
     oneYear.setFullYear(currentDate.getFullYear() - 1);
 
-    //Query for thirtyDays
-    const queryThirtyDays = {
-      "members.infectedDays": { $gte: thirtyDays, $lt: currentDate },
-    };
-
-    const queryTwoMonths = {
-      "members.infectedDays": { $gte: twoMonths, $lt: currentDate },
-    };
-
-    const queryThreeMonths = {
-      "members.infectedDays": { $gte: threeMonths, $lt: currentDate },
-    };
-
-    const queryOneYear = {
-      "members.infectedDays": { $gte: oneYear, $lt: currentDate },
-    };
-
     const familyListofuser = await Family.find({ email: email });
     const allinvitedemail = await relation
       .find({ sender: email })
@@ -223,17 +206,17 @@ router.get("/count-data/:email/:value", async (req, res) => {
     for (let i = 0; i < allinvitedemail.length; i++) {
       const familyDetail = await Family.find({
         email: allinvitedemail[i].receiver,
-        "members.infectedDays": { $gte: thirtyDays, $lt: currentDate },
+     
       });
       // allFamilyDetails.push(familyDetail);
 
       for (let j = 0; j < familyDetail.length; j++) {
-        let year = familyDetail[i].members[0].dob.getFullYear();
-        let month = familyDetail[i].members[0].dob.getMonth();
-        let day = familyDetail[i].members[0].dob.getDate();
-        let value = year + month / 12 + day / 30 / 12;
+        let year = familyDetail[j].members[0].infectedDays.getFullYear();
+        let month = familyDetail[j].members[0].infectedDays.getMonth();
+        let day = familyDetail[j].members[0].infectedDays.getDate();
+        let value = year + month / 12 + (day / 30)/ 12;
         if (currvalue - value <= findvalue) {
-          allFamilyDetails.push(familyDetail[i]);
+          allFamilyDetails.push(familyDetail[j]);
         }
       }
     }
@@ -243,19 +226,21 @@ router.get("/count-data/:email/:value", async (req, res) => {
         "members.infectedDays": { $gte: thirtyDays, $lt: currentDate },
       });
       for (let j = 0; j < familyDetail.length; j++) {
-        let year = familyDetail[i].members[0].dob.getFullYear();
-        let month = familyDetail[i].members[0].dob.getMonth();
-        let day = familyDetail[i].members[0].dob.getDate();
+        let year = familyDetail[i].members[0].infectedDays.getFullYear();
+        let month = familyDetail[i].members[0].infectedDays.getMonth();
+        let day = familyDetail[i].members[0].infectedDays.getDate();
         let value = year + month / 12 + day / 30 / 12;
         if (currvalue - value <= findvalue) {
           allFamilyDetails.push(familyDetail[i]);
         }
       }
     }
+    console.log("family",familyListofuser[0].members);
     for (let j = 0; j < familyListofuser.length; j++) {
-      let year = familyListofuser[j].members[0].dob.getFullYear();
-      let month = familyListofuser[j].members[0].dob.getMonth();
-      let day = familyListofuser[j].members[0].dob.getDate();
+      
+      let year = familyListofuser[j].members[0].infectedDays.getFullYear();
+      let month = familyListofuser[j].members[0].infectedDays.getMonth();
+      let day = familyListofuser[j].members[0].infectedDays.getDate();
       console.log("record date", month);
       let value = year + month / 12 + day / 30 / 12;
       console.log("vaueof records", value);

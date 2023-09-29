@@ -32,7 +32,8 @@ const Display = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [details1, setDetails1] = useState([]);
-  const [time, setTime] = useState(true)
+  const [time, setTime] = useState(false)
+  const [date, setDate] = useState('')
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -78,7 +79,13 @@ const Display = () => {
     // if(time===false){
     // getAllDetails()
     // }else{
-      fetchData()
+      // if(date==''){
+        // getAllDetails()
+
+      // }
+      // else{
+        fetchData();
+      // }
     
   },[])
   //get the data based on time
@@ -87,13 +94,14 @@ const Display = () => {
     const email = localStorage.getItem("email");
     try {
       const details = await axios.get(
-        `http://localhost:5000/count-data/${email}`
+        `http://localhost:5000/count-data/${email}/${date===''?'120':date}`
       );
       if (details) {
         console.log("hello",details.data);
         // console.log(details.data.allfamily1);
         setDetails1(details.data);
         console.log("details", details1);
+        
       }
     } catch (err) {
       console.log(err);
@@ -118,14 +126,14 @@ const Display = () => {
 
  
   const handleChange=(e)=>{
-    console.log(e.target.value);
+    setDate(e.target.value);
   }
 
 
   return (
     <>
      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <form >
+        {/* <form > */}
           <div style={{display:"flex"}}>
             <select onChange={handleChange}>
               <option value="1">month before</option>
@@ -133,11 +141,11 @@ const Display = () => {
               <option value="12">year before</option>
               <option value="24">2 year before</option>
             </select>
-            <Button type="submit" colorScheme="green" className="invButton">
+            <Button colorScheme="green" onClick={fetchData} className="invButton">
               search
             </Button>
           </div>
-        </form>
+        {/* </form> */}
         <Button colorScheme="green" onClick={openModal} className="invButton">
           Invite
         </Button>
@@ -154,6 +162,7 @@ const Display = () => {
                 <Th style={{ textAlign: "center" }}>Address</Th>
                 <Th style={{ textAlign: "center" }}>Gender</Th>
                 <Th style={{ textAlign: "center" }}>Covid Status</Th>
+                <Th style={{ textAlign: "center" }}>Date</Th>
                 <Th style={{ textAlign: "center" }}>Edit</Th>
                 <Th style={{ textAlign: "center" }}>Delete</Th>
               </Tr>
@@ -176,6 +185,9 @@ const Display = () => {
                     </Td>
                     <Td style={{ textAlign: "center" }}>
                       {item.members[0].covidStatus}
+                    </Td>
+                    <Td style={{ textAlign: "center" }}>
+                      {item.members[0].infectedDays}
                     </Td>
                     <Td style={{ textAlign: "center" }}>
                       <Button colorScheme="yellow" onClick={()=>updateDetails(email,item._id)}>Edit</Button>
