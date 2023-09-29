@@ -10,10 +10,13 @@ import {
   GridItem,
   Button,
   Select,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'; // Import styles
 import { useDispatch, useSelector } from "react-redux";
 import { clearform } from "../features/stepperhandling/StepperhandleSlice";
 const FormC = () => {
@@ -26,13 +29,13 @@ const FormC = () => {
       covidstatus: "",
       vaccinestatus: "",
       quarantine: "",
-      infected: "",
+      infectedDays: "",
     },
     validationSchema: Yup.object({
       covidstatus: Yup.string().required("Required"),
       vaccinestatus: Yup.string().required("Required"),
       quarantine: Yup.string().required("Required"),
-      infected: Yup.string().required("Required"),
+      infectedDays: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
       const formData = {
@@ -46,7 +49,7 @@ const FormC = () => {
           dob: newData.dob,
           covidStatus:values.covidstatus,
           vaccineStatus:values.vaccinestatus,
-          infectedTimes:values.infected,
+          infectedDays:values.infectedDays,
         }]
       }
       
@@ -54,7 +57,7 @@ const FormC = () => {
         `http://localhost:5000/families/create`,
         formData
       );
-      console.log(response2)
+      console.log("stored in database")
       dispatch(clearform())
       navigate('/display')
     },
@@ -132,26 +135,29 @@ const FormC = () => {
             </FormControl>
 
             <FormControl
-              isInvalid={formik2.errors.infected && formik2.touched.infected}
-            >
+              isInvalid={formik2.errors.infectedDays && formik2.touched.infectedDays}
+>
               <FormLabel alignSelf="flex-start">
-                If infected before, mention when was it
+                How many days before affected
               </FormLabel>
-              <Field
-                as={Input}
-                name="infected"
-                value={formik2.values.infected}
-                onChange={formik2.handleChange}
-                placeholder="how many days ago?"
-              />
-            </FormControl>
-          </SimpleGrid>
-          <Button type="submit" colorScheme="blue">
-            Submit
-          </Button>
-        </VStack>
-      </form>
-    </Formik>
+                <DatePicker
+                    selected={formik2.values.infectedDays}
+                    onChange={(date) => formik2.setFieldValue('infectedDays', date)}
+                    placeholderText="Select a date"
+                    dateFormat="MM/dd/yyyy" 
+                  
+                  />
+                  {formik2.errors.infectedDays && formik2.touched.infectedDays && (
+                <FormErrorMessage>{formik2.errors.infectedDays}</FormErrorMessage>
+                              )}
+                  </FormControl>
+                </SimpleGrid>
+                <Button type="submit" colorScheme="blue">
+                  Submit
+                </Button>
+              </VStack>
+            </form>
+          </Formik>
   );
 };
 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const user = require('./user');
-const {ObjectId} = mongoose.Schema.Types
+const {ObjectId} = mongoose.Schema.Types;
+
 
 const familySchema = new mongoose.Schema({
    groupName:{type: String, required: true},
@@ -14,7 +15,7 @@ const familySchema = new mongoose.Schema({
          dob: { type: Date, required: true },
          covidStatus:{type: String, required: true},
          vaccineStatus:{type: String, required: true},
-         infectedTimes:{type: String, required: true},
+         infectedDays:{type: Date, required: true},
 
       }
    ]

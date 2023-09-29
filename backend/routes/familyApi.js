@@ -2,8 +2,11 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require("mongoose");
 const Family = mongoose.model('family')
+const relation=require('../models/relationship');
 const Invite = require('../models/invite')
 const nodemailer=require('nodemailer'); 
+const family = require('../models/familyGroup');
+
 //Family Group Management
 
 router.post("/families/create",async(req,res)=>{
@@ -38,16 +41,32 @@ router.get('/families/:email',async(req,res)=>{
     const {email} = req.params;
 
     try {
-        const familyList = await Invite.find({email: email});
-       
+        const familyListofuser = await Family.find({email: email});
+        const allinvitedemail=await relation.find({sender:email}).select('receiver').exec();
+        const allinvitetomeemail=await relation.find({receiver:email}).select('sender').exec();
+        
         const allFamilyDetails = [];
-        for (let i = 0; i < familyList.length; i++) {
-            const familyDetail = await Family.findById({ _id: familyList[i].familyId });
-            allFamilyDetails.push(familyDetail);
+        for (let i = 0; i < allinvitedemail.length; i++) {
+            const familyDetail = await Family.find({ email: allinvitedemail[i].receiver});
+            // allFamilyDetails.push(familyDetail);
+            for(let j=0;j<familyDetail.length;j++){
+                allFamilyDetails.push(familyDetail[i]);
+            }
         }
+        for (let i = 0; i < allinvitetomeemail.length; i++) {
+            const familyDetail = await Family.find({ email: allinvitetomeemail[i].sender});
+            for(let j=0;j<familyDetail.length;j++){
+                allFamilyDetails.push(familyDetail[i]);
+            }
+        }
+        for(let j=0;j<familyListofuser.length;j++){
+            allFamilyDetails.push(familyListofuser[j]);
+        }
+        // allFamilyDetails.push(familyListofuser);
 
-        console.log(allFamilyDetails);
-        res.json({ allfamily1: allFamilyDetails });
+        // console.log(allFamilyDetails);
+        // res.json("hello");
+        res.send({  allFamilyDetails });
     } catch (err) {
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -56,11 +75,12 @@ router.get('/families/:email',async(req,res)=>{
 router.get('/confirminvitation/:sender/:receiver', async (req, res) => {
    const{sender,receiver}=req.params;
    try {
-    const familyList = await Invite.find({email: sender});
-    for (let i = 0; i < familyList.length; i++) {
-        const familyDetail =new Invite({ familyId: familyList[i].familyId,email:receiver,owner:false });
-        familyDetail.save();
-    }
+    const relations = new relation({sender: sender,receiver:receiver});
+    relations.save();
+    // for (let i = 0; i < familyList.length; i++) {
+        // const familyDetail =new Invite({ familyId: familyList[i].familyId,email:receiver,owner:false });
+        // familyDetail.save();
+    // }
     res.send("invition accepted successfully");
    }catch(error){
     res.send("error")
@@ -107,16 +127,15 @@ router.post('/send-mail',async(req,res)=>{
 router.delete("/deleteRoute/:id",async(req,res)=>{
     console.log("hey")
     try{
-    const familyResult=await Invite.deleteMany({familyId:req.params.id})
-    if(familyResult.ok === 1){
+    // const familyResult=await Invite.deleteMany({familyId:req.params.id})
+    // if(familyResult.ok === 1){
         const inviteResult=await Family.deleteOne({_id:req.params.id})
         if(inviteResult.ok===1){
             res.send(inviteResult)
         }
-    }
-}catch(err){
+    }catch(err){
     console.log(err)
-}
+    }
     
 })
  
@@ -135,6 +154,79 @@ router.put("/families/update/:id",async(req,res)=>{
         console.log(err)
     }
 
+})
+
+//Count Date
+router.get("/count-data/:email",async(req,res)=>{
+try{
+    const {email} = req.params
+    // const {members}
+    const currentDate = new Date();
+
+    const thirtyDays = new Date(currentDate);
+    thirtyDays.setDate(currentDate.getDate()-30)
+   
+
+    const twoMonths = new Date(currentDate);
+    twoMonths.setMonth(currentDate.getMonth()-2)
+
+    const threeMonths = new Date(currentDate)
+    threeMonths.setMonth(currentDate.getMonth()-3)
+
+    const oneYear = new Date(currentDate)
+    oneYear.setFullYear(currentDate.getFullYear()-1)
+
+    //Query for thirtyDays
+    const queryThirtyDays = {
+        'members.infectedDays':{$gte: thirtyDays, $lt: currentDate}
+    }
+    
+    const queryTwoMonths = {
+        'members.infectedDays':{$gte: twoMonths, $lt: currentDate}
+    }
+
+    const queryThreeMonths = {
+        'members.infectedDays':{$gte: threeMonths, $lt: currentDate}
+    }
+
+    const queryOneYear = {
+        'members.infectedDays':{$gte: oneYear, $lt: currentDate}
+    }
+
+    const familyListofuser = await Family.find({email: email});
+    const allinvitedemail=await relation.find({sender:email}).select('receiver').exec();
+    const allinvitetomeemail=await relation.find({receiver:email}).select('sender').exec();
+    const allFamilyDetails = [];
+    for (let i = 0; i < allinvitedemail.length; i++) {
+        const familyDetail = await Family.find({ email: allinvitedemail[i].receiver,'members.infectedDays':{$gte: thirtyDays, $lt: currentDate}});
+        // allFamilyDetails.push(familyDetail);
+       
+        for(let j=0;j<familyDetail.length;j++){
+            allFamilyDetails.push(familyDetail[i])
+        }
+    }
+    for (let i = 0; i < allinvitetomeemail.length; i++) {
+        const familyDetail = await Family.find({ email: allinvitetomeemail[i].sender,'members.infectedDays':{$gte: thirtyDays, $lt: currentDate}});
+        for(let j=0;j<familyDetail.length;j++){
+            allFamilyDetails.push(familyDetail[i]);
+        }
+    }
+    for(let j=0;j<familyListofuser.length;j++){
+        allFamilyDetails.push(familyListofuser[j]);
+    }
+    // const dataThirtyDays = await Family.find(queryThirtyDays)
+    // const dataTwoMonths = await Family.find(queryTwoMonths)
+    // const dataThreeMonths = await Family.find(queryThreeMonths)
+    // const dataOneYear = await Family.find(queryOneYear)
+
+
+
+    // const allData = [...dataThirtyDays, ...dataTwoMonths, ...dataThreeMonths, ...dataOneYear]
+
+   res.send(allFamilyDetails)
+}catch(err){
+    console.log(err)
+}
 })
 module.exports = router
 

@@ -32,7 +32,7 @@ const Display = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [details1, setDetails1] = useState([]);
-  
+  const [time, setTime] = useState(true)
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -49,23 +49,21 @@ const Display = () => {
         `http://localhost:5000/families/${email}`
       );
       if (details) {
-        console.log(details.data);
-        setDetails1(details.data.allfamily1);
+        console.log("hello",details.data.allFamilyDetails);
+        // console.log(details.data.allfamily1);
+        setDetails1(details.data.allFamilyDetails);
         console.log("details", details1);
       }
     } catch (err) {
       console.log(err);
     }
   };
-useEffect(()=>{
-  getAllDetails()
-},[details1])
- 
- const deleteData = async (id) => {
+  
+  const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
         `http://localhost:5000/deleteRoute/${id}`
-      );
+        );
       if (deleteAll) {
         console.log("deleted");
       }
@@ -75,9 +73,33 @@ useEffect(()=>{
       console.log(err);
     }
   };
+  
+  useEffect(()=>{
+    // if(time===false){
+    // getAllDetails()
+    // }else{
+      fetchData()
+    
+  },[])
+  //get the data based on time
+  
+  const fetchData = async()=>{
+    const email = localStorage.getItem("email");
+    try {
+      const details = await axios.get(
+        `http://localhost:5000/count-data/${email}`
+      );
+      if (details) {
+        console.log("hello",details.data);
+        // console.log(details.data.allfamily1);
+        setDetails1(details.data);
+        console.log("details", details1);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  //Delete the data
- 
 
   const sendInvite = () => {
     const sendInvite1 = axios.post("http://localhost:5000/send-mail", {
