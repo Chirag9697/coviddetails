@@ -9,6 +9,7 @@ const initialState = {
   dob: "",
   email: "",
   covidstatus: "",
+  
  
 };
 
@@ -46,6 +47,7 @@ export const StepperhandleData = createSlice({
       state.email = action.payload.email;
       state.covidstatus = action.payload.covidStatus;
       state.vaccineStatus = action.payload.vaccineStatus;
+      state.infectedDays=action.payload.infectedDays;
       
     }
   

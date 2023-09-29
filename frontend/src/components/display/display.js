@@ -76,7 +76,8 @@ useEffect(()=>{
     }
   };
 
-  //Delete the data
+  //Get the data based on its date
+ 
  
 
   const sendInvite = () => {

@@ -61,6 +61,13 @@ router.get('/confirminvitation/:sender/:receiver', async (req, res) => {
         const familyDetail =new Invite({ familyId: familyList[i].familyId,email:receiver,owner:false });
         familyDetail.save();
     }
+    const familyList2 = await Invite.find({email: receiver,owner:true});
+    for (let i = 0; i < familyList2.length; i++) {
+        // if(familyList[i].owner==true){
+            const familyDetail2 =new Invite({ familyId: familyList2[i].familyId,email:sender,owner:false });
+            familyDetail2.save();
+        // }
+    }
     res.send("invition accepted successfully");
    }catch(error){
     res.send("error")
@@ -135,6 +142,54 @@ router.put("/families/update/:id",async(req,res)=>{
         console.log(err)
     }
 
+})
+
+//Count Date
+router.get("/count-data/:email",async(req,res)=>{
+    
+try{
+    const currentDate = new Date();
+
+    const thirtyDays = new Date(currentDate);
+    thirtyDays.setDate(currentDate.getDate()-30)
+
+    const twoMonths = new Date(currentDate);
+    twoMonths.setMonth(currentDate.getMonth()-2)
+
+    const threeMonths = new Date(currentDate)
+    threeMonths.setMonth(currentDate.getMonth()-3)
+
+    const oneYear = new Date(currentDate)
+    oneYear.setFullYear(currentDate.getFullYear()-1)
+
+    //Query for thirtyDays
+    const queryThirtyDays = {
+        'members.infectedDays':{$gte: thirtyDays, $lt: currentDate}
+    }
+
+    const queryTwoMonths = {
+        'members.infectedDays':{$gte: twoMonths, $lt: currentDate}
+    }
+
+    const queryThreeMonths = {
+        'members.infectedDays':{$gte: threeMonths, $lt: currentDate}
+    }
+
+    const queryOneYear = {
+        'members.infectedDays':{$gte: oneYear, $lt: currentDate}
+    }
+
+    const dataThirtyDays = await Family.find(queryThirtyDays)
+    const dataTwoMonths = await Family.find(queryTwoMonths)
+    const dataThreeMonths = await Family.find(queryThreeMonths)
+    const dataOneYear = await Family.find(queryOneYear)
+
+    const allData = [...dataThirtyDays, ...dataTwoMonths, ...dataThreeMonths, ...dataOneYear]
+
+    res.json(allData)
+}catch(err){
+    console.log(err)
+}
 })
 module.exports = router
 

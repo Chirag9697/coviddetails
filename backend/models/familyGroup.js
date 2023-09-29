@@ -14,7 +14,7 @@ const familySchema = new mongoose.Schema({
          dob: { type: Date, required: true },
          covidStatus:{type: String, required: true},
          vaccineStatus:{type: String, required: true},
-         infectedTimes:{type: String, required: true},
+         infectedDays:{type: Date, required: true},
 
       }
    ]
