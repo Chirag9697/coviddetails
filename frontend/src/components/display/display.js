@@ -117,14 +117,31 @@ const Display = () => {
   }
 
  
-
+  const handleChange=(e)=>{
+    console.log(e.target.value);
+  }
 
 
   return (
     <>
-      <Button colorScheme="green" onClick={openModal} className="invButton">
-        Invite
-      </Button>
+     <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <form >
+          <div style={{display:"flex"}}>
+            <select onChange={handleChange}>
+              <option value="1">month before</option>
+              <option value="2">2 month before</option>
+              <option value="12">year before</option>
+              <option value="24">2 year before</option>
+            </select>
+            <Button type="submit" colorScheme="green" className="invButton">
+              search
+            </Button>
+          </div>
+        </form>
+        <Button colorScheme="green" onClick={openModal} className="invButton">
+          Invite
+        </Button>
+      </div>
       <div className="main">
         <TableContainer>
           <Table variant="simple">
