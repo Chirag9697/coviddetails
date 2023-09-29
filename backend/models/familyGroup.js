@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const user = require('./user');
-const {ObjectId} = mongoose.Schema.Types
+const {ObjectId} = mongoose.Schema.Types;
+
 
 const familySchema = new mongoose.Schema({
    groupName:{type: String, required: true},

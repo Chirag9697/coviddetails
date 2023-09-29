@@ -145,8 +145,7 @@ const FormC = () => {
                     onChange={(date) => formik2.setFieldValue('infectedDays', date)}
                     placeholderText="Select a date"
                     dateFormat="MM/dd/yyyy" 
-                    style={{ border: '1px solid #ccc', borderRadius: '4px' }}
-
+                  
                   />
                   {formik2.errors.infectedDays && formik2.touched.infectedDays && (
                 <FormErrorMessage>{formik2.errors.infectedDays}</FormErrorMessage>
