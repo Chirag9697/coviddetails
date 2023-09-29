@@ -237,7 +237,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
     }
     console.log("family",familyListofuser[0].members);
     for (let j = 0; j < familyListofuser.length; j++) {
-      
+      //ok
       let year = familyListofuser[j].members[0].infectedDays.getFullYear();
       let month = familyListofuser[j].members[0].infectedDays.getMonth();
       let day = familyListofuser[j].members[0].infectedDays.getDate();
