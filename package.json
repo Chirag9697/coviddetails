@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "nodemailer": "^6.9.5",
-    "react-geocode": "^1.0.0-alpha.1"
-  }
-}
