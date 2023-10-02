@@ -1,63 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import './nav.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeemailid, setemailid } from '../features/googlesigninemail/GooglesigninSlice';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./nav.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeemailid,
+  setemailid,
+} from "../features/googlesigninemail/GooglesigninSlice";
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
+
+import { EditIcon } from "@chakra-ui/icons";
 
 const Nav = () => {
   const navigate = useNavigate();
-  const loggedIn = useSelector((state) => state.signin.value); // Use Redux state
-
+  const loggedIn = localStorage.getItem("email");
+  const clearForm = useSelector((state) => state.stepperhandling.clearform);
   const dispatch = useDispatch();
 
-  const [isLoggedOut, setIsLoggedOut] = useState(false); // Local state to trigger re-render
-
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
   const handleLogout = () => {
-    // Implement your logout logic here
-    // For example, clear Redux state and navigate to the login page
-    dispatch(removeemailid()); // Clear the Redux state
-    localStorage.removeItem('email'); // Clear localStorage
-    setIsLoggedOut(true); // Set the local state to trigger a re-render
-    navigate('/signin'); // Navigate to the login page
+    dispatch(removeemailid());
+    localStorage.removeItem("email");
+    setIsLoggedOut(true);
+    navigate("/signin");
   };
 
-  // Use useEffect to watch for changes in isLoggedOut and re-render the component
+  const handleProfile = () => {
+    navigate("/profile");
+  };
+
+  const handleEdit = () => {
+    navigate("/edit");
+  };
+
   useEffect(() => {
     if (isLoggedOut) {
-      setIsLoggedOut(false); // Reset isLoggedOut
+      setIsLoggedOut(false);
     }
   }, [isLoggedOut]);
 
-  // Conditional rendering of the navbar
   if (!loggedIn) {
-    return null; // Hide the entire navbar when not logged in
+    return null;
   }
-  
+
   return (
-    <div className='navbar'>
-      <h1 className='heading'>
-        <Link to='/'>COVID APP</Link>
+    <div className="navbar">
+      <h1 className="heading">
+        <Link to="/">COVID APP</Link>
       </h1>
-      <ul className='nav-menu'>
+      <ul className="nav-menu">
         {loggedIn ? (
           <>
-            <Link to='/followingpost'>
-              <li>My Following Post</li>
+            <Link to="/display">
+              <li>Display</li>
             </Link>
 
-            <Link to='/profile'>
-              <li>Profile</li>
-            </Link>
-
-            <Link to='/createpost'>
-              <li>Create Post</li>
+            <Link to="/">
+              <li>Create</li>
             </Link>
 
             <li>
-              <button className='primaryBtn' onClick={handleLogout}>
-                Logout
-              </button>
+              <Box colorScheme="red">
+                <Menu colorScheme="blue">
+                  <MenuButton>
+                    <Avatar name="Avatar" src="https://bit.ly/broken-link">
+                      <AvatarBadge boxSize="1.25em" bg="green.500" />
+                    </Avatar>
+                  </MenuButton>
+                  <MenuList>
+                    <Flex>
+                      <MenuItem
+                        color="#2B6CB0"
+                        onClick={handleProfile}
+                        // display={flex}
+                        justifyContent={"space-between"}
+                      >
+                        Profile
+                        <Avatar name="Avatar" src="https://bit.ly/broken-link">
+                          <AvatarBadge boxSize="1.25em" bg="green.500" />
+                        </Avatar>
+                      </MenuItem>
+                    </Flex>
+                    <MenuItem
+                      icon={<EditIcon />}
+                      color="#2B6CB0"
+                      onClick={handleEdit}
+                    >
+                      Edit
+                    </MenuItem>
+                    <MenuItem color="red" onClick={handleLogout}>
+                      Logout
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
             </li>
           </>
         ) : null}

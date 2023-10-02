@@ -1,20 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  fullname: "",
+  group: "",
   address: "",
   phone: "",
   gender: "",
   dob: "",
   email: "",
-  firstname1: "",
-  lastname1: "",
-  address1: "",
-  phone1: "",
-  gender1: "",
-  dob1: "",
-  email1: "",
+  covidstatus: "",
+ 
 };
 
 export const StepperhandleData = createSlice({
@@ -33,19 +28,32 @@ export const StepperhandleData = createSlice({
     },
     secondstepformcompleted: (state, action) => {
       console.log("dataoffamilydetails", action.payload);
-      state.firstname1 = action.payload.firstname1;
-      state.lastname1 = action.payload.lastname1;
-      state.address1 = action.payload.address1;
-      state.phone1 = action.payload.phone1;
-      state.gender1 = action.payload.gender1;
-      state.dob1 = action.payload.dob1;
-      state.email1 = action.payload.email1;
+      state.fullname = action.payload.fullname;
+      state.group = action.payload.group;
+      state.address = action.payload.address;
+      state.phone = action.payload.phone;
+      state.gender = action.payload.gender;
+      state.dob = action.payload.dob;
+      state.email = action.payload.email;
     },
+    updateformcompleted:(state,action)=>{
+      state.fullname = action.payload.fullName;
+      state.group = action.payload.groupName;
+      state.address = action.payload.address;
+      state.phone = action.payload.phone;
+      state.gender = action.payload.gender;
+      state.dob = action.payload.dob;
+      state.email = action.payload.email;
+      state.covidstatus = action.payload.covidStatus;
+      state.vaccineStatus = action.payload.vaccineStatus;
+      
+    }
+  
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { firststepformcompleted, secondstepformcompleted } =
+export const { firststepformcompleted, secondstepformcompleted, updateformcompleted} =
   StepperhandleData.actions;
 
 export default StepperhandleData.reducer;

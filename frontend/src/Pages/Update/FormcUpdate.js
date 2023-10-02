@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import {
   FormControl,
   FormLabel,
@@ -10,18 +11,16 @@ import {
   GridItem,
   Button,
   Select,
-  
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { clearform } from "../features/stepperhandling/StepperhandleSlice";
-const FormC = () => {
-  const navigate = useNavigate();
+import { useSelector } from "react-redux";
+
+const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
   console.log(newData);
-  const dispatch = useDispatch();
+const {id} = useParams();
   const formik2 = useFormik({
     initialValues: {
       covidstatus: "",
@@ -39,28 +38,25 @@ const FormC = () => {
       const formData = {
         groupName: newData.group,
         email: localStorage.getItem("email"),
-        members: [
-          {
-            fullName: newData.fullname,
-            address: newData.address,
-            phone: newData.phone,
-            gender: newData.gender,
-            dob: newData.dob,
-            covidStatus: values.covidstatus,
-            vaccineStatus: values.vaccinestatus,
-            infectedTimes: values.infected,
-          },
-        ],
-      };
-
-      const response2 = await axios.post(
-        `http://localhost:5000/families/create`,
+        members:[{
+          fullName: newData.fullname,
+          address: newData.address,
+          phone: newData.phone,
+          gender: newData.gender,
+          dob: newData.dob,
+          covidStatus:values.covidstatus,
+          vaccineStatus:values.vaccinestatus,
+          infectedTimes:values.infected,
+        }]
+      }
+      
+      const response2 = await axios.put(
+        `http://localhost:5000/families/update/${id}`,
         formData
       );
-      console.log(response2);
-      dispatch(clearform());
-      navigate("/display");
+      console.log(response2)
     },
+
   });
 
   return (
@@ -148,7 +144,6 @@ const FormC = () => {
               />
             </FormControl>
           </SimpleGrid>
-
           <Button type="submit" colorScheme="blue">
             Submit
           </Button>
@@ -158,4 +153,4 @@ const FormC = () => {
   );
 };
 
-export default FormC;
+export default FormcUpdate;

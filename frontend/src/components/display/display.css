@@ -18,4 +18,9 @@ th {
     padding: 8px;
     
   }
+  .invButton{
+    float: right;
+    margin-right: 60px;
+    margin-top: 10px;
+  }
 

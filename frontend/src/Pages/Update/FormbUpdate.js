@@ -13,23 +13,19 @@ import {
   RadioGroup,
   Radio,
   FormErrorMessage,
-  Flex,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  backfromsecondstep,
-  secondstepcompleted,
-} from "../features/stepperhandling/StepperhandleSlice";
-import { secondstepformcompleted } from "../features/stepperhandling/Stepperhandledata";
+import { secondstepcompleted } from "../../features/stepperhandling/StepperhandleSlice";
+import { secondstepformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { useDispatch, useSelector } from "react-redux";
 
-const FormB = () => {
+const FormbUpdate = () => {
   const select = useSelector((state) => state.stepperformhander);
   const formik1 = useFormik({
     initialValues: {
-      fullname: `${select.fullname}`,
-      group: `${select.group}`,
+      fullName: `${select.fullname}`,
+      group: "",
       address: "",
       phone: "",
       gender: "",
@@ -79,7 +75,7 @@ const FormB = () => {
                 <Field
                   as={Input}
                   name="fullname"
-                  placeholder="First name"
+                  placeholder="Full name"
                   value={formik1.values.fullname}
                   onChange={formik1.handleChange}
                 />
@@ -92,11 +88,11 @@ const FormB = () => {
                   formik1.errors.group && formik1.touched.group
                 }
               >
-                <FormLabel>group</FormLabel>
+                <FormLabel>Group</FormLabel>
                 <Field
                   as={Input}
                   name="group"
-                  placeholder="group"
+                  placeholder="Group"
                   onChange={formik1.handleChange}
                   value={formik1.values.group}
                 />
@@ -187,27 +183,13 @@ const FormB = () => {
               <FormErrorMessage>{formik1.errors.email}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
-          <Flex>
-            <Button
-              type="submit"
-              colorScheme="blue"
-              marginRight="4"
-              onClick={handleBefore}
-            >
-              Back
-            </Button>
-            <Button
-              type="submit"
-              colorScheme="blue"
-              onClick={formik1.handleNext}
-            >
-              Next
-            </Button>
-          </Flex>
+          <Button type="submit" colorScheme="blue" onClick={formik1.handleNext}>
+            Next
+          </Button>
         </VStack>
       </form>
     </Formik>
   );
 };
 
-export default FormB;
+export default FormbUpdate;

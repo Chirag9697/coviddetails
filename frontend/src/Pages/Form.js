@@ -45,8 +45,7 @@ const Form = () => {
     onSubmit: (values) => {
       // dispatch(firststepcompleted());
       const data = { ...formik.values };
-      console.log("first");
-      dispatch(firststepformcompleted(data));
+     
       dispatch(firststepcompleted());
     },
   });
@@ -87,11 +86,11 @@ const Form = () => {
               <FormControl
                 isInvalid={formik.errors.lastname && formik.touched.lastname}
               >
-                <FormLabel>Last name</FormLabel>
+                <FormLabel>group</FormLabel>
                 <Field
                   as={Input}
                   name="lastname"
-                  placeholder="Last name"
+                  placeholder="group"
                   onChange={formik.handleChange}
                   value={formik.values.lastname}
                 />
