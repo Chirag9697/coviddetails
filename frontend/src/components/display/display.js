@@ -26,7 +26,7 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
-
+import ClusterMap from "../../Clustermap";
 const Display = () => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -142,6 +142,7 @@ const Display = () => {
 
   return (
     <>
+    <ClusterMap/>
      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* <form > */}
           <div style={{display:"flex"}}>

@@ -11,6 +11,7 @@ import { MainForm } from './Pages/MainForm';
 import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
 import Profile from "./Pages/Profile";
 import MyProfile from "./Pages/MyProfile";
+import ClusterMap from './Clustermap';
 // import { Mapdata } from './Pages/Mapdata';
 function App() {
 const navigate = useNavigate()
@@ -37,6 +38,7 @@ console.log(loggedin);
           <Route path="/signin" element={<Signin />} />
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/edit" element={<Profile />} />
+          <Route path="/map" element={<ClusterMap />} />
          
       </Routes>
     </div>
