@@ -15,9 +15,9 @@ import {
 } from "@chakra-ui/react";
 
 const steps = [
-  { title: "First", description: "Your Details" },
-  { title: "Second", description: "Family Details" },
-  { title: "Third", description: "Health Status" },
+  
+  { title: "First", description: "Family Details" },
+  { title: "Second", description: "Health Status" },
 ];
 
 const StepA = () => {

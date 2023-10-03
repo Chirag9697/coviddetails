@@ -61,9 +61,7 @@ const Form = () => {
       <form onSubmit={formik.handleSubmit}>
         <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
           <VStack spacing={2} align="flex-start">
-            <Heading color="var(--chakra-colors-blue-500);">
-              Your Details
-            </Heading>
+           
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
