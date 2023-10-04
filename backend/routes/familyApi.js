@@ -40,7 +40,7 @@ router.get("/families1/:id", async (req, res) => {
 });
 //retrieve the list of user's family group
 router.get("/families/:email", async (req, res) => {
-
+  console.log("get all details");
   const { email } = req.params;
 
   try {
@@ -53,7 +53,7 @@ router.get("/families/:email", async (req, res) => {
       .find({ receiver: email })
       .select("sender")
       .exec();
-
+    console.log(allinvitetomeemail);
     const allFamilyDetails = [];
     for (let i = 0; i < allinvitedemail.length; i++) {
       const familyDetail = await Family.find({
@@ -61,17 +61,19 @@ router.get("/families/:email", async (req, res) => {
       });
       // allFamilyDetails.push(familyDetail);
       for (let j = 0; j < familyDetail.length; j++) {
-        allFamilyDetails.push(familyDetail[i]);
+        allFamilyDetails.push(familyDetail[j]);
       }
     }
     for (let i = 0; i < allinvitetomeemail.length; i++) {
       const familyDetail = await Family.find({
         email: allinvitetomeemail[i].sender,
       });
+      console.log("family",familyDetail);
       for (let j = 0; j < familyDetail.length; j++) {
-        allFamilyDetails.push(familyDetail[i]);
+        allFamilyDetails.push(familyDetail[j]);
       }
     }
+    console.log("asdsa",allFamilyDetails);
     for (let j = 0; j < familyListofuser.length; j++) {
       allFamilyDetails.push(familyListofuser[j]);
     }
@@ -150,6 +152,7 @@ router.put("/families/update/:id", async (req, res) => {
   const { id } = req.params;
   console.log(id);
   const { groupName, email, members } = req.body;
+  console.log(members);
   try {
     const newFamily = await Family.findOneAndUpdate(
       { _id: id },
@@ -165,7 +168,7 @@ router.put("/families/update/:id", async (req, res) => {
 
 //Count Date
 router.get("/count-data/:email/:value", async (req, res) => {
- 
+  console.log("data is called");
   try {
     const { email, value } = req.params;
     const findvalue = value / 12;
@@ -182,12 +185,12 @@ router.get("/count-data/:email/:value", async (req, res) => {
       .find({ sender: email })
       .select("receiver")
       .exec();
-
+    console.log("allinvited",allinvitedemail);
     const allinvitetomeemail = await relation
       .find({ receiver: email })
       .select("sender")
       .exec();
-
+    console.log("allinvite me",allinvitetomeemail);
     const allFamilyDetails = [];
 
     // Add family details based on allinvitedemail
@@ -206,6 +209,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let value = year + month / 12 + (day / 30) / 12;
 
           if (currvalue - value <= findvalue) {
+            console.log(familyDetail[j]);
             allFamilyDetails.push(familyDetail[j]);
             break; // Break to prevent adding the same family multiple times
           }
@@ -217,9 +221,9 @@ router.get("/count-data/:email/:value", async (req, res) => {
     for (let i = 0; i < allinvitetomeemail.length; i++) {
       const familyDetail = await Family.find({
         email: allinvitetomeemail[i].sender,
-        "members.infectedDays": { $gte: thirtyDaysAgo, $lt: currdate },
+        // "members.infectedDays": { $gte: thirtyDaysAgo, $lt: currdate },
       });
-
+      console.log("fdsfa");
       for (let j = 0; j < familyDetail.length; j++) {
         const { members } = familyDetail[j];
         for (let k = 0; k < members.length; k++) {
@@ -230,6 +234,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let value = year + month / 12 + (day / 30) / 12;
 
           if (currvalue - value <= findvalue) {
+            console.log(familyDetail[j]);
             allFamilyDetails.push(familyDetail[j]);
             break; // Break to prevent adding the same family multiple times
           }
@@ -249,6 +254,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
         let value = year + month / 12 + (day / 30) / 12;
 
         if (currvalue - value <= findvalue) {
+          console.log(familyDetail[j]);
           allFamilyDetails.push(familyListofuser[j]);
           break; // Break to prevent adding the same family multiple times
         }
