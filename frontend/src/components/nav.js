@@ -49,7 +49,7 @@ useEffect(()=>{
         
         console.log(userProfile);
         // settProfiledata(userProfile);
-        localStorage.setItem("userId", userProfile._id);
+
        
       }
     } catch (err) {
