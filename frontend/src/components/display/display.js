@@ -155,6 +155,8 @@ const Display = () => {
 
   return (
     <>
+    <div style={{fontWeight:"bolder", fontSize:"30px", textAlign:"center", marginTop:"40px"}}><h1>Welcome to Covid App</h1></div>
+    <br/><br/>
     <ClusterMap/>
      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* <form > */}
