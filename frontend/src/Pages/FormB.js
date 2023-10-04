@@ -26,11 +26,11 @@ const FormB = () => {
     initialValues: {
       fullname: `${select.fullname}`,
       group: `${select.group}`,
-      address: "",
-      phone: "",
+      address:`${select.address}`,
+      phone: `${select.phone}`,
       gender: "",
-      dob: "",
-      email: "",
+      dob: `${select.dob}`,
+      email: `${select.email}`,
     },
     validationSchema: Yup.object({
       fullname: Yup.string().required("Required"),

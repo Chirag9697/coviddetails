@@ -26,7 +26,9 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
-
+import ClusterMap from "../../Clustermap";
+import { useDispatch } from "react-redux";
+import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 const Display = () => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +37,7 @@ const Display = () => {
   const [time, setTime] = useState(false)
   const [date, setDate] = useState('')
   // Function to open the modal
+  const dispatch=useDispatch();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -76,38 +79,48 @@ const Display = () => {
   };
   
   useEffect(()=>{
-    // if(time===false){
-    // getAllDetails()
-    // }else{
-      // if(date==''){
+    if(time===false){
+    getAllDetails()
+    }else{
+      // if(date===''){
         // getAllDetails()
-
+// 
       // }
       // else{
         fetchData();
       // }
-    
+    }
   },[])
   //get the data based on time
   
-  const fetchData = async()=>{
+  const fetchData = async () => {
     const email = localStorage.getItem("email");
     try {
-      const details = await axios.get(
-        `http://localhost:5000/count-data/${email}/${date===''?'120':date}`
-      );
-      if (details) {
-        console.log("hello",details.data);
-        // console.log(details.data.allfamily1);
-        setDetails1(details.data);
-        console.log("details", details1);
-        
+      if (!date) {
+        // Handle the case where date is empty or undefined
+        console.error("Date is empty or undefined.");
+        return;
+      }
+  
+      const response = await axios.get(
+        `http://localhost:5000/count-data/${email}/${date === '' ? '120' : date}`
+      );      
+  
+      if (response.data) {
+        console.log("Data fetched successfully:", response.data);
+        setDetails1(response.data);
+      } else {
+        console.error("No data returned from the server.");
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching data:", err);
     }
-  }
-
+  };
+  
+        
+        
+       
+     
 
   const sendInvite = () => {
     const sendInvite1 = axios.post("http://localhost:5000/send-mail", {
@@ -121,6 +134,16 @@ const Display = () => {
 
   //Update Query
   const updateDetails = async(email,id)=>{
+    const details = await axios.get(
+      `http://localhost:5000/families1/${id}`
+    );
+    if (details) {
+      console.log(details);
+      const newdata=details.data.allfamily1;
+      // const memberdata={...newdata.members[0]};
+      dispatch(updateformcompleted({...newdata,...newdata.members[0]}))
+      // console.log("data",details.data.allfamily1);
+    }
     navigate(`/update/${id}`)
   }
 
@@ -132,6 +155,9 @@ const Display = () => {
 
   return (
     <>
+    <div style={{fontWeight:"bolder", fontSize:"30px", textAlign:"center", marginTop:"40px"}}><h1>Welcome to Covid App</h1></div>
+    <br/><br/>
+    <ClusterMap/>
      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* <form > */}
           <div style={{display:"flex"}}>

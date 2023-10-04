@@ -15,16 +15,17 @@ import {
   StepDescription,
 } from "@chakra-ui/react";
 import FormB from "./FormB";
+import FormbUpdate from "./Update/FormbUpdate";
 
 const steps = [
-  { title: "First", description: "Your Details" },
-  { title: "Second", description: "Family Details" },
-  { title: "Third", description: "Health Status" },
+ 
+  { title: "First", description: "Family Details" },
+  { title: "Second", description: "Health Status" },
 ];
 
 const StepB = () => {
   const { activeStep, setActiveStep } = useSteps({
-    index: 1,
+    index: 0,
     count: steps.length,
   });
 

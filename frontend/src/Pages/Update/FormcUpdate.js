@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import {
   FormControl,
@@ -15,11 +15,15 @@ import {
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
+import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
+  const dispatch=useDispatch();
   console.log(newData);
+  const navigate=useNavigate();
 const {id} = useParams();
   const formik2 = useFormik({
     initialValues: {
@@ -46,7 +50,7 @@ const {id} = useParams();
           dob: newData.dob,
           covidStatus:values.covidstatus,
           vaccineStatus:values.vaccinestatus,
-          infectedTimes:values.infected,
+          infectedDays:values.infected,
         }]
       }
       
@@ -55,6 +59,10 @@ const {id} = useParams();
         formData
       );
       console.log(response2)
+      if(response2){
+        navigate('/');
+      }
+      dispatch(clearform());
     },
 
   });
@@ -137,10 +145,11 @@ const {id} = useParams();
               </FormLabel>
               <Field
                 as={Input}
+                type="date"
                 name="infected"
                 value={formik2.values.infected}
                 onChange={formik2.handleChange}
-                placeholder="how many days ago?"
+                placeholder="enter the infection date"
               />
             </FormControl>
           </SimpleGrid>
