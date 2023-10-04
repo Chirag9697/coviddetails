@@ -138,7 +138,7 @@ const FormC = () => {
               isInvalid={formik2.errors.infectedDays && formik2.touched.infectedDays}
 >
               <FormLabel alignSelf="flex-start">
-                How many days before affected
+                Date of infection, if affected
               </FormLabel>
                 <DatePicker
                     selected={formik2.values.infectedDays}

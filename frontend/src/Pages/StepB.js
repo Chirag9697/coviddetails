@@ -17,14 +17,14 @@ import {
 import FormB from "./FormB";
 
 const steps = [
-  { title: "First", description: "Your Details" },
-  { title: "Second", description: "Family Details" },
-  { title: "Third", description: "Health Status" },
+ 
+  { title: "First", description: "Family Details" },
+  { title: "Second", description: "Health Status" },
 ];
 
 const StepB = () => {
   const { activeStep, setActiveStep } = useSteps({
-    index: 1,
+    index: 0,
     count: steps.length,
   });
 
