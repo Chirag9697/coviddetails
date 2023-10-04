@@ -15,6 +15,7 @@ import {
   StepDescription,
 } from "@chakra-ui/react";
 import FormB from "./FormB";
+import FormbUpdate from "./Update/FormbUpdate";
 
 const steps = [
  

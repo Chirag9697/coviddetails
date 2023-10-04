@@ -27,6 +27,8 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 import ClusterMap from "../../Clustermap";
+import { useDispatch } from "react-redux";
+import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 const Display = () => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +37,7 @@ const Display = () => {
   const [time, setTime] = useState(false)
   const [date, setDate] = useState('')
   // Function to open the modal
+  const dispatch=useDispatch();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -79,13 +82,13 @@ const Display = () => {
     if(time===false){
     getAllDetails()
     }else{
-      if(date===''){
-        getAllDetails()
-
-      }
-      else{
+      // if(date===''){
+        // getAllDetails()
+// 
+      // }
+      // else{
         fetchData();
-      }
+      // }
     }
   },[])
   //get the data based on time
@@ -131,6 +134,16 @@ const Display = () => {
 
   //Update Query
   const updateDetails = async(email,id)=>{
+    const details = await axios.get(
+      `http://localhost:5000/families1/${id}`
+    );
+    if (details) {
+      console.log(details);
+      const newdata=details.data.allfamily1;
+      // const memberdata={...newdata.members[0]};
+      dispatch(updateformcompleted({...newdata,...newdata.members[0]}))
+      // console.log("data",details.data.allfamily1);
+    }
     navigate(`/update/${id}`)
   }
 
