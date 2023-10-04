@@ -82,13 +82,13 @@ const Display = () => {
     if(time===false){
     getAllDetails()
     }else{
-      if(date===''){
-        getAllDetails()
-
-      }
-      else{
+      // if(date===''){
+        // getAllDetails()
+// 
+      // }
+      // else{
         fetchData();
-      }
+      // }
     }
   },[])
   //get the data based on time
