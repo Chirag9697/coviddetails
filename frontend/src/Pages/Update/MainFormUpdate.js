@@ -49,11 +49,7 @@ export const MainFormUpdate = () => {
 
   return (
     <>
-      {first && (
-        <div>
-          <StepA />
-        </div>
-      )}
+    
       {second && (
         <div>
           <StepB />

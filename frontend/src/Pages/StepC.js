@@ -16,14 +16,14 @@ import {
 import FormC from "./FormC";
 
 const steps = [
-  { title: "First", description: "Your Details" },
-  { title: "Second", description: "Family Details" },
-  { title: "Third", description: "Health Status" },
+ 
+  { title: "First", description: "Family Details" },
+  { title: "Second", description: "Health Status" },
 ];
 
 function StepC() {
   const { activeStep, setActiveStep } = useSteps({
-    index: 2,
+    index: 1,
     count: steps.length,
   });
 
