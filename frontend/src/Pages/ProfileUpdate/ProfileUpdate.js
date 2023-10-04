@@ -18,10 +18,12 @@ import {
     FormErrorMessage,
   } from "@chakra-ui/react";
   import ProfileUpdateSlice from "./ProfileUpdateSlice";
+  import { useNavigate } from "react-router-dom";
   import { Field, Formik, useFormik } from "formik";
 import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
 // import userProfile from "../../../../backend/models/userProfile";
 const ProfileUpdate = () => {
+  const navigate=useNavigate()
   const dispatch = useDispatch()
   const select=useSelector((state) => state.profileupdate);
   // let select; 
@@ -68,6 +70,7 @@ const ProfileUpdate = () => {
         if(response){
             console.log("updated")
             dispatch(updateProfile(updatedData))
+            navigate('/profile')
         }
 
        

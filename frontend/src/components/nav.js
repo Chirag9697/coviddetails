@@ -60,7 +60,7 @@ useEffect(()=>{
 },[])
  
   const handleEdit = () => {
-    const id = localStorage.getItem("userId"); 
+    const id = localStorage.getItem("userid"); 
     if (id) {
      
       navigate(`/edit/${id}`); 
@@ -93,7 +93,7 @@ useEffect(()=>{
               <li>Display</li>
             </Link>
 
-            <Link to='/'>
+            <Link to='/form'>
               <li>Create</li>
             </Link>
 
