@@ -7,7 +7,7 @@ const userProfileSchema = new mongoose.Schema({
     phone: { type: Number },
     gender: { type: String },
     dob: { type: String },
-    email: { type: String },
+    email: { type: String} ,
 })
 
 const userProfile = mongoose.model("userProfile", userProfileSchema)
