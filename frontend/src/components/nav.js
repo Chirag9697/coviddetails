@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './nav.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeemailid, setemailid } from '../features/googlesigninemail/GooglesigninSlice';
+import axios from 'axios';
+import { updateProfile } from '../Pages/ProfileUpdate/ProfileUpdateSlice';
 import {
   Avatar,
   AvatarBadge,
@@ -35,10 +37,39 @@ const Nav = () => {
     navigate("/profile");
   };
 
-  const handleEdit = () => {
-    navigate("/edit");
+useEffect(()=>{
+  const getProfileData = async () => {
+    const email = localStorage.getItem("email")
+    try {
+      const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
+   
+      if (response.data.profileDetail) {
+        const userProfile = response.data.profileDetail;
+        dispatch(updateProfile(userProfile))
+        
+        console.log(userProfile);
+        // settProfiledata(userProfile);
+        localStorage.setItem("userId", userProfile._id);
+       
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
-  
+  getProfileData()
+},[])
+ 
+  const handleEdit = () => {
+    const id = localStorage.getItem("userId"); 
+    if (id) {
+     
+      navigate(`/edit/${id}`); 
+    
+    } else {
+      
+      console.error("ID not found in localStorage");
+    }
+  };
   useEffect(() => {
     if (isLoggedOut) {
       setIsLoggedOut(false); 

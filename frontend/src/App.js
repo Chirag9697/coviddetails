@@ -11,6 +11,7 @@ import { MainForm } from './Pages/MainForm';
 import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
 import Profile from "./Pages/Profile";
 import MyProfile from "./Pages/MyProfile";
+import ProfileUpdate from './Pages/ProfileUpdate/ProfileUpdate';
 // import { Mapdata } from './Pages/Mapdata';
 function App() {
 const navigate = useNavigate()
@@ -24,19 +25,20 @@ console.log(loggedin);
   }, [loggedin])
 
   
-  
+  const id = localStorage.getItem("userId")
 
   return (
     <div>
     <Nav/>
     <Routes>
        
-            <Route path="/" element={<MainForm />} />
-            <Route path="/display" element={<Display />} />
-            <Route path="/update/:id" element={<MainFormUpdate />} />
+          <Route path="/form" element={<MainForm />} />
+          <Route path="/display" element={<Display />} />
+          <Route path="/update/:id" element={<MainFormUpdate />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/" element={<Profile />} />
           <Route path="/profile" element={<MyProfile />} />
-          <Route path="/edit" element={<Profile />} />
+          <Route path="/edit/:id" element={<ProfileUpdate />} />
          
       </Routes>
     </div>

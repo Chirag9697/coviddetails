@@ -1,68 +1,91 @@
-import React from "react";
-
-import {
-  FormControl,
-  Input,
-  FormLabel,
-  VStack,
-  Heading,
-  SimpleGrid,
-  GridItem,
-  HStack,
-  Button,
-  RadioGroup,
-  Radio,
-  FormErrorMessage,
-} from "@chakra-ui/react";
-import { Field, Formik, useFormik } from "formik";
-import * as Yup from "yup";
-import { useSelector } from "react-redux";
-import MyProfile from "./MyProfile";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-
-const Profile = () => {
+import * as Yup from "yup";
+import {useSelector, useDispatch} from 'react-redux'
+import {
+    FormControl,
+    Input,
+    FormLabel,
+    VStack,
+    Heading,
+    SimpleGrid,
+    GridItem,
+    HStack,
+    Button,
+    RadioGroup,
+    Radio,
+    FormErrorMessage,
+  } from "@chakra-ui/react";
+  import ProfileUpdateSlice from "./ProfileUpdateSlice";
+  import { Field, Formik, useFormik } from "formik";
+import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
+// import userProfile from "../../../../backend/models/userProfile";
+const ProfileUpdate = () => {
+  const dispatch = useDispatch()
+  const select=useSelector((state) => state.profileupdate);
+  // let select; 
+  // const[profiledata,settProfiledata]=useState({});
+  const id = localStorage.getItem("userId")
+  // const dispatch = useDispatch()
+ 
   
-  const select = useSelector((state) => state.stepperformhander);
+  
+  const email = localStorage.getItem("email");
+
+  
+  
+  
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      address: "",
-      phone: "",
-      gender: "",
-      dob: "",
-      email: "",
+      firstName: `${select.firstName}`,
+      lastName: `${select.lastName}`,
+      address: `${select.address}`,
+      phone: `${select.phone}`,
+      gender: ``,
+      dob: `${select.dob}`,
+      email: ``,
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().required("Required"),
-      lastName: Yup.string().required("Required"),
-      address: Yup.string().required("Required"),
-      phone: Yup.number().min(10).positive().integer().required("Required"),
-      gender: Yup.string().required("Required"),
-      dob: Yup.date().required("Required"),
-      email: Yup.string().email(),
+      // Define your validation schema here
     }),
-    onSubmit: async(values) => {
-      const email = localStorage.getItem("email")
-      try{
-        const newData = {...values,email}
-      const addProfile = await axios.post("http://localhost:5000/profile",
-      newData
-      );
-        if(addProfile){
-          console.log("added")
+    onSubmit: async (values) => {
+      try {
+        const updatedData = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          address: values.address,
+          phone: values.phone,
+          gender: values.gender,
+          dob: values.dob,
+        
+        };
+
+        const response = await axios.put(
+          `http://localhost:5000/edit-profile/${id}`,
+          updatedData
+        );
+        if(response){
+            console.log("updated")
+            dispatch(updateProfile(updatedData))
         }
-    }catch(err){
-      console.log(err)
-    }
-  }
-})
+
+       
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
+
+  
+ 
 
   return (
     <div>
-      <Formik
+        <Formik
         initialValues={formik.initialValues}
         validationSchema={formik.validationSchema}
+        enableReinitialize={true}
       >
         <form onSubmit={formik.handleSubmit}>
           <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
@@ -71,7 +94,7 @@ const Profile = () => {
                 Your Details
               </Heading>
             </VStack>
-            <SimpleGrid columns={2} columnGap={4} rowGap={3}>
+            <SimpleGrid columns={2} columnGap={3} rowGap={3}>
               <GridItem colSpan={1}>
                 <FormControl
                   isInvalid={
@@ -184,4 +207,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileUpdate;
