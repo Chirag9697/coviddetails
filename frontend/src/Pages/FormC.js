@@ -59,7 +59,7 @@ const FormC = () => {
       );
       console.log("stored in database")
       dispatch(clearform())
-      navigate('/display')
+      navigate('/')
     },
 
   });

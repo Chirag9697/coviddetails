@@ -5,6 +5,7 @@ import './nav.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeemailid, setemailid } from '../features/googlesigninemail/GooglesigninSlice';
 import axios from 'axios';
+import { clearform } from '../features/stepperhandling/Stepperhandledata';
 import { updateProfile } from '../Pages/ProfileUpdate/ProfileUpdateSlice';
 import {
   Avatar,
@@ -70,6 +71,11 @@ useEffect(()=>{
       console.error("ID not found in localStorage");
     }
   };
+  const createroute=()=>{
+// import { useDispatch } from "react-redux";
+    dispatch(clearform());
+    navigate('/form')
+  }
   useEffect(() => {
     if (isLoggedOut) {
       setIsLoggedOut(false); 
@@ -89,13 +95,15 @@ useEffect(()=>{
       <ul className='nav-menu'>
         {loggedIn ? (
           <>
-            <Link to='/display'>
+            <Link to='/'>
               <li>Display</li>
             </Link>
 
-            <Link to='/form'>
+            <div onClick={createroute}>
+
               <li>Create</li>
-            </Link>
+            </div>
+            {/* </Link> */}
 
             <li>
               <Box colorScheme="red">

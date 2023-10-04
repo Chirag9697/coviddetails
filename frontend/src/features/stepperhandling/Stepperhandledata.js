@@ -40,13 +40,26 @@ export const StepperhandleData = createSlice({
       state.vaccineStatus = action.payload.vaccineStatus;
       state.infectedDays=action.payload.infectedDays;
       
+    },
+    clearform:(state)=>{
+      state.fullname = '';
+      state.group = '';
+      state.address = '';
+      state.phone = '';
+      state.gender = '';
+      state.dob = '';
+      state.email = '';
+      state.covidstatus = '';
+      state.vaccineStatus = '';
+      state.infectedDays='';
+      
     }
   
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { firststepformcompleted, secondstepformcompleted, updateformcompleted} =
+export const { firststepformcompleted, secondstepformcompleted, updateformcompleted,clearform} =
   StepperhandleData.actions;
 
 export default StepperhandleData.reducer;
