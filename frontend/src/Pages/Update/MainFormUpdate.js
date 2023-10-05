@@ -43,7 +43,7 @@ export const MainFormUpdate = () => {
           console.log(err);
         }
       };
-    alldata()
+    // alldata()
   },[])
   
 
