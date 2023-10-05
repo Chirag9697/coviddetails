@@ -15,9 +15,9 @@ export const MainForm = () => {
   const dispatch=useDispatch();
   const second = useSelector((state) => state.stepperhandling.second);
   const third = useSelector((state) => state.stepperhandling.third);
-  useEffect(()=>{
-    dispatch(clearform());
-  },[])
+  // useEffect(()=>{
+    // dispatch(clearform());
+  // },[])
   return (
     <>
       
