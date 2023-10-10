@@ -2,39 +2,39 @@ import React, { useState } from "react";
 
 import {
   FormControl,
-  Input,
   FormLabel,
+  Input,
   VStack,
   Heading,
   SimpleGrid,
   GridItem,
-  HStack,
   Button,
+  HStack,
   RadioGroup,
   Radio,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
+import { secondstepcompleted } from "../../features/stepperhandling/StepperhandleSlice";
+import { secondstepformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { useDispatch, useSelector } from "react-redux";
-import { firststepformcompleted } from "../features/stepperhandling/Stepperhandledata";
-import { firststepcompleted } from "../features/stepperhandling/StepperhandleSlice";
 
-const Form = () => {
-  const dispatch = useDispatch();
-  const formik = useFormik({
+const FormB = () => {
+  const select = useSelector((state) => state.stepperformhander);
+  const formik1 = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      address: "",
-      phone: "",
+      fullname: `${select.fullname}`,
+      group: `${select.group}`,
+      address:`${select.address}`,
+      phone: `${select.phone}`,
       gender: "",
-      dob: "",
-      email: "",
+      dob: `${select.dob}`,
+      email: `${select.email}`,
     },
     validationSchema: Yup.object({
-      firstname: Yup.string().required("Required"),
-      lastname: Yup.string().required("Required"),
+      fullname: Yup.string().required("Required"),
+      group: Yup.string().required("Required"),
       address: Yup.string().required("Required"),
       phone: Yup.number().min(10).positive().integer().required("Required"),
       gender: Yup.string().required("Required"),
@@ -42,88 +42,93 @@ const Form = () => {
       email: Yup.string().email(),
     }),
     onSubmit: (values) => {
-      // dispatch(firststepcompleted());
-      const data = { ...formik.values };
-     
-      dispatch(firststepcompleted());
+      const data = { ...values };
+      dispatch(secondstepformcompleted(data));
+      dispatch(secondstepcompleted());
     },
   });
 
-  const handleNext = (e) => {
-    e.preventDefault();
-  };
+  const dispatch = useDispatch();
+
+ 
 
   return (
     <Formik
-      initialValues={formik.initialValues}
-      validationSchema={formik.validationSchema}
+      initialValues={formik1.initialValues}
+      validationSchema={formik1.validationSchema}
     >
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik1.handleSubmit}>
         <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
           <VStack spacing={2} align="flex-start">
-           
+            <Heading color="var(--chakra-colors-blue-500);">
+              Family Details
+            </Heading>
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
               <FormControl
-                isInvalid={formik.errors.firstname && formik.touched.firstname}
+                isInvalid={
+                  formik1.errors.fullname && formik1.touched.fullname
+                }
               >
                 <FormLabel>First name</FormLabel>
                 <Field
                   as={Input}
-                  name="firstname"
+                  name="fullname"
                   placeholder="First name"
-                  value={formik.values.firstname}
-                  onChange={formik.handleChange}
+                  value={formik1.values.fullname}
+                  onChange={formik1.handleChange}
                 />
-                <FormErrorMessage>{formik.errors.firstname}</FormErrorMessage>
+                <FormErrorMessage>{formik1.errors.fullname}</FormErrorMessage>
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
               <FormControl
-                isInvalid={formik.errors.lastname && formik.touched.lastname}
+                isInvalid={
+                  formik1.errors.group && formik1.touched.group
+                }
               >
                 <FormLabel>group</FormLabel>
                 <Field
                   as={Input}
-                  name="lastname"
+                  name="group"
                   placeholder="group"
-                  onChange={formik.handleChange}
-                  value={formik.values.lastname}
+                  onChange={formik1.handleChange}
+                  value={formik1.values.group}
                 />
-                <FormErrorMessage>{formik.errors.lastname}</FormErrorMessage>
+                <FormErrorMessage>{formik1.errors.group}</FormErrorMessage>
               </FormControl>
             </GridItem>
 
             <FormControl
-              isInvalid={formik.errors.address && formik.touched.address}
+              isInvalid={formik1.errors.address && formik1.touched.address}
             >
               <FormLabel alignSelf="flex-start">Address</FormLabel>
               <Field
                 as={Input}
                 name="address"
                 placeholder="Enter your address"
-                onChange={formik.handleChange}
-                value={formik.values.address}
+                onChange={formik1.handleChange}
+                value={formik1.values.address}
               />
-              <FormErrorMessage>{formik.errors.address}</FormErrorMessage>
+              <FormErrorMessage>{formik1.errors.address}</FormErrorMessage>
             </FormControl>
 
             <FormControl
-              isInvalid={formik.errors.phone && formik.touched.phone}
+              isInvalid={formik1.errors.phone && formik1.touched.phone}
             >
               <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
               <Field
                 as={Input}
                 name="phone"
                 placeholder="Enter your phone number"
-                onChange={formik.handleChange}
-                value={formik.values.phone}
+                onChange={formik1.handleChange}
+                value={formik1.values.phone}
               />
-              <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
+              <FormErrorMessage>{formik1.errors.phone}</FormErrorMessage>
             </FormControl>
             <FormControl
-              isInvalid={formik.errors.gender && formik.touched.gender}
+              isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
               <RadioGroup defaultValue="Itachi">
@@ -132,7 +137,7 @@ const Form = () => {
                     as={Radio}
                     name="gender"
                     value="Male"
-                    onChange={formik.handleChange}
+                    onChange={formik1.handleChange}
                   >
                     Male
                   </Field>
@@ -140,15 +145,17 @@ const Form = () => {
                     as={Radio}
                     name="gender"
                     value="Female"
-                    onChange={formik.handleChange}
+                    onChange={formik1.handleChange}
                   >
                     Female
                   </Field>
                 </HStack>
               </RadioGroup>
-              <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
+              <FormErrorMessage>{formik1.errors.gender}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={formik.errors.dob && formik.touched.dob}>
+            <FormControl
+              isInvalid={formik1.errors.dob && formik1.touched.dob}
+            >
               <FormLabel>Date Of Birth</FormLabel>
               <Field
                 as={Input}
@@ -156,13 +163,13 @@ const Form = () => {
                 placeholder="Select Date and Time"
                 size="md"
                 type="date"
-                onChange={formik.handleChange}
-                value={formik.values.dob}
+                onChange={formik1.handleChange}
+                value={formik1.values.dob}
               />
-              <FormErrorMessage>{formik.errors.dob}</FormErrorMessage>
+              <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>
             <FormControl
-              isInvalid={formik.errors.email && formik.touched.email}
+              isInvalid={formik1.errors.email && formik1.touched.email}
             >
               <FormLabel alignSelf="flex-start">Email</FormLabel>
               <Field
@@ -170,13 +177,13 @@ const Form = () => {
                 sx={{ width: "800px" }}
                 name="email"
                 placeholder="Enter your email address"
-                onChange={formik.handleChange}
-                value={formik.values.email}
+                onChange={formik1.handleChange}
+                value={formik1.values.email}
               />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+              <FormErrorMessage>{formik1.errors.email}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
-          <Button type="submit" colorScheme="blue" onClick={formik.handleNext}>
+          <Button type="submit" colorScheme="blue" onClick={formik1.handleNext}>
             Next
           </Button>
         </VStack>
@@ -185,4 +192,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default FormB;

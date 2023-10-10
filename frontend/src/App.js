@@ -6,12 +6,12 @@ import { Signin } from "./features/googlesigninemail/Signin";
 import { useEffect, useState } from 'react';
 import Typewriter from "typewriter-effect";
 import { useNavigate } from 'react-router-dom';
-import Nav from './components/nav';
-import { MainForm } from './Pages/MainForm';
+import Nav from './components/navbar/nav';
+import { MainForm } from './Pages/familyform/MainForm';
 import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
-import Profile from "./Pages/Profile";
-import MyProfile from "./Pages/MyProfile";
-import ClusterMap from './Clustermap';
+import Profile from "./Pages/Profileset/Profile";
+import MyProfile from "./Pages/Profileset/MyProfile";
+import ClusterMap from './components/maps/Clustermap';
 import ProfileUpdate from './Pages/ProfileUpdate/ProfileUpdate';
 // import { Mapdata } from './Pages/Mapdata';
 function App() {

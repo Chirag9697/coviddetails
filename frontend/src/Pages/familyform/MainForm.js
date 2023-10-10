@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   firststepcompleted,
   secondstepcompleted,
-} from "../features/stepperhandling/StepperhandleSlice";
-import { clearform } from "../features/stepperhandling/Stepperhandledata";
+} from "../../features/stepperhandling/StepperhandleSlice";
+import { clearform } from "../../features/stepperhandling/Stepperhandledata";
 export const MainForm = () => {
   const dispatch=useDispatch();
   const second = useSelector((state) => state.stepperhandling.second);

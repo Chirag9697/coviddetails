@@ -8,7 +8,7 @@ import { Polygon } from "react-leaflet";
 // import  TileLayer  from 'leaflet'
 import L from "leaflet";
 // import {addressPoints} from './realworld'
-import { countrycodes } from "./data";
+import { countrycodes } from "../../data";
 import axios from "axios";
 import { useEffect } from "react";
 const coordinates1 = [
@@ -57,7 +57,7 @@ export const ClusterMap = () => {
   const [details1, setDetails1] = useState([]);
   let coordinatesdetails = [{ coordinates: [[]] }, { coordinates: [[]] }];
   const customIcon = new L.Icon({
-    iconUrl: require("./location.svg").default,
+    iconUrl: require("../../location.svg").default,
     iconSize: new L.Point(40, 47),
   });
   const getAllDetails = async () => {

@@ -18,7 +18,7 @@ import axios from "axios";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Import styles
 import { useDispatch, useSelector } from "react-redux";
-import { clearform } from "../features/stepperhandling/StepperhandleSlice";
+import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
 const FormC = () => {
   const navigate = useNavigate()
   const newData = useSelector((state) => state.stepperformhander);

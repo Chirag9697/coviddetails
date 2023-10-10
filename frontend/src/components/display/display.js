@@ -26,8 +26,8 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
-import  BarChart  from "../../../src/BarChart";
-import ClusterMap from "../../Clustermap";
+import  BarChart  from "../charts/BarChart";
+import ClusterMap from "../maps/Clustermap";
 import { useDispatch } from "react-redux";
 import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import {format} from 'date-fns';

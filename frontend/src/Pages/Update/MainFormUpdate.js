@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import FormUpdate from "./FormUpdate";
 import FormbUpdate from "./FormbUpdate";
 import FormcUpdate from "./FormcUpdate";
-import StepA from "../../Pages/StepA";
-import StepB from "../../Pages/StepB";
+import StepA from "../../Pages/familyform/StepA";
+import StepB from "../../Pages/familyform/StepB";
 import StepcUpdate from "../../Pages/Update/StepcUpdate";
 import axios from "axios";
 

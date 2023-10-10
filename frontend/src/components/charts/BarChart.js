@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "../../App.css";
 import {
   select,
   scaleLinear,
@@ -47,7 +47,43 @@ const BarChart = () => {
     }
   };
   const makebarchart = () => {
-    
+    console.log(svgref);
+    const svg = select(svgref.current);
+    const xscale = scaleBand()
+      .domain(
+        datedata.map((item, index) => {
+          return index;
+        })
+      )
+      .range([0, 300])
+      .padding(0.5);
+    const xAxis = axisBottom(xscale)
+      .ticks(datedata.length)
+      .tickFormat((index) => datedata[index]);
+    xAxis(svg.select(".x-axis"));
+
+    const yscale = scaleLinear().domain([0, 10]).range([150, 0]);
+    const colorscale = scaleLinear()
+      .domain([0, 100, 150])
+      .range(["blue", "orange", "red"])
+      .clamp(true);
+    svg.select(".x-axis").style("transform", "translateY(150px)").call(xAxis);
+    const yaxis = axisRight(yscale);
+
+    svg.select(".y-axis").style("transform", "translateX(300px)").call(yaxis);
+    svg
+      .selectAll(".bar")
+      .data(maindata)
+      .join("rect")
+      .attr("class", "bar")
+      .style("transform", "scale(1,-1)")
+      .attr("x", (value, index) => xscale(index))
+      .attr("y", -150)
+      .attr("width", xscale.bandwidth())
+      .transition()
+      .attr("fill", colorscale)
+      .attr("height", (value) => 150 - yscale(value));
+    // setRender(1);
   };
   const makelinechart = () => {
     const svg = select(svgref2.current);
