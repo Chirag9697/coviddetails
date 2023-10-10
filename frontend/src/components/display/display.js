@@ -164,7 +164,7 @@ const Display = () => {
       <br />
       <br />
 
-      {/* <ClusterMap/> */}
+      <ClusterMap/>
       {/* <div> */}
       {/* </div> */}
       <BarChart />
@@ -262,7 +262,7 @@ const Display = () => {
         }}
       >
         <Button colorScheme="green" isDisabled={currentpage==0?true:false} onClick={()=>setCurrentpage(currentpage-1)}>Prev</Button>
-        <Button colorScheme="green" isDisabled={details1.length-5<currentpage*5?true:false} onClick={()=>setCurrentpage(currentpage+1)}>Next</Button>
+        <Button colorScheme="green" isDisabled={details1.length-6<currentpage*5?true:false} onClick={()=>setCurrentpage(currentpage+1)}>Next</Button>
       </div>
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>

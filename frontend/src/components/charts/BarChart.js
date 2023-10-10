@@ -116,10 +116,19 @@ const BarChart = () => {
     // setRender(2);
   };
   useEffect(() => {
-    makebarchart();
-    makelinechart();
-    getalldata();
+     getalldata();
+    // if(maindata.length>0 && datedata.length>0){
+      makelinechart();
+      makebarchart();
+    // }
   }, []);
+  useEffect(() => {
+    // Call chart rendering functions whenever the data or dimensions change
+    if (maindata.length > 0 && datedata.length > 0) {
+      makebarchart();
+      makelinechart();
+    }
+  }, [maindata, datedata]);
   // useEffect(()=>{
 
   // },[])
