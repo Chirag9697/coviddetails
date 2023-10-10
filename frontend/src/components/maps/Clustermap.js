@@ -77,16 +77,17 @@ export const ClusterMap = () => {
             let flag = 0;
             for (let j = 0; j < countrycodes[index].length; j++) {
               if (
-                countrycodes[index][j].Municipal_Center_Tanuja.toLocaleLowerCase() ===
-                details.data.allFamilyDetails[i].members[0].address.toLocaleLowerCase()
+                countrycodes[index][
+                  j
+                ].Municipal_Center_Tanuja.toLocaleLowerCase() ==
+                details.data.allFamilyDetails[
+                  i
+                ].members[0].address.toLocaleLowerCase()
               ) {
-                coordinates1[index][0].coordinates.push([
-                  countrycodes[index][j].Final_X_Coordinate,
-                  countrycodes[index][j].Final_Y_Coordinate,
-                ]);
+                coordinates1[index][0].coordinates.push([countrycodes[index][j].Final_X_Coordinate,countrycodes[index][j].Final_Y_Coordinate]);
                 // console.log("casccsadcda", [
-                // countrycodes[index][j].Final_X_Coordinate,
-                // countrycodes[index][j].Final_Y_Coordinate,
+                  // countrycodes[index][j].Final_X_Coordinate,
+                  // countrycodes[index][j].Final_Y_Coordinate,
                 // ]);
                 // console.log(coordinates1[index]);
                 flag = 1;
@@ -101,10 +102,10 @@ export const ClusterMap = () => {
           // }
         }
         // console.log(countrycodes);
-        console.clear();
         console.log("fhsafewa", coordinates1);
         setDetails1(details.data.allFamilyDetails);
 
+        console.log("details112", details1);
       }
     } catch (err) {
       console.log(err);
@@ -128,19 +129,14 @@ export const ClusterMap = () => {
       ></TileLayer>
       {/* </MapContainer> */}
       {coordinates1.map((provinces) => {
-        // const coordinates2 = provinces[0].coordinates.map((item1) => [
-          // item1[1],
-          // item1[0],
-        // ]);
-        const coordinates2=[];
-        console.log(coordinates2)
+        const coordinates2=provinces[0].coordinates.map((item1)=>[item1[1],item1[0]]);
+        // console.log(coordinates)
         // const coordinates = [[12, 12]];
-        let n = coordinates2.length;
-        console.log("dcasd", coordinates2);
+        console.log("dcasd",coordinates2);
         return (
           <Polygon
             pathOptions={{
-              fillColor: "red",
+              fillColor: "black",
               fillOpacity: 0.7,
               weight: 2,
               opacity: 1,
@@ -153,7 +149,7 @@ export const ClusterMap = () => {
                 const layer = e.target;
                 layer.setStyle({
                   dashArray: "",
-                  fillColor: "red",
+                  fillColor: "#BD0026",
                   fillOpacity: 0.7,
                   weight: 2,
                   opacity: 1,
@@ -167,7 +163,7 @@ export const ClusterMap = () => {
                   weight: 2,
                   dashArray: "3",
                   color: "black",
-                  fillColor: "red",
+                  fillColor: "black",
                 });
               },
               click: (e) => {},
