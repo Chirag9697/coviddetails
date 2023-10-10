@@ -128,10 +128,11 @@ export const ClusterMap = () => {
       ></TileLayer>
       {/* </MapContainer> */}
       {coordinates1.map((provinces) => {
-        const coordinates2 = provinces[0].coordinates.map((item1) => [
-          item1[1],
-          item1[0],
-        ]);
+        // const coordinates2 = provinces[0].coordinates.map((item1) => [
+          // item1[1],
+          // item1[0],
+        // ]);
+        const coordinates2=[];
         console.log(coordinates2)
         // const coordinates = [[12, 12]];
         let n = coordinates2.length;

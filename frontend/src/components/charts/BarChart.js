@@ -7,6 +7,7 @@ import {
   axisRight,
   axisBottom,
   axisLeft,
+  brushX,
 } from "d3";
 import { line } from "d3";
 import { useRef } from "react";
@@ -114,6 +115,12 @@ const BarChart = () => {
       .attr("fill", "none")
       .attr("stroke", "blue");
     // setRender(2);
+    //brush
+    const brush=brushX().extent([
+      [0,0],
+      [300,150]
+    ])
+    svg.select(".brush").call(brush).call(brush.move,[0,50]);
   };
   useEffect(() => {
      getalldata();
@@ -157,6 +164,7 @@ const BarChart = () => {
         <svg ref={svgref2}>
           <g className="x-axis2" />
           <g className="y-axis2" />
+          <g className="brush" />
         </svg>
       </div>
     </div>
