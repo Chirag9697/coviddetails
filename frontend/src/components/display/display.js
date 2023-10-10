@@ -176,6 +176,7 @@ const Display = () => {
             <option value="2">2 month before</option>
             <option value="12">year before</option>
             <option value="24">2 year before</option>
+            <option value="1000">show all data</option>
           </select>
           <Button colorScheme="green" onClick={fetchData} className="invButton">
             search

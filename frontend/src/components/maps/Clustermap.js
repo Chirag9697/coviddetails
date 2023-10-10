@@ -131,8 +131,8 @@ export const ClusterMap = () => {
       {coordinates1.map((provinces) => {
         const coordinates2=provinces[0].coordinates.map((item1)=>[item1[1],item1[0]]);
         // console.log(coordinates)
-        // const coordinates = [[12, 12]];
-        console.log("dcasd",coordinates2);
+        // const coordinates3 = [[12, 12]];
+        // console.log("dcasd",coordinates2);
         return (
           <Polygon
             pathOptions={{
