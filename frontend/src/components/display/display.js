@@ -26,9 +26,11 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
+import  BarChart  from "../../../src/BarChart";
 import ClusterMap from "../../Clustermap";
 import { useDispatch } from "react-redux";
 import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
+import {format} from 'date-fns';
 const Display = () => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,10 +55,10 @@ const Display = () => {
         `http://localhost:5000/families/${email}`
       );
       if (details) {
-        console.log("hello",details.data.allFamilyDetails);
+        // console.log("hello",details.data.allFamilyDetails);
         // console.log(details.data.allfamily1);
         setDetails1(details.data.allFamilyDetails);
-        console.log("details", details1);
+        // console.log("details", details1);
       }
     } catch (err) {
       console.log(err);
@@ -157,7 +159,11 @@ const Display = () => {
     <>
     <div style={{fontWeight:"bolder", fontSize:"30px", textAlign:"center", marginTop:"40px"}}><h1>Welcome to Covid App</h1></div>
     <br/><br/>
-    <ClusterMap/>
+
+    {/* <ClusterMap/> */}
+    {/* <div> */}
+    {/* </div> */}
+      <BarChart/>
      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* <form > */}
           <div style={{display:"flex"}}>
@@ -213,7 +219,7 @@ const Display = () => {
                       {item.members[0].covidStatus}
                     </Td>
                     <Td style={{ textAlign: "center" }}>
-                      {item.members[0].infectedDays}
+                      {format(new Date(item.members[0].infectedDays), 'dd/MM/yyyy')}
                     </Td>
                     <Td style={{ textAlign: "center" }}>
                       <Button colorScheme="yellow" onClick={()=>updateDetails(email,item._id)}>Edit</Button>

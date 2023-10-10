@@ -6,7 +6,7 @@ const relation = require("../models/relationship");
 const Invite = require("../models/invite");
 const nodemailer = require("nodemailer");
 const family = require("../models/familyGroup");
-
+// const ISODate=require('date')
 //Family Group Management
 
 router.post("/families/create", async (req, res) => {
@@ -68,12 +68,12 @@ router.get("/families/:email", async (req, res) => {
       const familyDetail = await Family.find({
         email: allinvitetomeemail[i].sender,
       });
-      console.log("family",familyDetail);
+      console.log("family", familyDetail);
       for (let j = 0; j < familyDetail.length; j++) {
         allFamilyDetails.push(familyDetail[j]);
       }
     }
-    console.log("asdsa",allFamilyDetails);
+    console.log("asdsa", allFamilyDetails);
     for (let j = 0; j < familyListofuser.length; j++) {
       allFamilyDetails.push(familyListofuser[j]);
     }
@@ -176,7 +176,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
     const currvalue =
       currdate.getFullYear() +
       currdate.getMonth() / 12 +
-      (currdate.getDate() / 30) / 12;
+      currdate.getDate() / 30 / 12;
 
     const thirtyDaysAgo = new Date(currdate);
     thirtyDaysAgo.setDate(currdate.getDate() - 30);
@@ -185,12 +185,12 @@ router.get("/count-data/:email/:value", async (req, res) => {
       .find({ sender: email })
       .select("receiver")
       .exec();
-    console.log("allinvited",allinvitedemail);
+    console.log("allinvited", allinvitedemail);
     const allinvitetomeemail = await relation
       .find({ receiver: email })
       .select("sender")
       .exec();
-    console.log("allinvite me",allinvitetomeemail);
+    console.log("allinvite me", allinvitetomeemail);
     const allFamilyDetails = [];
 
     // Add family details based on allinvitedemail
@@ -206,7 +206,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let year = member.infectedDays.getFullYear();
           let month = member.infectedDays.getMonth();
           let day = member.infectedDays.getDate();
-          let value = year + month / 12 + (day / 30) / 12;
+          let value = year + month / 12 + day / 30 / 12;
 
           if (currvalue - value <= findvalue) {
             console.log(familyDetail[j]);
@@ -231,7 +231,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let year = member.infectedDays.getFullYear();
           let month = member.infectedDays.getMonth();
           let day = member.infectedDays.getDate();
-          let value = year + month / 12 + (day / 30) / 12;
+          let value = year + month / 12 + day / 30 / 12;
 
           if (currvalue - value <= findvalue) {
             console.log(familyDetail[j]);
@@ -251,7 +251,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
         let year = member.infectedDays.getFullYear();
         let month = member.infectedDays.getMonth();
         let day = member.infectedDays.getDate();
-        let value = year + month / 12 + (day / 30) / 12;
+        let value = year + month / 12 + day / 30 / 12;
 
         if (currvalue - value <= findvalue) {
           console.log(familyDetail[j]);
@@ -267,4 +267,29 @@ router.get("/count-data/:email/:value", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get("/getdatabydates", async (req, res) => {
+  try{
+
+    const data=await Family.aggregate([
+     
+      {
+        $group: {
+          _id:{   $year: {$arrayElemAt: ["$members.infectedDays", 0],}  },
+          memberCount: { $sum: 1 }
+        },
+      },
+      {
+        $sort:{
+          "_id":1,
+        },
+      },
+    ]).exec();
+    console.log(data);
+    res.send(data)
+  }catch(error){
+    console.log(error);
+    res.send("erorr");
+  }
+  });
+  module.exports = router;
+  

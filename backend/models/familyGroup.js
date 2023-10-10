@@ -6,8 +6,8 @@ const {ObjectId} = mongoose.Schema.Types;
 const familySchema = new mongoose.Schema({
    groupName:{type: String, required: true},
    email: {type: String},
-   members: [
-      {
+   members:[ 
+         {
          fullName: { type: String, required: true },
          address: { type: String, required: true },
          phone: { type: Number },
@@ -19,6 +19,7 @@ const familySchema = new mongoose.Schema({
 
       }
    ]
+
 
 })
 

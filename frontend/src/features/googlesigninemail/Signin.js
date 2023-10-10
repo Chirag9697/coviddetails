@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { removeemailid, setemailid } from "./GooglesigninSlice";
 import Typewriter from "typewriter-effect";
 import Google from "../../image/google.png";
-
+// import { Machine } from "xstate";
+// import machine from './machine';
 import "./Signin.css";
 import axios from "axios";
 // signInWithPopup
@@ -25,11 +26,13 @@ export const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // const service=interpret(machine).start();
   const handleclick = () => {
+
     signInWithPopup(auth, provider).then((data) => {
       dispatch(setemailid(data.user.email));
       localStorage.setItem("email", data.user.email);
-
+      // service.send({type:"loggingin",email:data.user.email});
       // Send the email to the backend API
       const email = localStorage.getItem("email");
       // try{
@@ -45,7 +48,7 @@ export const Signin = () => {
       .then((response)=>{
         localStorage.setItem("userid",response.data._id);
       })
-      console.log(addProfile);
+      // console.log(addProfile);
        axios
         .post("http://127.0.0.1:5000/save-email", {
           email: data.user.email,
@@ -69,9 +72,9 @@ export const Signin = () => {
     // localStorage.removeItem("email");
     // setValue("");
   };
-  useEffect(() => {
-    dispatch(setemailid(localStorage.getItem("email")));
-  });
+  // useEffect(() => {
+  //   dispatch(setemailid(localStorage.getItem("email")));
+  // });
   return (
     <div className="signinhome">
       <div className="App">
