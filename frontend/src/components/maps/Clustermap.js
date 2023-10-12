@@ -133,43 +133,43 @@ export const ClusterMap = () => {
         // console.log(coordinates)
         // const coordinates3 = [[12, 12]];
         // console.log("dcasd",coordinates2);
-        return (
-          <Polygon
-            pathOptions={{
-              fillColor: "black",
-              fillOpacity: 0.7,
-              weight: 2,
-              opacity: 1,
-              dashArray: 3,
-              color: "black",
-            }}
-            positions={coordinates2}
-            eventHandlers={{
-              mouseover: (e) => {
-                const layer = e.target;
-                layer.setStyle({
-                  dashArray: "",
-                  fillColor: "#BD0026",
-                  fillOpacity: 0.7,
-                  weight: 2,
-                  opacity: 1,
-                  color: "black",
-                });
-              },
-              mouseout: (e) => {
-                const layer = e.target;
-                layer.setStyle({
-                  fillOpacity: 0.7,
-                  weight: 2,
-                  dashArray: "3",
-                  color: "black",
-                  fillColor: "black",
-                });
-              },
-              click: (e) => {},
-            }}
-          />
-        );
+        // return (
+        //   <Polygon
+        //     pathOptions={{
+        //       fillColor: "black",
+        //       fillOpacity: 0.7,
+        //       weight: 2,
+        //       opacity: 1,
+        //       dashArray: 3,
+        //       color: "black",
+        //     }}
+        //     positions={coordinates2}
+        //     eventHandlers={{
+        //       mouseover: (e) => {
+        //         const layer = e.target;
+        //         layer.setStyle({
+        //           dashArray: "",
+        //           fillColor: "#BD0026",
+        //           fillOpacity: 0.7,
+        //           weight: 2,
+        //           opacity: 1,
+        //           color: "black",
+        //         });
+        //       },
+        //       mouseout: (e) => {
+        //         const layer = e.target;
+        //         layer.setStyle({
+        //           fillOpacity: 0.7,
+        //           weight: 2,
+        //           dashArray: "3",
+        //           color: "black",
+        //           fillColor: "black",
+        //         });
+        //       },
+        //       click: (e) => {},
+        //     }}
+        //   />
+        // );
       })}
     </MapContainer>
   );

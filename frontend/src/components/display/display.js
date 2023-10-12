@@ -32,11 +32,14 @@ import { useDispatch } from "react-redux";
 import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { format } from "date-fns";
 import { current } from "immer";
+import { useToast } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 const Display = () => {
   const navigate = useNavigate();
   const [currentpage, setCurrentpage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const toast = useToast()
   const [details1, setDetails1] = useState([]);
   const [time, setTime] = useState(false);
   const [date, setDate] = useState("");
@@ -74,6 +77,14 @@ const Display = () => {
       );
       if (deleteAll) {
         console.log("deleted");
+        toast({
+          position: 'bottom',
+          render: () => (
+            <Box color='white' p={2} bg='red' style={{textAlign:"center"}}>
+              Invited successfully check yor mail
+            </Box>
+          ),
+        })
       }
       getAllDetails();
     } catch (err) {
@@ -128,6 +139,15 @@ const Display = () => {
       receiver: email,
     });
     if (sendInvite1) {
+      closeModal();
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color='white' p={2} bg='blue.500' style={{textAlign:"center"}}>
+            Invited successfully check yor mail
+          </Box>
+        ),
+      })
       console.log("email sent");
     }
   };
@@ -289,7 +309,7 @@ const Display = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={sendInvite}>
+            <Button colorScheme="blue" mr={3} onClick={()=>sendInvite()}>
               send
             </Button>
           </ModalFooter>

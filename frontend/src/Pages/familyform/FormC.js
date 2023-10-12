@@ -38,6 +38,7 @@ const FormC = () => {
       infectedDays: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
+      console.log("hello")
       const formData = {
         groupName: newData.group,
         email: localStorage.getItem("email"),
@@ -57,6 +58,7 @@ const FormC = () => {
         `http://localhost:5000/families/create`,
         formData
       );
+      console.log(response2);
       console.log("stored in database")
       dispatch(clearform())
       navigate('/')
