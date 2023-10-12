@@ -44,82 +44,13 @@ const Display = () => {
     setIsModalOpen(false);
   };
   const getAllDetails = async () => {
-    const email = localStorage.getItem("email");
-    try {
-      const details = await axios.get(
-        `http://localhost:5000/families/${email}`
-      );
-      if (details) {
-        console.log("hello",details.data.allFamilyDetails);
-        // console.log(details.data.allfamily1);
-        setDetails1(details.data.allFamilyDetails);
-        console.log("details", details1);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+   
   };
   
   const deleteData = async (id) => {
-    try {
-      const deleteAll = await axios.delete(
-        `http://localhost:5000/deleteRoute/${id}`
-        );
-      if (deleteAll) {
-        console.log("deleted");
-      }
-      getAllDetails();
-      
-    } catch (err) {
-      console.log(err);
-    }
+   
   };
   
-  useEffect(()=>{
-    // if(time===false){
-    // getAllDetails()
-    // }else{
-      // if(date==''){
-        // getAllDetails()
-
-      // }
-      // else{
-        fetchData();
-      // }
-    
-  },[])
-  //get the data based on time
-  
-  const fetchData = async()=>{
-    const email = localStorage.getItem("email");
-    try {
-      const details = await axios.get(
-        `http://localhost:5000/count-data/${email}/${date===''?'120':date}`
-      );
-      if (details) {
-        console.log("hello",details.data);
-        // console.log(details.data.allfamily1);
-        setDetails1(details.data);
-        console.log("details", details1);
-        
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-
-  const sendInvite = () => {
-    const sendInvite1 = axios.post("http://localhost:5000/send-mail", {
-      sender: localStorage.getItem("email"),
-      receiver: email,
-    });
-    if (sendInvite1) {
-      console.log("email sent");
-    }
-  };
-
-  //Update Query
   const updateDetails = async(email,id)=>{
     navigate(`/update/${id}`)
   }
@@ -141,7 +72,7 @@ const Display = () => {
               <option value="12">year before</option>
               <option value="24">2 year before</option>
             </select>
-            <Button colorScheme="green" onClick={fetchData} className="invButton">
+            <Button colorScheme="green" className="invButton">
               search
             </Button>
           </div>
@@ -233,7 +164,7 @@ const Display = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={sendInvite}>
+            <Button colorScheme="blue" mr={3}>
               send
             </Button>
           </ModalFooter>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useMachine } from "@xstate/react";
+import machine from '../../features/googlesigninemail/Signinmachine';
 import './nav.css';
 import axios from 'axios';
 import {
@@ -17,11 +19,10 @@ import {
 import { EditIcon } from "@chakra-ui/icons";
 const Nav = () => {
   const navigate = useNavigate();
+  const [state, send] = useMachine(machine);
   const loggedIn = localStorage.getItem("email") 
-
-  const [isLoggedOut, setIsLoggedOut] = useState(false); 
   const handleLogout = () => {
-   
+    send({ type: "logout" });
     localStorage.removeItem('email'); 
     navigate('/signin'); 
   };
@@ -30,22 +31,26 @@ const Nav = () => {
     navigate("/profile");
   };
 
-useEffect(()=>{
-},[])
+  useEffect(()=>{
+    console.log("helloo",state.matches("signedin"));
+    if(state.matches('signin')===true){
+      navigate('/signin');
+      return;
+   }
+  },[])
  
   const handleEdit = () => {
   };
   const createroute=()=>{
   }
-  useEffect(() => {
-    },[]);  
   return (
-    <div className='navbar'>
-      <h1 className='heading'>
+    <>
+    
+      <div className='navbar'>
+      <h1 className='heading'>  
         <Link to='/'>COVID APP</Link>
       </h1>
       <ul className='nav-menu'>
-        {loggedIn ? (
           <>
             <Link to='/'>
               <li>Display</li>
@@ -72,7 +77,7 @@ useEffect(()=>{
                         onClick={handleProfile}
                         // display={flex}
                         justifyContent={"space-between"}
-                      >
+                        >
                         Profile
                         <Avatar name="Avatar" src="https://bit.ly/broken-link">
                           <AvatarBadge boxSize="1.25em" bg="green.500" />
@@ -83,10 +88,10 @@ useEffect(()=>{
                       icon={<EditIcon />}
                       color="#2B6CB0"
                       onClick={handleEdit}
-                    >
+                      >
                       Edit
                     </MenuItem>
-                    <MenuItem color="red" onClick={handleLogout}>
+                    <MenuItem color="red" onClick={()=>handleLogout()}>
                       Logout
                     </MenuItem>
                   </MenuList>
@@ -94,9 +99,10 @@ useEffect(()=>{
               </Box>
             </li>
           </>
-        ) : null}
-      </ul>
-    </div>
+          </ul>
+          </div>
+
+          </>
   );
 };
 

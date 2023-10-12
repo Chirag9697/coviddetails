@@ -39,7 +39,7 @@ export const Signin = () => {
         
     };
     const clicklogout = () => {
-        send({ type: "logout" });
+       
         console.log("logout");
     };
     // useEffect(() => {
@@ -53,11 +53,6 @@ export const Signin = () => {
                 navigate('/');
                 return;
             }
-            if(state.matches('signin')===true){
-                navigate('/signin');
-                return;
-            }
-            
 
         }, [state]);
         return (
@@ -74,7 +69,7 @@ export const Signin = () => {
           }}
         />
       </div>
-      {!state.matches("signedin") ? (
+     
         <Button
           onClick={handleclick}
           style={{ fontSize: "19px", borderStyle: "none", cursor: "pointer" }}
@@ -87,9 +82,6 @@ export const Signin = () => {
             alt=""
           />{" "}
         </Button>
-      ) : (
-        <button onClick={clicklogout}>logout</button>
-      )}
     </div>
   );
 };
