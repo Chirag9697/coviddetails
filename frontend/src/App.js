@@ -19,11 +19,7 @@ const navigate = useNavigate()
 const loggedin = localStorage.getItem("email")
 console.log(loggedin);
   // Check if the user is logged in, if not, redirect to the /signin route
-  useEffect(()=>{
-    if (!loggedin) {
-      navigate('/signin');
-    }
-  }, [loggedin])
+  
 
   
   const id = localStorage.getItem("userId")
