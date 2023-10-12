@@ -6,6 +6,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 // import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import machine from "./Signinmachine";//ok
+
 import Typewriter from "typewriter-effect";
 import Google from "../../image/google.png";
 import { useMachine } from "@xstate/react";
