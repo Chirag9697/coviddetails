@@ -48,6 +48,7 @@ export const Signin = () => {
         useEffect(() => {
             
             console.log(state.context);
+            console.log("state.matchecs",state.matches("signedin"));
             if(state.matches('signedin')===true){
 
                 navigate('/');
@@ -85,3 +86,4 @@ export const Signin = () => {
     </div>
   );
 };
+ export default Signin

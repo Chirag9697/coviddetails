@@ -24,7 +24,7 @@ const Nav = () => {
   const handleLogout = () => {
     send({ type: "logout" });
     localStorage.removeItem('email'); 
-    navigate('/signin'); 
+    // navigate('/signin'); 
   };
 
   const handleProfile = () => {

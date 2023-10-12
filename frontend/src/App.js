@@ -24,11 +24,11 @@ const navigate = useNavigate()
     
   const id = localStorage.getItem("userId")
   const [state, send] = useMachine(machine);
-  console.log(state);
+  console.log("cdsca",state.context);
   return (
     <div>
 
-    {state.matches("signedin")==true && <Nav/>}
+    {state.matches("signin") && <Nav/>}
     <Routes>
        
           <Route path="/signin" element={<Signin />} />

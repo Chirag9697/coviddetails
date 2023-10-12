@@ -26,7 +26,8 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
-
+import {useMachine} from "@xstate/react";
+import machine from "../../features/googlesigninemail/Signinmachine";
 const Display = () => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +35,7 @@ const Display = () => {
   const [details1, setDetails1] = useState([]);
   const [time, setTime] = useState(false)
   const [date, setDate] = useState('')
+  const [state, send] = useMachine(machine);
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -60,9 +62,9 @@ const Display = () => {
     setDate(e.target.value);
   }
 
-  
-  useEffect(()=>{
 
+  useEffect(()=>{
+    send({type:"Submit",email:localStorage.getItem("email")});
   },[])
 
 
