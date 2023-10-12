@@ -60,6 +60,11 @@ const Display = () => {
     setDate(e.target.value);
   }
 
+  
+  useEffect(()=>{
+
+  },[])
+
 
   return (
     <>
