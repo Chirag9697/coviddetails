@@ -48,7 +48,7 @@ useEffect(()=>{
         const userProfile = response.data.profileDetail;
         dispatch(updateProfile(userProfile))
         
-        console.log(userProfile);
+        // console.log(userProfile);
         // settProfiledata(userProfile);
 
        

@@ -16,11 +16,11 @@ import axios from "axios";
 export const Signin = () => {
   const handleType = (count) => {
     // Access the word count number
-    console.log(count);
+    // console.log(count);
   };
 
   const handleDone = () => {
-    console.log("Done after 5 loops!");
+    // console.log("Done after 5 loops!");
   };
   const value = useSelector((state) => state.signin.value);
   const dispatch = useDispatch();
@@ -32,10 +32,7 @@ export const Signin = () => {
     signInWithPopup(auth, provider).then((data) => {
       dispatch(setemailid(data.user.email));
       localStorage.setItem("email", data.user.email);
-      // service.send({type:"loggingin",email:data.user.email});
-      // Send the email to the backend API
       const email = localStorage.getItem("email");
-      // try{
       const newData = {
         firstName: "",
         lastName: "",
@@ -54,7 +51,7 @@ export const Signin = () => {
           email: data.user.email,
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           
           navigate("/");
         })
@@ -66,7 +63,7 @@ export const Signin = () => {
   };
 
   const clicklogout = () => {
-    console.log("logout");
+    // console.log("logout");
     dispatch(removeemailid());
     localStorage.removeItem("email");
     // localStorage.removeItem("email");
