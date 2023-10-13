@@ -63,7 +63,7 @@ const Display = () => {
         // console.log("hello",details.data.allFamilyDetails);
         // console.log(details.data.allfamily1);
         setDetails1(details.data.allFamilyDetails);
-        // console.log("details", details1);
+        // console.log("details",   details1);
       }
     } catch (err) {
       console.log(err);
@@ -76,7 +76,7 @@ const Display = () => {
         `http://localhost:5000/deleteRoute/${id}`
       );
       if (deleteAll) {
-        console.log("deleted");
+        // console.log("deleted");
         toast({
           position: 'bottom',
           render: () => (
@@ -140,15 +140,15 @@ const Display = () => {
     });
     if (sendInvite1) {
       closeModal();
-      toast({
-        position: 'bottom',
-        render: () => (
-          <Box color='white' p={2} bg='blue.500' style={{textAlign:"center"}}>
-            Invited successfully check yor mail
-          </Box>
-        ),
-      })
-      console.log("email sent");
+      // toast({
+      //   position: 'bottom',
+      //   render: () => (
+      //     <Box color='white' p={2} bg='blue.500' style={{textAlign:"center"}}>
+      //       Invited successfully check yor mail
+      //     </Box>
+      //   ),
+      // })
+      // console.log("email sent");
     }
   };
 
@@ -156,7 +156,7 @@ const Display = () => {
   const updateDetails = async (email, id) => {
     const details = await axios.get(`http://localhost:5000/families1/${id}`);
     if (details) {
-      console.log(details);
+      // console.log(details);
       const newdata = details.data.allfamily1;
       // const memberdata={...newdata.members[0]};
       dispatch(updateformcompleted({ ...newdata, ...newdata.members[0] }));
@@ -184,7 +184,7 @@ const Display = () => {
       <br />
       <br />
 
-      <ClusterMap/>
+      {/* <ClusterMap/> */}
       {/* <div> */}
       {/* </div> */}
       <BarChart />
@@ -229,7 +229,7 @@ const Display = () => {
                 if (item && item.members && item.members[0]) {
                   // return(<>'
                   return (
-                    <Tr>
+                    <Tr key={id}>
                       <Td style={{ textAlign: "center" }}>
                         {item.members[0].fullName}
                       </Td>

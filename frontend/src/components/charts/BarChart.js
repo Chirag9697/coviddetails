@@ -29,26 +29,26 @@ const BarChart = () => {
         //   console.log("hello",details.data.allFamilyDetails);
         // console.log(details.data.allfamily1);
         //   setDetails1(details.data.allFamilyDetails);
-        console.log("details", details.data);
+        // console.log("details", details.data);
         const maindatacal = details.data.map((item) => {
           return item.memberCount;
         });
         const datedatacal = details.data.map((item) => {
           return parseInt(item._id);
         });
-        console.log("datedata", datedatacal);
+        // console.log("datedata", datedatacal);
         // setData(details.data);
         setMaindata(maindatacal);
         setDatedata(datedatacal);
 
-        console.log("maindata", maindata);
+        // console.log("maindata", maindata);
       }
     } catch (err) {
       console.log(err);
     }
   };
   const makebarchart = () => {
-    console.log(svgref);
+    // console.log(svgref);
     const svg = select(svgref.current);
     const xscale = scaleBand()
       .domain(
