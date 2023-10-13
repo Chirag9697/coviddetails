@@ -21,6 +21,7 @@ import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
+  console.log("newdata",newData);
   const dispatch=useDispatch();
   console.log(newData);
   const navigate=useNavigate();
@@ -90,6 +91,8 @@ const {id} = useParams();
                   name="covidstatus"
                   value={formik2.values.covidstatus}
                   onChange={formik2.handleChange}
+                  defaultValue={newData.covidstatus}
+                  
                 >
                   <option>Select</option>
                   <option> Positive</option>

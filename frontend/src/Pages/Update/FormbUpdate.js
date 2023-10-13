@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FormbUpdate = () => {
   const select = useSelector((state) => state.stepperformhander);
+  console.log("sddfa",select);
   const formik1 = useFormik({
     initialValues: {
       fullName: `${select.fullname}`,
@@ -131,7 +132,7 @@ const FormbUpdate = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue={select.gender}>
+              <RadioGroup defaultValue={select.memeber.Gender}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}

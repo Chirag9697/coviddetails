@@ -60,10 +60,11 @@ const ProfileUpdate = () => {
           lastName: values.lastName,
           address: values.address,
           phone: values.phone,
-          gender: values.gender,
+          gender: values.selectOption,
           dob: values.dob,
         
         };
+        console.log("updated value",updatedData);
 
         const response = await axios.put(
           `http://localhost:5000/edit-profile/${id}`,

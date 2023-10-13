@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FormB = () => {
   const select = useSelector((state) => state.stepperformhander);
+  console.log("select",select);
   const formik1 = useFormik({
     initialValues: {
       fullname: `${select.fullname}`,
@@ -131,7 +132,7 @@ const FormB = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue="Itachi">
+              <RadioGroup defaultValue={select.gender}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}
@@ -164,7 +165,8 @@ const FormB = () => {
                 size="md"
                 type="date"
                 onChange={formik1.handleChange}
-                value={formik1.values.dob}
+                // value={formik1.values.dob}
+                defaultValue={select.dob}
               />
               <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>
