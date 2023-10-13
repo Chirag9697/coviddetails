@@ -28,7 +28,7 @@ const navigate = useNavigate()
   return (
     <div>
 
-    {state.matches("signin") && <Nav/>}
+    {state.matches("signedin") && <Nav/>}
     <Routes>
        
           <Route path="/signin" element={<Signin />} />

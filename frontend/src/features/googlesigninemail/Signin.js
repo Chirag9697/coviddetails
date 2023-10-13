@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { auth, provider } from "../../googlesignin/config";
 import { signInWithPopup } from "firebase/auth";
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import { redirect } from "react-router-dom";
+
 // import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import machine from "./Signinmachine";//ok
@@ -51,8 +53,8 @@ export const Signin = () => {
             console.log("state.matchecs",state.matches("signedin"));
             if(state.matches('signedin')===true){
 
-                navigate('/');
-                return;
+                return redirect('/');
+                // return;
             }
 
         }, [state]);
