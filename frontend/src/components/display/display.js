@@ -219,7 +219,7 @@ const Display = () => {
                 <Th style={{ textAlign: "center" }}>Address</Th>
                 <Th style={{ textAlign: "center" }}>Gender</Th>
                 <Th style={{ textAlign: "center" }}>Covid Status</Th>
-                <Th style={{ textAlign: "center" }}>Date</Th>
+                <Th style={{ textAlign: "center" }}>Infected Date</Th>
                 <Th style={{ textAlign: "center" }}>Edit</Th>
                 <Th style={{ textAlign: "center" }}>Delete</Th>
               </Tr>
