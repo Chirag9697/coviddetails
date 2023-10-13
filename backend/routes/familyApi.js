@@ -266,11 +266,17 @@ router.get("/count-data/:email/:value", async (req, res) => {
   }
 });
 
-router.get("/getdatabydates", async (req, res) => {
-  try{
+router.get("/getdatabydates/:email", async (req, res) => {
+  try{ 
+    console.log("demail");  
+    const{email}=req.params;
 
     const data=await Family.aggregate([
-     
+      {
+        $match: {
+          "email": email
+        }
+      },
       {
         $group: {
           _id:{   $year: {$arrayElemAt: ["$members.infectedDays", 0],}  },

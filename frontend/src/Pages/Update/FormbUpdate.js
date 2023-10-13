@@ -131,7 +131,7 @@ const FormbUpdate = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue="Itachi">
+              <RadioGroup defaultValue={select.gender}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}

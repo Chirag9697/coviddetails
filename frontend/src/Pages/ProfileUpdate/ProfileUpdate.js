@@ -26,6 +26,7 @@ const ProfileUpdate = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch()
   const select=useSelector((state) => state.profileupdate);
+  console.log("dsad",select);
   // let select; 
   // const[profiledata,settProfiledata]=useState({});
   const id = localStorage.getItem("userId")
@@ -47,6 +48,7 @@ const ProfileUpdate = () => {
       gender: ``,
       dob: `${select.dob}`,
       email: ``,
+      selectOption:`${select.gender}`
     },
     validationSchema: Yup.object({
       // Define your validation schema here
@@ -163,21 +165,23 @@ const ProfileUpdate = () => {
                 isInvalid={formik.errors.gender && formik.touched.gender}
               >
                 <FormLabel>Gender</FormLabel>
-                <RadioGroup defaultValue="Itachi">
+                <RadioGroup defaultValue={select.gender}>
                   <HStack spacing="24px">
                     <Field
                       as={Radio}
-                      name="gender"
+                      name="selectOption"
                       value="Male"
                       onChange={formik.handleChange}
+                      
                     >
                       Male
                     </Field>
                     <Field
                       as={Radio}
-                      name="gender"
+                      name="selectOption"
                       value="Female"
                       onChange={formik.handleChange}
+                      // select={true}
                     >
                       Female
                     </Field>

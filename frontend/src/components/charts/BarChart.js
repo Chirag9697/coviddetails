@@ -24,7 +24,9 @@ const BarChart = () => {
   const svgref2 = useRef();
   const getalldata = async () => {
     try {
-      const details = await axios.get(`http://localhost:5000/getdatabydates`);
+      const email=localStorage.getItem("email");
+      console.log("email",email);
+      const details = await axios.get(`http://localhost:5000/getdatabydates/${email}`);
       if (details) {
         //   console.log("hello",details.data.allFamilyDetails);
         // console.log(details.data.allfamily1);
