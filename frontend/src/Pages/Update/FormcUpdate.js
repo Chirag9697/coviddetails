@@ -21,9 +21,9 @@ import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
-  console.log("newdata",newData);
+  // console.log("newdata",newData);
   const dispatch=useDispatch();
-  console.log(newData);
+  // console.log(newData);
   const navigate=useNavigate();
 const {id} = useParams();
   const formik2 = useFormik({
@@ -40,6 +40,8 @@ const {id} = useParams();
       infected: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
+      console.log("cdsac",values);
+      console.log("updatea");
       const formData = {
         groupName: newData.group,
         email: localStorage.getItem("email"),
@@ -62,8 +64,8 @@ const {id} = useParams();
       console.log(response2)
       if(response2){
         navigate('/');
+        dispatch(clearform());
       }
-      dispatch(clearform());
     },
 
   });
@@ -91,7 +93,7 @@ const {id} = useParams();
                   name="covidstatus"
                   value={formik2.values.covidstatus}
                   onChange={formik2.handleChange}
-                  defaultValue={newData.covidstatus}
+                  // defaultValue={newData.covidstatus}
                   
                 >
                   <option>Select</option>
@@ -113,7 +115,7 @@ const {id} = useParams();
                   value={formik2.values.vaccinestatus}
                   onChange={formik2.handleChange}
                 >
-                  <option>Select</option>
+                  <option>Select</option> 
                   <option> Positive</option>
                   <option> Negative</option>
                 </Field>

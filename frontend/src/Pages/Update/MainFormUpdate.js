@@ -6,7 +6,7 @@ import StepA from "../../Pages/familyform/StepA";
 import StepB from "../../Pages/familyform/StepB";
 import StepcUpdate from "../../Pages/Update/StepcUpdate";
 import axios from "axios";
-
+import StepBupdate from "./StepBupdate";
 import { useDispatch, useSelector } from "react-redux";
 import {
   secondstepformcompleted,
@@ -52,7 +52,7 @@ export const MainFormUpdate = () => {
     
       {second && (
         <div>
-          <StepB />
+          <StepBupdate />
         </div>
       )}
       {third && (

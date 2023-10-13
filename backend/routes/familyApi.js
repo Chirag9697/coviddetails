@@ -81,6 +81,7 @@ router.get("/families/:email", async (req, res) => {
 
     // console.log(allFamilyDetails);
     // res.json("hello");
+    console.log("casdca",allFamilyDetails);
     res.send({ allFamilyDetails });
   } catch (err) {
     console.log(err);
@@ -270,7 +271,7 @@ router.get("/getdatabydates/:email", async (req, res) => {
   try{ 
     console.log("demail");  
     const{email}=req.params;
-
+    
     const data=await Family.aggregate([
       {
         $match: {

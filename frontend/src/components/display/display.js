@@ -31,6 +31,8 @@ import ClusterMap from "../maps/Clustermap";
 import { useDispatch } from "react-redux";
 import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { format } from "date-fns";
+import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
+// import { clearform} from "../../features/stepperhandling/Stepperhandledata";
 import { current } from "immer";
 import { useToast } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
@@ -61,7 +63,7 @@ const Display = () => {
       );
       if (details) {
         // console.log("hello",details.data.allFamilyDetails);
-        // console.log(details.data.allfamily1);
+        console.log(details.data.allFamilyDetails);
         setDetails1(details.data.allFamilyDetails);
         // console.log("details",   details1);
       }
@@ -94,16 +96,18 @@ const Display = () => {
 
   useEffect(() => {
     if (time === false) {
+      dispatch(clearform());
+      // dispatch(clearform2());
       getAllDetails();
     } else {
       // if(date===''){
       // getAllDetails()
-      //
+      
       // }
       // else{
       fetchData();
-      // }
-    }
+      }
+    // }
   }, []);
   //get the data based on time
 

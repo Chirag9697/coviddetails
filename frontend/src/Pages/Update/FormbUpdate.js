@@ -22,23 +22,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FormbUpdate = () => {
   const select = useSelector((state) => state.stepperformhander);
-  console.log("sddfa",select);
+  console.log("select",select);
   const formik1 = useFormik({
     initialValues: {
-      fullName: `${select.fullname}`,
-      group: "",
-      address: "",
-      phone: "",
+      fullname: `${select.fullname}`,
+      group: `${select.group}`,
+      address:`${select.address}`,
+      phone: `${select.phone}`,
       gender: "",
-      dob: "",
-      email: "",
+      dob: `${select.dob}`,
+      email: `${select.email}`,
     },
     validationSchema: Yup.object({
       fullname: Yup.string().required("Required"),
       group: Yup.string().required("Required"),
       address: Yup.string().required("Required"),
       phone: Yup.number().min(10).positive().integer().required("Required"),
-      gender: Yup.string().required("Required"),
+      // gender: Yup.string().required("Required"),
       dob: Yup.date().required("Required"),
       email: Yup.string().email(),
     }),
@@ -76,7 +76,7 @@ const FormbUpdate = () => {
                 <Field
                   as={Input}
                   name="fullname"
-                  placeholder="Full name"
+                  placeholder="First name"
                   value={formik1.values.fullname}
                   onChange={formik1.handleChange}
                 />
@@ -89,11 +89,11 @@ const FormbUpdate = () => {
                   formik1.errors.group && formik1.touched.group
                 }
               >
-                <FormLabel>Group</FormLabel>
+                <FormLabel>group</FormLabel>
                 <Field
                   as={Input}
                   name="group"
-                  placeholder="Group"
+                  placeholder="group"
                   onChange={formik1.handleChange}
                   value={formik1.values.group}
                 />
@@ -132,7 +132,7 @@ const FormbUpdate = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue={select.memeber.Gender}>
+              <RadioGroup defaultValue={select.gender}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}
@@ -165,7 +165,8 @@ const FormbUpdate = () => {
                 size="md"
                 type="date"
                 onChange={formik1.handleChange}
-                value={formik1.values.dob}
+                // value={formik1.values.dob}
+                defaultValue={select.dob}
               />
               <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>
