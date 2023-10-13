@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { updateProfile } from "../Pages/ProfileUpdate/ProfileUpdateSlice";
+import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

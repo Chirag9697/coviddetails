@@ -254,7 +254,6 @@ router.get("/count-data/:email/:value", async (req, res) => {
         let value = year + month / 12 + day / 30 / 12;
 
         if (currvalue - value <= findvalue) {
-          console.log(familyDetail[j]);
           allFamilyDetails.push(familyListofuser[j]);
           break; // Break to prevent adding the same family multiple times
         }

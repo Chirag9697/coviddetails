@@ -8,7 +8,7 @@ import { Polygon } from "react-leaflet";
 // import  TileLayer  from 'leaflet'
 import L from "leaflet";
 // import {addressPoints} from './realworld'
-import { countrycodes } from "./data";
+import { countrycodes } from "../../data";
 import axios from "axios";
 import { useEffect } from "react";
 const coordinates1 = [
@@ -57,7 +57,7 @@ export const ClusterMap = () => {
   const [details1, setDetails1] = useState([]);
   let coordinatesdetails = [{ coordinates: [[]] }, { coordinates: [[]] }];
   const customIcon = new L.Icon({
-    iconUrl: require("./location.svg").default,
+    iconUrl: require("../../location.svg").default,
     iconSize: new L.Point(40, 47),
   });
   const getAllDetails = async () => {
@@ -77,16 +77,17 @@ export const ClusterMap = () => {
             let flag = 0;
             for (let j = 0; j < countrycodes[index].length; j++) {
               if (
-                countrycodes[index][j].Municipal_Center_Tanuja.toLocaleLowerCase() ===
-                details.data.allFamilyDetails[i].members[0].address.toLocaleLowerCase()
+                countrycodes[index][
+                  j
+                ].Municipal_Center_Tanuja.toLocaleLowerCase() ==
+                details.data.allFamilyDetails[
+                  i
+                ].members[0].address.toLocaleLowerCase()
               ) {
-                coordinates1[index][0].coordinates.push([
-                  countrycodes[index][j].Final_X_Coordinate,
-                  countrycodes[index][j].Final_Y_Coordinate,
-                ]);
+                coordinates1[index][0].coordinates.push([countrycodes[index][j].Final_X_Coordinate,countrycodes[index][j].Final_Y_Coordinate]);
                 // console.log("casccsadcda", [
-                // countrycodes[index][j].Final_X_Coordinate,
-                // countrycodes[index][j].Final_Y_Coordinate,
+                  // countrycodes[index][j].Final_X_Coordinate,
+                  // countrycodes[index][j].Final_Y_Coordinate,
                 // ]);
                 // console.log(coordinates1[index]);
                 flag = 1;
@@ -101,10 +102,10 @@ export const ClusterMap = () => {
           // }
         }
         // console.log(countrycodes);
-        console.clear();
         console.log("fhsafewa", coordinates1);
         setDetails1(details.data.allFamilyDetails);
 
+        console.log("details112", details1);
       }
     } catch (err) {
       console.log(err);
@@ -128,51 +129,47 @@ export const ClusterMap = () => {
       ></TileLayer>
       {/* </MapContainer> */}
       {coordinates1.map((provinces) => {
-        const coordinates2 = provinces[0].coordinates.map((item1) => [
-          item1[1],
-          item1[0],
-        ]);
-        console.log(coordinates2)
-        // const coordinates = [[12, 12]];
-        let n = coordinates2.length;
-        console.log("dcasd", coordinates2);
-        return (
-          <Polygon
-            pathOptions={{
-              fillColor: "red",
-              fillOpacity: 0.7,
-              weight: 2,
-              opacity: 1,
-              dashArray: 3,
-              color: "black",
-            }}
-            positions={coordinates2}
-            eventHandlers={{
-              mouseover: (e) => {
-                const layer = e.target;
-                layer.setStyle({
-                  dashArray: "",
-                  fillColor: "red",
-                  fillOpacity: 0.7,
-                  weight: 2,
-                  opacity: 1,
-                  color: "black",
-                });
-              },
-              mouseout: (e) => {
-                const layer = e.target;
-                layer.setStyle({
-                  fillOpacity: 0.7,
-                  weight: 2,
-                  dashArray: "3",
-                  color: "black",
-                  fillColor: "red",
-                });
-              },
-              click: (e) => {},
-            }}
-          />
-        );
+        const coordinates2=provinces[0].coordinates.map((item1)=>[item1[1],item1[0]]);
+        // console.log(coordinates)
+        // const coordinates3 = [[12, 12]];
+        // console.log("dcasd",coordinates2);
+        // return (
+        //   <Polygon
+        //     pathOptions={{
+        //       fillColor: "black",
+        //       fillOpacity: 0.7,
+        //       weight: 2,
+        //       opacity: 1,
+        //       dashArray: 3,
+        //       color: "black",
+        //     }}
+        //     positions={coordinates2}
+        //     eventHandlers={{
+        //       mouseover: (e) => {
+        //         const layer = e.target;
+        //         layer.setStyle({
+        //           dashArray: "",
+        //           fillColor: "#BD0026",
+        //           fillOpacity: 0.7,
+        //           weight: 2,
+        //           opacity: 1,
+        //           color: "black",
+        //         });
+        //       },
+        //       mouseout: (e) => {
+        //         const layer = e.target;
+        //         layer.setStyle({
+        //           fillOpacity: 0.7,
+        //           weight: 2,
+        //           dashArray: "3",
+        //           color: "black",
+        //           fillColor: "black",
+        //         });
+        //       },
+        //       click: (e) => {},
+        //     }}
+        //   />
+        // );
       })}
     </MapContainer>
   );

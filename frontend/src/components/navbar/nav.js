@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './nav.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeemailid, setemailid } from '../features/googlesigninemail/GooglesigninSlice';
+import { removeemailid, setemailid } from '../../features/googlesigninemail/GooglesigninSlice';
 import axios from 'axios';
-import { clearform } from '../features/stepperhandling/Stepperhandledata';
-import { updateProfile } from '../Pages/ProfileUpdate/ProfileUpdateSlice';
+import { clearform } from '../../features/stepperhandling/Stepperhandledata';
+import { updateProfile } from '../../Pages/ProfileUpdate/ProfileUpdateSlice';
 import {
   Avatar,
   AvatarBadge,
