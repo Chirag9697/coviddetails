@@ -12,6 +12,7 @@
     align-items: flex-end; /* Align to the right */
     padding-right: 60px; /* Add padding to the right */
     text-align: center;
+   
   }
   
   /* You may need to adjust styles for the content inside .signinhome */
@@ -24,10 +25,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-color:  red !important;
+    color:  red !important;
     
 }
   .signinhome span {
     
     font-size: 17px;
   }
+  .signin-button {
+    position: absolute; 
+    bottom: 20px;
+    right: 20px; 
+}

@@ -90,7 +90,7 @@ export const Signin = () => {
       {!value && (
         <Button
           onClick={handleclick}
-          style={{ fontSize: "19px", borderStyle: "none" }}
+          style={{ fontSize: "19px", borderStyle: "none", marginTop:"15px" }}
         >
           Sign in with google
           <img

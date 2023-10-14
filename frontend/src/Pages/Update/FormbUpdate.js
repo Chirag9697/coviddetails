@@ -22,15 +22,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FormbUpdate = () => {
   const select = useSelector((state) => state.stepperformhander);
-  console.log("select",select);
+
+  const dob = select.dob ? select.dob.split('T')[0] : '';
+  
   const formik1 = useFormik({
     initialValues: {
       fullname: `${select.fullname}`,
       group: `${select.group}`,
       address:`${select.address}`,
       phone: `${select.phone}`,
-      gender: "",
-      dob: `${select.dob}`,
+      gender: select.gender || "",
+      dob: dob,
       email: `${select.email}`,
     },
     validationSchema: Yup.object({
@@ -132,7 +134,7 @@ const FormbUpdate = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue={select.gender}>
+              <RadioGroup defaultValue={formik1.values.gender} onChange={formik1.handleChange}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}
@@ -165,8 +167,8 @@ const FormbUpdate = () => {
                 size="md"
                 type="date"
                 onChange={formik1.handleChange}
-                // value={formik1.values.dob}
-                defaultValue={select.dob}
+                value={formik1.values.dob}
+               
               />
               <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>

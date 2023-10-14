@@ -21,17 +21,19 @@ import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
-  // console.log("newdata",newData);
+  
   const dispatch=useDispatch();
-  // console.log(newData);
+ 
   const navigate=useNavigate();
 const {id} = useParams();
+const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] : '';
+
   const formik2 = useFormik({
     initialValues: {
-      covidstatus: "",
-      vaccinestatus: "",
-      quarantine: "",
-      infected: "",
+      covidstatus: newData.covidstatus,
+      vaccinestatus: newData.vaccineStatus,
+      quarantine: newData.quarantine,
+      infected: infectedDays,
     },
     validationSchema: Yup.object({
       covidstatus: Yup.string().required("Required"),
