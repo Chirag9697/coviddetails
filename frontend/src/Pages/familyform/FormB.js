@@ -132,7 +132,7 @@ const FormB = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue={select.gender}>
+              <RadioGroup>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}
@@ -165,8 +165,8 @@ const FormB = () => {
                 size="md"
                 type="date"
                 onChange={formik1.handleChange}
-                // value={formik1.values.dob}
-                defaultValue={select.dob}
+                value={formik1.values.dob}
+                
               />
               <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>

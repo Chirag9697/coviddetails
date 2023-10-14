@@ -12,9 +12,10 @@ const familySchema = new mongoose.Schema({
          address: { type: String, required: true },
          phone: { type: Number },
          gender: { type: String },
-         dob: { type: Date, required: true },
+         dob: { type: Date},
          covidStatus:{type: String, required: true},
          vaccineStatus:{type: String, required: true},
+         quarantine:{type: String, required: true},
          infectedDays:{type: Date, required: true},
 
       }

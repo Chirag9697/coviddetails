@@ -50,6 +50,7 @@ const FormC = () => {
           dob: newData.dob,
           covidStatus:values.covidstatus,
           vaccineStatus:values.vaccinestatus,
+          quarantine: values.quarantine,
           infectedDays:values.infectedDays,
         }]
       }
