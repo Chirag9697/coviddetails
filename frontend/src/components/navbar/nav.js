@@ -29,9 +29,10 @@ const Nav = () => {
   const handleLogout = () => {
    
     dispatch(removeemailid()); 
-    localStorage.removeItem('email'); 
+    localStorage.clear();
     setIsLoggedOut(true); 
     navigate('/signin'); 
+    window.location.reload();
   };
 
   const handleProfile = () => {
@@ -48,7 +49,7 @@ useEffect(()=>{
         const userProfile = response.data.profileDetail;
         dispatch(updateProfile(userProfile))
         
-        // console.log(userProfile);
+        console.log("Hello",userProfile);
         // settProfiledata(userProfile);
 
        

@@ -46,42 +46,48 @@ const MyProfile = () => {
       </VStack>
       <SimpleGrid columns={2} columnGap={3} rowGap={3}>
         <GridItem colSpan={1}>
-          <FormControl>
-            <FormLabel>First name</FormLabel>
+        <Heading as='h5' size='sm'>
+            First Name
+          </Heading>
             <span color="red">{select.firstName}</span>
-          </FormControl>
+         
         </GridItem>
         <GridItem colSpan={1}>
-          <FormControl>
-            <FormLabel>Last Name</FormLabel>
+        <Heading as='h5' size='sm'>
+            Last Name
+          </Heading>
             <span>{select.lastName}</span>
-          </FormControl>
         </GridItem>
 
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Address</FormLabel>
+        <GridItem colSpan={1}>
+        <Heading as='h5' size='sm'>
+            Address
+          </Heading>
           <span>{select.address}</span>
-        </FormControl>
+          </GridItem>
 
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            Phone
+          </Heading>
           <span>{select.phone}</span>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Gender</FormLabel>
-          <RadioGroup defaultValue="Itachi">
-            <HStack spacing="24px"></HStack>
+          </GridItem>
+
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            Gender
+          </Heading>
             <span>{select.gender}</span>
-          </RadioGroup>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Date Of Birth</FormLabel>
+          </GridItem>
+
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            DOB
+          </Heading>
           <span>{select.dob}</span>
-        </FormControl>
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Email</FormLabel>
-          <span>{select.email}</span>
-        </FormControl>
+          </GridItem>
+
+         
       </SimpleGrid>
     </VStack>
   );

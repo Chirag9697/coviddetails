@@ -29,7 +29,7 @@ const ProfileUpdate = () => {
   console.log("dsad",select);
   // let select; 
   // const[profiledata,settProfiledata]=useState({});
-  const id = localStorage.getItem("userId")
+  const id = localStorage.getItem("userid")
   // const dispatch = useDispatch()
  
   
@@ -45,7 +45,7 @@ const ProfileUpdate = () => {
       lastName: `${select.lastName}`,
       address: `${select.address}`,
       phone: `${select.phone}`,
-      gender: ``,
+      gender: select.gender,
       dob: `${select.dob}`,
       email: ``,
       selectOption:`${select.gender}`

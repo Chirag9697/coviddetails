@@ -14,6 +14,8 @@ import "./Signin.css";
 import axios from "axios";
 // signInWithPopup
 export const Signin = () => {
+  const select=useSelector((state)=>state.profileupdate);
+
   const handleType = (count) => {
     // Access the word count number
     // console.log(count);
@@ -41,7 +43,7 @@ export const Signin = () => {
         phone: "",
         email,
       };
-      const addProfile =axios.post("http://localhost:5000/profile", newData)
+      axios.post("http://localhost:5000/profile", newData)
       .then((response)=>{
         localStorage.setItem("userid",response.data._id);
       })
