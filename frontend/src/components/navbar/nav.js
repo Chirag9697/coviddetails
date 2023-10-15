@@ -29,9 +29,10 @@ const Nav = () => {
   const handleLogout = () => {
    
     dispatch(removeemailid()); 
-    localStorage.removeItem('email'); 
+    localStorage.clear();
     setIsLoggedOut(true); 
     navigate('/signin'); 
+    window.location.reload();
   };
 
   const handleProfile = () => {
@@ -40,7 +41,8 @@ const Nav = () => {
 
 useEffect(()=>{
   const getProfileData = async () => {
-    const email = localStorage.getItem("email")
+    const email = localStorage.getItem("email");
+
     try {
       const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
    
@@ -48,7 +50,7 @@ useEffect(()=>{
         const userProfile = response.data.profileDetail;
         dispatch(updateProfile(userProfile))
         
-        // console.log(userProfile);
+        console.log("Hello",userProfile);
         // settProfiledata(userProfile);
 
        
@@ -96,12 +98,12 @@ useEffect(()=>{
         {loggedIn ? (
           <>
             <Link to='/'>
-              <li>Display</li>
+              <li style={{marginTop:"20px"}}>Display</li>
             </Link>
 
             <div onClick={createroute}>
 
-              <li>Create</li>
+              <li style={{marginTop:"20px"}}>Create</li>
             </div>
             {/* </Link> */}
 

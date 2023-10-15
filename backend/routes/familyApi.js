@@ -28,16 +28,19 @@ router.post("/families/create", async (req, res) => {
 });
 
 router.get("/families1/:id", async (req, res) => {
-  console.log("getupdate");
+  
   const { id } = req.params;
+  console.log("hyaaaa",id)
   try {
     const familyDetail = await Family.findById({ _id: id });
+    
     res.json({ allfamily1: familyDetail });
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
   }
 });
+
 //retrieve the list of user's family group
 router.get("/families/:email", async (req, res) => {
   console.log("get all details");
@@ -77,10 +80,7 @@ router.get("/families/:email", async (req, res) => {
     for (let j = 0; j < familyListofuser.length; j++) {
       allFamilyDetails.push(familyListofuser[j]);
     }
-    // allFamilyDetails.push(familyListofuser);
-
-    // console.log(allFamilyDetails);
-    // res.json("hello");
+    
     console.log("casdca",allFamilyDetails);
     res.send({ allFamilyDetails });
   } catch (err) {
@@ -88,20 +88,19 @@ router.get("/families/:email", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 router.get("/confirminvitation/:sender/:receiver", async (req, res) => {
   const { sender, receiver } = req.params;
   try {
     const relations = new relation({ sender: sender, receiver: receiver });
     relations.save();
-    // for (let i = 0; i < familyList.length; i++) {
-    // const familyDetail =new Invite({ familyId: familyList[i].familyId,email:receiver,owner:false });
-    // familyDetail.save();
-    // }
+  
     res.send("invition accepted successfully");
   } catch (error) {
     res.send("error");
   }
 }); //explain this code
+
 router.post("/send-mail", async (req, res) => {
   const { sender, receiver } = req.body;
   console.log(sender);

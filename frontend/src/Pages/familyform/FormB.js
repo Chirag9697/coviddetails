@@ -24,6 +24,7 @@ const FormB = () => {
   const select = useSelector((state) => state.stepperformhander);
   console.log("select",select);
   const formik1 = useFormik({
+    
     initialValues: {
       fullname: `${select.fullname}`,
       group: `${select.group}`,
@@ -171,19 +172,15 @@ const FormB = () => {
               <FormErrorMessage>{formik1.errors.dob}</FormErrorMessage>
             </FormControl>
             <FormControl
+             
               isInvalid={formik1.errors.email && formik1.touched.email}
             >
-              <FormLabel alignSelf="flex-start">Email</FormLabel>
-              <Field
-                as={Input}
-                sx={{ width: "800px" }}
-                name="email"
-                placeholder="Enter your email address"
-                onChange={formik1.handleChange}
-                value={formik1.values.email}
-              />
+              
+           
+              <div style={{ width: 800 }}></div>
               <FormErrorMessage>{formik1.errors.email}</FormErrorMessage>
             </FormControl>
+            
           </SimpleGrid>
           <Button type="submit" colorScheme="blue" onClick={formik1.handleNext}>
             Next

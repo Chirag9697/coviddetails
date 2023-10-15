@@ -51,6 +51,7 @@ const BarChart = () => {
   };
   const makebarchart = () => {
     // console.log(svgref);
+   
     const svg = select(svgref.current);
     const xscale = scaleBand()
       .domain(

@@ -24,7 +24,7 @@ export const ProfileUpdateSlice = createSlice({
       state.phone = action.payload.phone;
       state.gender = action.payload.gender;
       state.dob = action.payload.dob;
-      console.log(state.firstName)
+      
       
     }
    

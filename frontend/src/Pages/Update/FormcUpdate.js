@@ -42,8 +42,6 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
       infected: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
-      console.log("cdsac",values);
-      console.log("updatea");
       const formData = {
         groupName: newData.group,
         email: localStorage.getItem("email"),

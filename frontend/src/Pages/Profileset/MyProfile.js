@@ -15,7 +15,6 @@ import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const email = localStorage.getItem("email");
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -25,11 +24,12 @@ const MyProfile = () => {
     const getData = async () => {
       // debugger
       try {
+        const email = localStorage.getItem("email");
         const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
         if (response.data) {
           // dispatch(updateProfile(response.data.profileDetail))
           console.log('sda',response.data);
-          // setData(response.data.profileDetail);
+          setData(response.data.profileDetail);
           
         }
       } catch (err) {
@@ -46,42 +46,48 @@ const MyProfile = () => {
       </VStack>
       <SimpleGrid columns={2} columnGap={3} rowGap={3}>
         <GridItem colSpan={1}>
-          <FormControl>
-            <FormLabel>First name</FormLabel>
-            <span color="red">{select.firstName}</span>
-          </FormControl>
+        <Heading as='h5' size='sm'>
+            First Name
+          </Heading>
+            <span color="red">{data.firstName}</span>
+         
         </GridItem>
         <GridItem colSpan={1}>
-          <FormControl>
-            <FormLabel>Last Name</FormLabel>
-            <span>{select.lastName}</span>
-          </FormControl>
+        <Heading as='h5' size='sm'>
+            Last Name
+          </Heading>
+            <span>{data.lastName}</span>
         </GridItem>
 
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Address</FormLabel>
-          <span>{select.address}</span>
-        </FormControl>
+        <GridItem colSpan={1}>
+        <Heading as='h5' size='sm'>
+            Address
+          </Heading>
+          <span>{data.address}</span>
+          </GridItem>
 
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
-          <span>{select.phone}</span>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Gender</FormLabel>
-          <RadioGroup defaultValue="Itachi">
-            <HStack spacing="24px"></HStack>
-            <span>{select.gender}</span>
-          </RadioGroup>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Date Of Birth</FormLabel>
-          <span>{select.dob}</span>
-        </FormControl>
-        <FormControl>
-          <FormLabel alignSelf="flex-start">Email</FormLabel>
-          <span>{select.email}</span>
-        </FormControl>
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            Phone
+          </Heading>
+          <span>{data.phone}</span>
+          </GridItem>
+
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            Gender
+          </Heading>
+            <span>{data.gender}</span>
+          </GridItem>
+
+          <GridItem colSpan={1}>
+          <Heading as='h5' size='sm'>
+            DOB
+          </Heading>
+          <span>{data.dob}</span>
+          </GridItem>
+
+         
       </SimpleGrid>
     </VStack>
   );
