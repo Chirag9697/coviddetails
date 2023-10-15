@@ -41,7 +41,8 @@ const Nav = () => {
 
 useEffect(()=>{
   const getProfileData = async () => {
-    const email = localStorage.getItem("email")
+    const email = localStorage.getItem("email");
+
     try {
       const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
    

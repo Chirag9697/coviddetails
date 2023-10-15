@@ -9,14 +9,8 @@ router.post("/profile",async(req,res)=>{
     try{
         const existingProfile = await Profile.findOne({email})
         if(existingProfile){
-          existingProfile.firstName = firstName
-          existingProfile.lastName = lastName
-          existingProfile.address = address
-          existingProfile.phone = phone
-          existingProfile.gender = gender
-          existingProfile.dob = dob
-          await existingProfile.save()
-          return res.json(existingProfile)
+         
+          return res.send({error:"profile already exists"});
         }
         const newUserProfile = new Profile({firstName, lastName,address, phone,gender,dob,email});
 
@@ -34,6 +28,7 @@ router.post("/profile",async(req,res)=>{
 // Get profile route
 router.get("/get-profile/:email", async (req, res) => {
     const { email } = req.params;
+    console.log("cdsacs",email);
   console.log("Get Profile Route Called",email);
 
     try {
@@ -41,7 +36,7 @@ router.get("/get-profile/:email", async (req, res) => {
       console.log("hello profile",profileDetail)
       if (!profileDetail) {
         
-        return res.json({ message: "Profile not found" });
+        return res.json({ error: "Profile not found" });
       }
       console.log(profileDetail)
       res.json({ profileDetail });

@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeemailid, setemailid } from "./GooglesigninSlice";
 import Typewriter from "typewriter-effect";
-import Google from "../../image/google.png";
+import Google from "../../image/google.png"
+import { updateProfile } from "../../Pages/ProfileUpdate/ProfileUpdateSlice";
 // import { Machine } from "xstate";
 // import machine from './machine';
 import "./Signin.css";
@@ -27,7 +28,23 @@ export const Signin = () => {
   const value = useSelector((state) => state.signin.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const checkprofile=()=>{
+    axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
+    .then((response)=>{
+      console.log(response);
+      if(response.data.profileDetail){
+        console.log("profile existing");
+        // flag=true;
+        // dispatch(updateProfile(response.data))
+        // console.log("casca",response.data);
+        localStorage.setItem("userid",response.data.profileDetail._id);
+      }
+      else{
+        return false;
+      }
+    })
+    return true;
+  }
   // const service=interpret(machine).start();
   const handleclick = () => {
 
@@ -43,15 +60,34 @@ export const Signin = () => {
         phone: "",
         email,
       };
-      axios.post("http://localhost:5000/profile", newData)
-      .then((response)=>{
-        localStorage.setItem("userid",response.data._id);
-      })
-      // console.log(addProfile);
-       axios
-        .post("http://127.0.0.1:5000/save-email", {
-          email: data.user.email,
+      // let flag=false;
+      // axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
+      // .then((response)=>{
+      //   console.log(response);
+      //   if(response.data.profileDetail){
+      //     console.log("profile existing");
+      //     flag=true;
+      //     // dispatch(updateProfile(response.data))
+      //     // console.log("casca",response.data);
+      //     localStorage.setItem("userid",response.data.profileDetail._id);
+      //   }
+      // })
+      const checkprof=checkprofile();
+    
+      // console.log(flag);
+      if(checkprof==false){
+        // console.log
+        axios.post("http://localhost:5000/profile", newData)
+        .then((response)=>{
+          console.log("new profile created");
+          localStorage.setItem("userid",response.data._id);
         })
+      }
+      // console.log(addProfile);
+      axios
+      .post("http://127.0.0.1:5000/save-email", {
+        email: data.user.email,
+      })
         .then((response) => {
           // console.log(response);
           

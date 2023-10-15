@@ -15,7 +15,6 @@ import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const email = localStorage.getItem("email");
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -25,11 +24,12 @@ const MyProfile = () => {
     const getData = async () => {
       // debugger
       try {
+        const email = localStorage.getItem("email");
         const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
         if (response.data) {
           // dispatch(updateProfile(response.data.profileDetail))
           console.log('sda',response.data);
-          // setData(response.data.profileDetail);
+          setData(response.data.profileDetail);
           
         }
       } catch (err) {
@@ -49,42 +49,42 @@ const MyProfile = () => {
         <Heading as='h5' size='sm'>
             First Name
           </Heading>
-            <span color="red">{select.firstName}</span>
+            <span color="red">{data.firstName}</span>
          
         </GridItem>
         <GridItem colSpan={1}>
         <Heading as='h5' size='sm'>
             Last Name
           </Heading>
-            <span>{select.lastName}</span>
+            <span>{data.lastName}</span>
         </GridItem>
 
         <GridItem colSpan={1}>
         <Heading as='h5' size='sm'>
             Address
           </Heading>
-          <span>{select.address}</span>
+          <span>{data.address}</span>
           </GridItem>
 
           <GridItem colSpan={1}>
           <Heading as='h5' size='sm'>
             Phone
           </Heading>
-          <span>{select.phone}</span>
+          <span>{data.phone}</span>
           </GridItem>
 
           <GridItem colSpan={1}>
           <Heading as='h5' size='sm'>
             Gender
           </Heading>
-            <span>{select.gender}</span>
+            <span>{data.gender}</span>
           </GridItem>
 
           <GridItem colSpan={1}>
           <Heading as='h5' size='sm'>
             DOB
           </Heading>
-          <span>{select.dob}</span>
+          <span>{data.dob}</span>
           </GridItem>
 
          
