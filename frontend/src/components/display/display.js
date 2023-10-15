@@ -83,7 +83,7 @@ const Display = () => {
           position: 'bottom',
           render: () => (
             <Box color='white' p={2} bg='red' style={{textAlign:"center"}}>
-              Invited successfully check yor mail
+              Deleted Successfully
             </Box>
           ),
         })
@@ -192,18 +192,31 @@ const Display = () => {
       {/* <div> */}
       {/* </div> */}
       <BarChart />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop:"40px" }}>
+        
         {/* <form > */}
-        <div style={{ display: "flex" }}>
-          <select onChange={handleChange}>
-            <option value="1">month before</option>
-            <option value="2">2 month before</option>
-            <option value="12">year before</option>
-            <option value="24">2 year before</option>
-            <option value="1000">show all data</option>
-          </select>
+        <div style={{ display: "flex", marginLeft:"60px"}}>
+        <select
+          style={{
+            width: "150px", 
+            height:"40px",
+            border: "1px solid #E2E8F0",
+            borderRadius: "4px",
+            padding: "6px",
+            marginRight: "8px",
+            marginTop:"9px",
+          }}
+          onChange={handleChange}
+        >
+          <option value="1">Month Before</option>
+          <option value="2">2 Months Before</option>
+          <option value="12">Year Before</option>
+          <option value="24">2 Years Before</option>
+          <option value="1000">Show All Data</option>
+        </select>
           <Button colorScheme="green" onClick={fetchData} className="invButton">
-            search
+            Search
           </Button>
         </div>
         {/* </form> */}
@@ -212,7 +225,7 @@ const Display = () => {
         </Button>
       </div>
       <div className="main">
-        <TableContainer>
+        <TableContainer style={{marginTop: "-30px"}}>
           <Table variant="simple">
             <Thead>
               <Tr>
@@ -283,10 +296,11 @@ const Display = () => {
           display: "flex",
           width: "90vw",
           justifyContent: "space-between",
-          marginLeft:"60px"
+          marginLeft:"60px",
+          marginTop:"-20px",
         }}
       >
-        <Button colorScheme="green" isDisabled={currentpage==0?true:false} onClick={()=>setCurrentpage(currentpage-1)}>Prev</Button>
+        <Button colorScheme="green"  isDisabled={currentpage==0?true:false} onClick={()=>setCurrentpage(currentpage-1)}>Prev</Button>
         <Button colorScheme="green" isDisabled={details1.length-6<currentpage*5?true:false} onClick={()=>setCurrentpage(currentpage+1)}>Next</Button>
       </div>
       {/* Modal */}

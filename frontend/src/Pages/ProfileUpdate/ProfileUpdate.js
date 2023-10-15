@@ -25,8 +25,10 @@ import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
 const ProfileUpdate = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch()
+  
   const select=useSelector((state) => state.profileupdate);
-  console.log("dsad",select);
+ 
+  
   // let select; 
   // const[profiledata,settProfiledata]=useState({});
   const id = localStorage.getItem("userid")
@@ -36,12 +38,31 @@ const ProfileUpdate = () => {
   
   const email = localStorage.getItem("email");
 
+  useEffect(()=>{
+    const fetchData = async()=>{
+      try{
+        const res = await axios.get(`http://localhost:5000/get-profile/${email}`)
+        if (res.data.profileDetail) {
+          const userProfile = res.data.profileDetail;
+          dispatch(updateProfile(userProfile))
+          
+          
+          console.log("Hello 123",userProfile);
+          // settProfiledata(userProfile);
   
-  
+         
+        }
+      }catch(err){
+        console.log(err)
+      } 
+    }
+    fetchData()
+  },[])
   
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstName: `${select.firstName}`,
+      firstName: select.firstName,
       lastName: `${select.lastName}`,
       address: `${select.address}`,
       phone: `${select.phone}`,
@@ -83,10 +104,12 @@ const ProfileUpdate = () => {
     },
   });
 
-  
+  console.log("This is it")
+  console.log(formik.initialValues)
+  console.log(select)
  
 
-  return (
+  return(
     <div>
         <Formik
         initialValues={formik.initialValues}
@@ -106,7 +129,7 @@ const ProfileUpdate = () => {
                   isInvalid={
                     formik.errors.firstName && formik.touched.firstName
                   }
-                  style={{width: "700px"}}
+                  style={{width: "600px"}}
                 >
                   <FormLabel>First name</FormLabel>
                   <Field

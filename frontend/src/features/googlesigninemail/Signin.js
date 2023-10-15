@@ -116,8 +116,8 @@ export const Signin = () => {
         <Typewriter
           options={{
             strings: [
-              '<span style="font-size: 40px; color: yellow;">Welcome to Covid19 App</span>',
-              '<span style="font-size: 25px; color: white;">To know the Health Status of Your family</span>',
+              '<span style="font-size: 30px; color: yellow;">Welcome to Covid19 App</span>',
+              '<span style="font-size: 30px; color: white;">To know the Health Status of Your family</span>',
             ],
             autoStart: true,
             loop: true, // Set loop to true to make it loop

@@ -98,12 +98,12 @@ useEffect(()=>{
         {loggedIn ? (
           <>
             <Link to='/'>
-              <li>Display</li>
+              <li style={{marginTop:"20px"}}>Display</li>
             </Link>
 
             <div onClick={createroute}>
 
-              <li>Create</li>
+              <li style={{marginTop:"20px"}}>Create</li>
             </div>
             {/* </Link> */}
 
