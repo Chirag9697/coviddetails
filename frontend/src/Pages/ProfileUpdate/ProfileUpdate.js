@@ -61,13 +61,12 @@ const ProfileUpdate = () => {
       firstName: select.firstName,
       lastName: `${select.lastName}`,
       address: `${select.address}`,
-      phone: `${select.phone}`,
+      phone: select.phone || "",
       dob: `${select.dob}`,
       email: ``,
       gender: select.gender || "",
     },
     validationSchema: Yup.object({
-      // Define your validation schema here
     }),
     onSubmit: async (values) => {
       try {

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './nav.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeemailid, setemailid } from '../../features/googlesigninemail/GooglesigninSlice';
+import { useDispatch } from 'react-redux';
+import { removeemailid } from '../../features/googlesigninemail/GooglesigninSlice';
 import axios from 'axios';
 import { clearform } from '../../features/stepperhandling/Stepperhandledata';
 import { updateProfile } from '../../Pages/ProfileUpdate/ProfileUpdateSlice';
@@ -100,7 +100,6 @@ useEffect(()=>{
 
               <li style={{marginTop:"20px"}}>Create</li>
             </div>
-            {/* </Link> */}
 
             <li>
               <Box colorScheme="red">

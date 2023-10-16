@@ -24,7 +24,7 @@ const steps = [
 ];
 
 const StepBupdate = () => {
-  const { activeStep, setActiveStep } = useSteps({
+  const { activeStep } = useSteps({
     index: 0,
     count: steps.length,
   });
