@@ -2,19 +2,15 @@ import {
 
   Box,
   Flex,
-  GridItem,
   Heading,
-  SimpleGrid,
   VStack,
-  Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaUser } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
 import { MdPhone } from 'react-icons/md';
-import { FiUser } from 'react-icons/fi';
 import { MdEvent } from 'react-icons/md';
 
 const MyProfile = () => {
@@ -81,11 +77,11 @@ const MyProfile = () => {
           <Box>
           <MdLocationOn size={20} style={{ backgroundColor: 'transparent' }}/>
           </Box>
-          <Heading as="h5" size="md" fontSize="lg" align="center" marginLeft="10px">
+          <Heading as="h5" size="md" fontSize="lg">
             Address:
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px',textAlign:"center" }}>{data.address}</span>
+          <span color="red" fontSize="lg" style={{ textAlign:"center" }}>{data.address}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -128,15 +124,9 @@ const MyProfile = () => {
         </Flex>        
       </Flex>
         
-      {/* </GridItem> */}
-    {/* </SimpleGrid> */}
-  
+      
   </VStack>
-  
-
-
-  
-
+ 
   );
 };
 

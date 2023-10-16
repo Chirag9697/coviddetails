@@ -16,13 +16,12 @@ import {
   import FormcUpdate from "../../Pages/Update/FormcUpdate";
   
   const steps = [
-    // { title: "First", description: "Your Details" },
     { title: "first", description: "Family Details" },
     { title: "second", description: "Health Status" },
   ];
 
   function StepC() {
-    const { activeStep, setActiveStep } = useSteps({
+    const { activeStep } = useSteps({
       index: 2,
       count: steps.length,
     });

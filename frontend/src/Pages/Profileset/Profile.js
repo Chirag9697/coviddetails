@@ -16,13 +16,10 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
-import MyProfile from "./MyProfile";
 import axios from "axios";
 
 const Profile = () => {
   
-  const select = useSelector((state) => state.stepperformhander);
   const formik = useFormik({
     initialValues: {
       firstName: "",
