@@ -6,9 +6,8 @@ const relation = require("../models/relationship");
 const Invite = require("../models/invite");
 const nodemailer = require("nodemailer");
 const family = require("../models/familyGroup");
-// const ISODate=require('date')
-//Family Group Management
 
+//Create family
 router.post("/families/create", async (req, res) => {
   console.log("create");
   const { groupName, email, members } = req.body;
@@ -27,6 +26,7 @@ router.post("/families/create", async (req, res) => {
   }
 });
 
+//Get families detail for update
 router.get("/families1/:id", async (req, res) => {
   
   const { id } = req.params;
@@ -89,6 +89,7 @@ router.get("/families/:email", async (req, res) => {
   }
 });
 
+//Confirm email by accepting
 router.get("/confirminvitation/:sender/:receiver", async (req, res) => {
   const { sender, receiver } = req.params;
   try {
@@ -99,8 +100,9 @@ router.get("/confirminvitation/:sender/:receiver", async (req, res) => {
   } catch (error) {
     res.send("error");
   }
-}); //explain this code
+}); 
 
+//Send mail using nodemailer
 router.post("/send-mail", async (req, res) => {
   const { sender, receiver } = req.body;
   console.log(sender);
@@ -111,7 +113,7 @@ router.post("/send-mail", async (req, res) => {
       pass: "arup ossg moue xxme",
     },
     tls: {
-      rejectUnauthorized: false, // Allow self-signed certificates
+      rejectUnauthorized: false, 
     },
   });
   const url = `http://localhost:5000/confirminvitation/${sender}/${receiver}`;
@@ -128,17 +130,15 @@ router.post("/send-mail", async (req, res) => {
       console.log("mail is sent");
     }
 
-    // console.log("email sent");
+    
   });
-  // res.send("sending mails");
+  
 });
 
 //delete the data
 router.delete("/deleteRoute/:id", async (req, res) => {
   console.log("hey");
   try {
-    // const familyResult=await Invite.deleteMany({familyId:req.params.id})
-    // if(familyResult.ok === 1){
     const inviteResult = await Family.deleteOne({ _id: req.params.id });
     res.status(201).json(inviteResult);
   } catch (err) {
@@ -266,6 +266,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
   }
 });
 
+//Group data
 router.get("/getdatabydates/:email", async (req, res) => {
   try{ 
     console.log("demail");  
@@ -296,5 +297,6 @@ router.get("/getdatabydates/:email", async (req, res) => {
     res.send("erorr");
   }
   });
+  
   module.exports = router;
   

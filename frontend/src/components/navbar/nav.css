@@ -11,7 +11,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+
+   
   }
+
   
   .nav-menu {
     list-style: none;
@@ -44,4 +47,29 @@
   .primaryBtn:hover {
     background-color: rgb(213, 19, 19);
     transition: all 0.25s ease;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: row;
+      text-align: center;
+      padding: 10px;
+    }
+  
+    .nav-menu {
+      flex-direction: row;
+      margin-top: 20px;
+    }
+   
+  
+    .nav-menu li {
+      margin: 0;
+      margin-bottom: 20px;
+      margin-top: 15px;
+    }
+  
+    .heading {
+      font-size: 20px;
+      padding-top: 15px;
+    }
   }

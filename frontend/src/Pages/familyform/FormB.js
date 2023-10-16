@@ -90,11 +90,11 @@ const FormB = () => {
                   formik1.errors.group && formik1.touched.group
                 }
               >
-                <FormLabel>group</FormLabel>
+                <FormLabel>Group</FormLabel>
                 <Field
                   as={Input}
                   name="group"
-                  placeholder="group"
+                  placeholder="Group"
                   onChange={formik1.handleChange}
                   value={formik1.values.group}
                 />

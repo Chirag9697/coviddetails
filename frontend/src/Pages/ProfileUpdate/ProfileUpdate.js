@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import axios from "axios";
 import * as Yup from "yup";
 import {useSelector, useDispatch} from 'react-redux'
@@ -17,11 +16,9 @@ import {
     Radio,
     FormErrorMessage,
   } from "@chakra-ui/react";
-  import ProfileUpdateSlice from "./ProfileUpdateSlice";
-  import { useNavigate } from "react-router-dom";
-  import { Field, Formik, useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { Field, Formik, useFormik } from "formik";
 import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
-// import userProfile from "../../../../backend/models/userProfile";
 const ProfileUpdate = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch()
@@ -29,10 +26,9 @@ const ProfileUpdate = () => {
   const select=useSelector((state) => state.profileupdate);
  
   
-  // let select; 
-  // const[profiledata,settProfiledata]=useState({});
+  
   const id = localStorage.getItem("userid")
-  // const dispatch = useDispatch()
+  
  
   
   
@@ -48,7 +44,7 @@ const ProfileUpdate = () => {
           
           
           console.log("Hello 123",userProfile);
-          // settProfiledata(userProfile);
+        
   
          
         }
@@ -66,10 +62,9 @@ const ProfileUpdate = () => {
       lastName: `${select.lastName}`,
       address: `${select.address}`,
       phone: `${select.phone}`,
-      gender: select.gender,
       dob: `${select.dob}`,
       email: ``,
-      selectOption:`${select.gender}`
+      gender: select.gender || "",
     },
     validationSchema: Yup.object({
       // Define your validation schema here
@@ -81,7 +76,7 @@ const ProfileUpdate = () => {
           lastName: values.lastName,
           address: values.address,
           phone: values.phone,
-          gender: values.selectOption,
+          gender: values.gender,
           dob: values.dob,
         
         };
@@ -185,34 +180,32 @@ const ProfileUpdate = () => {
                 />
                 <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
               </FormControl>
-              <FormControl
-                isInvalid={formik.errors.gender && formik.touched.gender}
-              >
-                <FormLabel>Gender</FormLabel>
-                <RadioGroup defaultValue={select.gender}>
-                  <HStack spacing="24px">
-                    <Field
-                      as={Radio}
-                      name="selectOption"
-                      value="Male"
-                      onChange={formik.handleChange}
-                      
-                    >
-                      Male
-                    </Field>
-                    <Field
-                      as={Radio}
-                      name="selectOption"
-                      value="Female"
-                      onChange={formik.handleChange}
-                      // select={true}
-                    >
-                      Female
-                    </Field>
-                  </HStack>
-                </RadioGroup>
-                <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
-              </FormControl>
+              <FormControl isInvalid={formik.errors.gender && formik.touched.gender}>
+              <FormLabel>Gender</FormLabel>
+              <RadioGroup defaultValue={formik.values.gender} onChange={formik.handleChange}>
+                <HStack spacing="24px">
+                  <Field
+                    as={Radio}
+                    name="gender"
+                    value="Male"
+                    onChange={formik.handleChange}
+                    
+                  >
+                    Male
+                  </Field>
+                  <Field
+                    as={Radio}
+                    name="gender"
+                    value="Female"
+                    onChange={formik.handleChange}
+                  >
+                    Female
+                  </Field>
+                </HStack>
+              </RadioGroup>
+              <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
+            </FormControl>
+
               <FormControl isInvalid={formik.errors.dob && formik.touched.dob}>
                 <FormLabel>Date Of Birth</FormLabel>
                 <Field

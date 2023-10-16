@@ -1,19 +1,14 @@
 
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import Display from './components/display/display';
-import { Route, Routes } from 'react-router-dom';
-import { Signin } from "./features/googlesigninemail/Signin";
-import { useEffect, useState } from 'react';
-import Typewriter from "typewriter-effect";
-import { useNavigate } from 'react-router-dom';
-import Nav from './components/navbar/nav';
-import { MainForm } from './Pages/familyform/MainForm';
-import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
-import Profile from "./Pages/Profileset/Profile";
-import MyProfile from "./Pages/Profileset/MyProfile";
-import ClusterMap from './components/maps/Clustermap';
 import ProfileUpdate from './Pages/ProfileUpdate/ProfileUpdate';
-// import { Mapdata } from './Pages/Mapdata';
+import MyProfile from "./Pages/Profileset/MyProfile";
+import { MainFormUpdate } from './Pages/Update/MainFormUpdate';
+import { MainForm } from './Pages/familyform/MainForm';
+import Display from './components/display/display';
+import Nav from './components/navbar/nav';
+import { Signin } from "./features/googlesigninemail/Signin";
 function App() {
 const navigate = useNavigate()
 const loggedin = localStorage.getItem("email")
@@ -25,16 +20,12 @@ console.log(loggedin);
     }
   }, [loggedin])
 
-  
-  const id = localStorage.getItem("userId")
-
   return (
     <div>
     <Nav/>
     <Routes>
        
           <Route path="/form" element={<MainForm />} />
-          
           <Route path="/update/:id" element={<MainFormUpdate />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/" element={<Display />} />

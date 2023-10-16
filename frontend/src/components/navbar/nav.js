@@ -22,12 +22,12 @@ import { EditIcon } from "@chakra-ui/icons";
 const Nav = () => {
   const navigate = useNavigate();
   const loggedIn = localStorage.getItem("email") 
-  const clearForm = useSelector((state) => state.stepperhandling.clearform);
   const dispatch = useDispatch();
 
-  const [isLoggedOut, setIsLoggedOut] = useState(false); 
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
+  
+  //handle logout
   const handleLogout = () => {
-   
     dispatch(removeemailid()); 
     localStorage.clear();
     setIsLoggedOut(true); 
@@ -39,6 +39,7 @@ const Nav = () => {
     navigate("/profile");
   };
 
+//fetching user profile
 useEffect(()=>{
   const getProfileData = async () => {
     const email = localStorage.getItem("email");
@@ -49,11 +50,8 @@ useEffect(()=>{
       if (response.data.profileDetail) {
         const userProfile = response.data.profileDetail;
         dispatch(updateProfile(userProfile))
-        
         console.log("Hello",userProfile);
-        // settProfiledata(userProfile);
 
-       
       }
     } catch (err) {
       console.log(err);
@@ -74,7 +72,6 @@ useEffect(()=>{
     }
   };
   const createroute=()=>{
-// import { useDispatch } from "react-redux";
     dispatch(clearform());
     navigate('/form')
   }
