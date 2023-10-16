@@ -29,6 +29,7 @@ export const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const checkprofile=()=>{
+    if(
     axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
     .then((response)=>{
       console.log(response);
@@ -38,12 +39,14 @@ export const Signin = () => {
         // dispatch(updateProfile(response.data))
         // console.log("casca",response.data);
         localStorage.setItem("userid",response.data.profileDetail._id);
+        return true;
       }
-      else{
-        return false;
-      }
-    })
-    return true;
+      // else{
+      // }
+    })==true){
+      return true;
+    }
+    return false;
   }
   // const service=interpret(machine).start();
   const handleclick = () => {
@@ -73,7 +76,7 @@ export const Signin = () => {
       //   }
       // })
       const checkprof=checkprofile();
-    
+      console.log(checkprof);
       // console.log(flag);
       if(checkprof==false){
         // console.log
