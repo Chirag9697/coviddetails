@@ -9,6 +9,7 @@ import {
   SimpleGrid,
   GridItem,
   Button,
+  Box,
   Select,
   FormErrorMessage,
 } from "@chakra-ui/react";
@@ -79,7 +80,7 @@ const FormC = () => {
               Health Status
             </Heading>
           </VStack>
-          <SimpleGrid columns={2} columnGap={3} rowGap={3}>
+          <SimpleGrid style={{ width: 1200 }} columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
               <FormControl
                 isInvalid={formik2.errors.lastname && formik2.touched.lastname}
@@ -137,23 +138,23 @@ const FormC = () => {
               </Field>
             </FormControl>
 
+
             <FormControl
               isInvalid={formik2.errors.infectedDays && formik2.touched.infectedDays}
->
-              <FormLabel alignSelf="flex-start">
-                Date of infection, if affected
-              </FormLabel>
-                <DatePicker
-                    selected={formik2.values.infectedDays}
-                    onChange={(date) => formik2.setFieldValue('infectedDays', date)}
-                    placeholderText="Select a date"
-                    dateFormat="MM/dd/yyyy" 
-                  
-                  />
-                  {formik2.errors.infectedDays && formik2.touched.infectedDays && (
-                <FormErrorMessage>{formik2.errors.infectedDays}</FormErrorMessage>
-                              )}
-                  </FormControl>
+            >
+              <FormLabel>Infected Days</FormLabel>
+              <Field
+                as={Input}
+                name="infectedDays"
+                placeholder="Select Date and Time"
+                size="md"
+                type="date"
+                onChange={formik2.handleChange}
+                value={formik2.values.dob}
+                
+              />
+              <FormErrorMessage>{formik2.errors.dob}</FormErrorMessage>
+            </FormControl>
                 </SimpleGrid>
                 <Button type="submit" colorScheme="blue">
                   Submit

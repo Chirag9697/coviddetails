@@ -11,6 +11,7 @@ import {
   GridItem,
   Button,
   Select,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
@@ -77,12 +78,12 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
     >
       <form onSubmit={formik2.handleSubmit}>
         <VStack w="full" h="full" p={10} spacing={10} align="flex-start">
-          <VStack spacing={2} align="flex-start">
+          <VStack spacing={3} align="flex-start">
             <Heading color="var(--chakra-colors-blue-500);">
               Health Status
             </Heading>
           </VStack>
-          <SimpleGrid columns={2} columnGap={3} rowGap={3}>
+          <SimpleGrid style={{ width: 1200 }} columns={2} columnGap={3} rowGap={3}>
             <GridItem colSpan={1}>
               <FormControl
                 isInvalid={formik2.errors.lastname && formik2.touched.lastname}
@@ -94,7 +95,7 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
                   value={formik2.values.covidstatus}
                   onChange={formik2.handleChange}
                   // defaultValue={newData.covidstatus}
-                  
+                
                 >
                   <option>Select</option>
                   <option> Positive</option>
@@ -143,19 +144,20 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
             </FormControl>
 
             <FormControl
-              isInvalid={formik2.errors.infected && formik2.touched.infected}
+              isInvalid={formik2.errors.infectedDays && formik2.touched.infectedDays}
             >
-              <FormLabel alignSelf="flex-start">
-                If infected before, mention when was it
-              </FormLabel>
+              <FormLabel>Infected Days</FormLabel>
               <Field
                 as={Input}
+                name="infectedDays"
+                placeholder="Select Date and Time"
+                size="md"
                 type="date"
-                name="infected"
-                value={formik2.values.infected}
                 onChange={formik2.handleChange}
-                placeholder="enter the infection date"
+                value={formik2.values.dob}
+                
               />
+              <FormErrorMessage>{formik2.errors.dob}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
           <Button type="submit" colorScheme="blue">

@@ -32,10 +32,9 @@ import { useDispatch } from "react-redux";
 import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { format } from "date-fns";
 import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
-// import { clearform} from "../../features/stepperhandling/Stepperhandledata";
-import { current } from "immer";
 import { useToast } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
+
 const Display = () => {
   const navigate = useNavigate();
   const [currentpage, setCurrentpage] = useState(0);
@@ -45,16 +44,18 @@ const Display = () => {
   const [details1, setDetails1] = useState([]);
   const [time, setTime] = useState(false);
   const [date, setDate] = useState("");
-  // Function to open the modal
+
   const dispatch = useDispatch();
+
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  //get all details
   const getAllDetails = async () => {
     const email = localStorage.getItem("email");
     try {
@@ -62,27 +63,25 @@ const Display = () => {
         `http://localhost:5000/families/${email}`
       );
       if (details) {
-        // console.log("hello",details.data.allFamilyDetails);
         console.log(details.data.allFamilyDetails);
         setDetails1(details.data.allFamilyDetails);
-        // console.log("details",   details1);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+  //delete data
   const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
         `http://localhost:5000/deleteRoute/${id}`
       );
       if (deleteAll) {
-        // console.log("deleted");
         toast({
           position: 'bottom',
           render: () => (
-            <Box color='white' p={2} bg='red' style={{textAlign:"center"}}>
+            <Box color='white' p={2} bg='red' style={{ textAlign: "center" }}>
               Deleted Successfully
             </Box>
           ),
@@ -94,36 +93,27 @@ const Display = () => {
     }
   };
 
+  //check which one to display
   useEffect(() => {
     if (time === false) {
       dispatch(clearform());
-      // dispatch(clearform2());
       getAllDetails();
     } else {
-      // if(date===''){
-      // getAllDetails()
-      
-      // }
-      // else{
       fetchData();
-      }
-    // }
+    }
   }, []);
-  //get the data based on time
 
+  
   const fetchData = async () => {
     const email = localStorage.getItem("email");
     try {
       if (!date) {
-        // Handle the case where date is empty or undefined
         console.error("Date is empty or undefined.");
         return;
       }
 
       const response = await axios.get(
-        `http://localhost:5000/count-data/${email}/${
-          date === "" ? "120" : date
-        }`
+        `http://localhost:5000/count-data/${email}/${date === "" ? "120" : date}`
       );
 
       if (response.data) {
@@ -144,27 +134,22 @@ const Display = () => {
     });
     if (sendInvite1) {
       closeModal();
-      // toast({
-      //   position: 'bottom',
-      //   render: () => (
-      //     <Box color='white' p={2} bg='blue.500' style={{textAlign:"center"}}>
-      //       Invited successfully check yor mail
-      //     </Box>
-      //   ),
-      // })
-      // console.log("email sent");
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color='white' p={2} bg='blue' style={{ textAlign: "center" }}>
+            Invited Successfully
+          </Box>
+        ),
+      })
     }
   };
 
-  //Update Query
   const updateDetails = async (email, id) => {
     const details = await axios.get(`http://localhost:5000/families1/${id}`);
     if (details) {
-      // console.log(details);
       const newdata = details.data.allfamily1;
-      // const memberdata={...newdata.members[0]};
       dispatch(updateformcompleted({ ...newdata, ...newdata.members[0] }));
-      // console.log("data",details.data.allfamily1);
     }
     navigate(`/update/${id}`);
   };
@@ -188,44 +173,40 @@ const Display = () => {
       <br />
       <br />
 
-      {/* <ClusterMap/> */}
-      {/* <div> */}
-      {/* </div> */}
-      <BarChart />
-      
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop:"40px" }}>
-        
-        {/* <form > */}
-        <div style={{ display: "flex", marginLeft:"60px"}}>
-        <select
-          style={{
-            width: "150px", 
-            height:"40px",
-            border: "1px solid #E2E8F0",
-            borderRadius: "4px",
-            padding: "6px",
-            marginRight: "8px",
-            marginTop:"9px",
-          }}
-          onChange={handleChange}
-        >
-          <option value="1">Month Before</option>
-          <option value="2">2 Months Before</option>
-          <option value="12">Year Before</option>
-          <option value="24">2 Years Before</option>
-          <option value="1000">Show All Data</option>
-        </select>
+      <div className="bar-chart-container">
+        <BarChart />
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px" }}>
+        <div style={{ display: "flex", marginLeft: "60px" }}>
+          <select
+            style={{
+              width: "150px",
+              height: "40px",
+              border: "1px solid #E2E8F0",
+              borderRadius: "4px",
+              padding: "6px",
+              marginRight: "8px",
+              marginTop: "9px",
+            }}
+            onChange={handleChange}
+          >
+            <option value="1">Month Before</option>
+            <option value="2">2 Months Before</option>
+            <option value="12">Year Before</option>
+            <option value="24">2 Years Before</option>
+            <option value="1000">Show All Data</option>
+          </select>
           <Button colorScheme="green" onClick={fetchData} className="invButton">
             Search
           </Button>
         </div>
-        {/* </form> */}
         <Button colorScheme="green" onClick={openModal} className="invButton">
           Invite
         </Button>
       </div>
       <div className="main">
-        <TableContainer style={{marginTop: "-30px"}}>
+        <TableContainer style={{ marginTop: "-30px" }}>
           <Table variant="simple">
             <Thead>
               <Tr>
@@ -242,9 +223,8 @@ const Display = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {details1.slice(currentpage*5,(currentpage+1)*5).map((item, id) => {
+              {details1.slice(currentpage * 5, (currentpage + 1) * 5).map((item, id) => {
                 if (item && item.members && item.members[0]) {
-                  // return(<>'
                   return (
                     <Tr key={id}>
                       <Td style={{ textAlign: "center" }}>
@@ -282,7 +262,6 @@ const Display = () => {
                           Delete
                         </Button>
                       </Td>
-                      {/* <Td style={{ textAlign: 'center'  }}>{item.fullName}</Td> */}
                     </Tr>
                   );
                 }
@@ -296,14 +275,13 @@ const Display = () => {
           display: "flex",
           width: "90vw",
           justifyContent: "space-between",
-          marginLeft:"60px",
-          marginTop:"-20px",
+          marginLeft: "60px",
+          marginTop: "-20px",
         }}
       >
-        <Button colorScheme="green"  isDisabled={currentpage==0?true:false} onClick={()=>setCurrentpage(currentpage-1)}>Prev</Button>
-        <Button colorScheme="green" isDisabled={details1.length-6<currentpage*5?true:false} onClick={()=>setCurrentpage(currentpage+1)}>Next</Button>
+        <Button colorScheme="green" isDisabled={currentpage === 0 ? true : false} onClick={() => setCurrentpage(currentpage - 1)}>Prev</Button>
+        <Button colorScheme="green" isDisabled={details1.length - 6 < currentpage * 5 ? true : false} onClick={() => setCurrentpage(currentpage + 1)}>Next</Button>
       </div>
-      {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
@@ -327,7 +305,7 @@ const Display = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={()=>sendInvite()}>
+            <Button colorScheme="blue" mr={3} onClick={() => sendInvite()}>
               send
             </Button>
           </ModalFooter>
@@ -338,3 +316,4 @@ const Display = () => {
 };
 
 export default Display;
+
