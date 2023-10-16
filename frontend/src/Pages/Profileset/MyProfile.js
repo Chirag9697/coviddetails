@@ -82,7 +82,7 @@ const MyProfile = () => {
           <MdLocationOn size={20} style={{ backgroundColor: 'transparent' }}/>
           </Box>
           <Heading as="h5" size="md" fontSize="lg" align="center" marginLeft="10px">
-            Address
+            Address:
           </Heading>
           </Flex>
           <span color="red" fontSize="lg" style={{ marginLeft: '10px',textAlign:"center" }}>{data.address}</span>
