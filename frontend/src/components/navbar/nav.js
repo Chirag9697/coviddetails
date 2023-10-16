@@ -50,7 +50,6 @@ useEffect(()=>{
       if (response.data.profileDetail) {
         const userProfile = response.data.profileDetail;
         dispatch(updateProfile(userProfile))
-        console.log("Hello",userProfile);
 
       }
     } catch (err) {
@@ -80,7 +79,6 @@ useEffect(()=>{
       setIsLoggedOut(false); 
     }
   }, [isLoggedOut]);
-
 
   if (!loggedIn) {
     return null; 

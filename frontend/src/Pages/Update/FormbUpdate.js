@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 import {
   FormControl,
@@ -17,13 +17,11 @@ import {
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { secondstepcompleted } from "../../features/stepperhandling/StepperhandleSlice";
-import { secondstepformcompleted, updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
+import { secondstepformcompleted } from "../../features/stepperhandling/Stepperhandledata";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 const FormbUpdate = () => {
   const select = useSelector((state) => state.stepperformhander);
-  const [details1, setDetails1] = useState([])
   const dob = select.dob ? select.dob.split('T')[0] : '';
   
   const formik1 = useFormik({

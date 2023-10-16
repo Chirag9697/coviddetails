@@ -6,14 +6,11 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
-  ButtonGroup,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -63,7 +60,7 @@ const Display = () => {
         `http://localhost:5000/families/${email}`
       );
       if (details) {
-        console.log(details.data.allFamilyDetails);
+      
         setDetails1(details.data.allFamilyDetails);
       }
     } catch (err) {
@@ -117,7 +114,7 @@ const Display = () => {
       );
 
       if (response.data) {
-        console.log("Data fetched successfully:", response.data);
+        
         setDetails1(response.data);
       } else {
         console.error("No data returned from the server.");
