@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Profile = require("../models/userProfile")
 
 router.post("/profile",async(req,res)=>{
-  console.log("profile route is calledcdscas");
+ 
     const {firstName, lastName,address, phone,gender,dob,email} = req.body
     try{
         const existingProfile = await Profile.findOne({email})
@@ -28,17 +28,13 @@ router.post("/profile",async(req,res)=>{
 // Get profile route
 router.get("/get-profile/:email", async (req, res) => {
     const { email } = req.params;
-    console.log("cdsacs",email);
-  console.log("Get Profile Route Called",email);
-
     try {
       const profileDetail = await Profile.findOne({email:email});
-      console.log("hello profile",profileDetail)
+  
       if (!profileDetail) {
         
         return res.json({ error: "Profile not found" });
       }
-      console.log(profileDetail)
       res.json({ profileDetail });
     } catch (err) {
       console.error(err);
@@ -52,7 +48,7 @@ router.get("/get-profile/:email", async (req, res) => {
 router.put("/edit-profile/:id", async (req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
-    console.log("okkkkkkkkkk",id,updatedData)
+   
     try {
       const updatedProfile = await Profile.findByIdAndUpdate(
         id,

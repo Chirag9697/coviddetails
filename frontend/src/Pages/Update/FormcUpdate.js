@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import {
   FormControl,
@@ -94,7 +94,6 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
                   name="covidstatus"
                   value={formik2.values.covidstatus}
                   onChange={formik2.handleChange}
-                  // defaultValue={newData.covidstatus}
                 
                 >
                   <option>Select</option>

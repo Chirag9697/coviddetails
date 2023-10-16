@@ -9,7 +9,7 @@ const family = require("../models/familyGroup");
 
 //Create family
 router.post("/families/create", async (req, res) => {
-  console.log("create");
+  
   const { groupName, email, members } = req.body;
   try {
     const newFamily = new Family({ groupName, email, members });
@@ -30,7 +30,7 @@ router.post("/families/create", async (req, res) => {
 router.get("/families1/:id", async (req, res) => {
   
   const { id } = req.params;
-  console.log("hyaaaa",id)
+ 
   try {
     const familyDetail = await Family.findById({ _id: id });
     
@@ -43,7 +43,7 @@ router.get("/families1/:id", async (req, res) => {
 
 //retrieve the list of user's family group
 router.get("/families/:email", async (req, res) => {
-  console.log("get all details");
+  
   const { email } = req.params;
 
   try {
@@ -56,7 +56,7 @@ router.get("/families/:email", async (req, res) => {
       .find({ receiver: email })
       .select("sender")
       .exec();
-    console.log(allinvitetomeemail);
+    
     const allFamilyDetails = [];
     for (let i = 0; i < allinvitedemail.length; i++) {
       const familyDetail = await Family.find({
@@ -71,17 +71,16 @@ router.get("/families/:email", async (req, res) => {
       const familyDetail = await Family.find({
         email: allinvitetomeemail[i].sender,
       });
-      console.log("family", familyDetail);
+      
       for (let j = 0; j < familyDetail.length; j++) {
         allFamilyDetails.push(familyDetail[j]);
       }
     }
-    console.log("asdsa", allFamilyDetails);
+    
     for (let j = 0; j < familyListofuser.length; j++) {
       allFamilyDetails.push(familyListofuser[j]);
     }
     
-    console.log("casdca",allFamilyDetails);
     res.send({ allFamilyDetails });
   } catch (err) {
     console.log(err);
@@ -105,7 +104,7 @@ router.get("/confirminvitation/:sender/:receiver", async (req, res) => {
 //Send mail using nodemailer
 router.post("/send-mail", async (req, res) => {
   const { sender, receiver } = req.body;
-  console.log(sender);
+ 
   let mailtransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -137,7 +136,7 @@ router.post("/send-mail", async (req, res) => {
 
 //delete the data
 router.delete("/deleteRoute/:id", async (req, res) => {
-  console.log("hey");
+  
   try {
     const inviteResult = await Family.deleteOne({ _id: req.params.id });
     res.status(201).json(inviteResult);
@@ -148,11 +147,11 @@ router.delete("/deleteRoute/:id", async (req, res) => {
 
 //Update Route
 router.put("/families/update/:id", async (req, res) => {
-  console.log("create");
+
   const { id } = req.params;
-  console.log(id);
+
   const { groupName, email, members } = req.body;
-  console.log(members);
+ 
   try {
     const newFamily = await Family.findOneAndUpdate(
       { _id: id },
@@ -168,7 +167,7 @@ router.put("/families/update/:id", async (req, res) => {
 
 //Count Date
 router.get("/count-data/:email/:value", async (req, res) => {
-  console.log("data is called");
+  
   try {
     const { email, value } = req.params;
     const findvalue = value / 12;
@@ -185,12 +184,13 @@ router.get("/count-data/:email/:value", async (req, res) => {
       .find({ sender: email })
       .select("receiver")
       .exec();
-    console.log("allinvited", allinvitedemail);
+    
+      
     const allinvitetomeemail = await relation
       .find({ receiver: email })
       .select("sender")
       .exec();
-    console.log("allinvite me", allinvitetomeemail);
+    
     const allFamilyDetails = [];
 
     // Add family details based on allinvitedemail
@@ -209,7 +209,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let value = year + month / 12 + day / 30 / 12;
 
           if (currvalue - value <= findvalue) {
-            console.log(familyDetail[j]);
+          
             allFamilyDetails.push(familyDetail[j]);
             break; // Break to prevent adding the same family multiple times
           }
@@ -223,7 +223,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
         email: allinvitetomeemail[i].sender,
         // "members.infectedDays": { $gte: thirtyDaysAgo, $lt: currdate },
       });
-      console.log("fdsfa");
+      
       for (let j = 0; j < familyDetail.length; j++) {
         const { members } = familyDetail[j];
         for (let k = 0; k < members.length; k++) {
@@ -234,7 +234,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
           let value = year + month / 12 + day / 30 / 12;
 
           if (currvalue - value <= findvalue) {
-            console.log(familyDetail[j]);
+            
             allFamilyDetails.push(familyDetail[j]);
             break; // Break to prevent adding the same family multiple times
           }
@@ -269,7 +269,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
 //Group data
 router.get("/getdatabydates/:email", async (req, res) => {
   try{ 
-    console.log("demail");  
+   
     const{email}=req.params;
     
     const data=await Family.aggregate([
@@ -290,10 +290,10 @@ router.get("/getdatabydates/:email", async (req, res) => {
         },
       },
     ]).exec();
-    console.log(data);
+   
     res.send(data)
   }catch(error){
-    console.log(error);
+   
     res.send("erorr");
   }
   });

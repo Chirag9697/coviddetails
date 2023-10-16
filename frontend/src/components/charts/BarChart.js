@@ -25,32 +25,28 @@ const BarChart = () => {
   const getalldata = async () => {
     try {
       const email=localStorage.getItem("email");
-      console.log("email",email);
+    
       const details = await axios.get(`http://localhost:5000/getdatabydates/${email}`);
       if (details) {
-        //   console.log("hello",details.data.allFamilyDetails);
-        // console.log(details.data.allfamily1);
-        //   setDetails1(details.data.allFamilyDetails);
-        // console.log("details", details.data);
+    
         const maindatacal = details.data.map((item) => {
           return item.memberCount;
         });
         const datedatacal = details.data.map((item) => {
           return parseInt(item._id);
         });
-        // console.log("datedata", datedatacal);
-        // setData(details.data);
+       
         setMaindata(maindatacal);
         setDatedata(datedatacal);
 
-        // console.log("maindata", maindata);
+     
       }
     } catch (err) {
       console.log(err);
     }
   };
   const makebarchart = () => {
-    // console.log(svgref);
+   
    
     const svg = select(svgref.current);
     const xscale = scaleBand()
@@ -69,7 +65,8 @@ const BarChart = () => {
     const yscale = scaleLinear().domain([0, 10]).range([150, 0]);
     const colorscale = scaleLinear()
       .domain([0, 100, 150])
-      .range(["blue", "orange", "red"])
+      .range(["blue", "orange"
+      , "red"])
       .clamp(true);
     svg.select(".x-axis").style("transform", "translateY(150px)").call(xAxis);
     const yaxis = axisRight(yscale);
