@@ -97,7 +97,6 @@ const Display = () => {
     if (time === false) {
       dispatch(clearform());
       getAllDetails();
-      setTime(true);
     } else {
       fetchData();
     }
