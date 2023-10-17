@@ -44,9 +44,7 @@ const ProfileUpdate = () => {
           
           
           console.log("Hello 123",userProfile);
-        
-  
-         
+     
         }
       }catch(err){
         console.log(err)

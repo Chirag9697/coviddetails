@@ -21,4 +21,21 @@ router.post('/save-email', async (req, res) => {
     }
   });
 
+  router.get('/get-user/:email', async (req, res) => {
+    try {
+      const { email } = req.params;
+  
+      // Create a new Email document
+      const findUser = await User.findOne({ email });
+    
+      // Save the Email document to the database
+      await findUser.save();
+  
+      res.status(201).json({ findUser });
+    } catch (error) {
+     
+      res.status(500).json({ error: 'An internal server error occurred' });
+    }
+  });
+
   module.exports = router

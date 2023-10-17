@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Text,
   Step,
   StepIcon,
   StepIndicator,
@@ -8,13 +7,12 @@ import {
   StepStatus,
   Stepper,
   useSteps,
-  Stack,
   StepNumber,
   Box,
   StepTitle,
   StepDescription,
 } from "@chakra-ui/react";
-// import FormB from "./FormB";
+
 import FormbUpdate from "../Update/FormbUpdate";
 
 const steps = [

@@ -1,5 +1,4 @@
 import {
-
   Box,
   Flex,
   Heading,
@@ -7,23 +6,21 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { FaUser } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
 import { MdPhone } from 'react-icons/md';
 import { MdEvent } from 'react-icons/md';
 
 const MyProfile = () => {
-  const [data, setData] = useState({}); // Initialize data as an object
-  const select=useSelector((state)=>state.profileupdate);
+  const [data, setData] = useState({}); 
   useEffect(() => {
     const getData = async () => {
-      // debugger
+     
       try {
         const email = localStorage.getItem("email");
         const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
         if (response.data) {
-          // dispatch(updateProfile(response.data.profileDetail))
+         
           console.log('sda',response.data);
           setData(response.data.profileDetail);
           
@@ -42,8 +39,7 @@ const MyProfile = () => {
       Your Details
 
     </Heading>
-    {/* <SimpleGrid columns={2} columnGap={3} rowGap={6} justifyItems="space-between" style={{ width: "500px" }}> */}
-      {/* <GridItem  style={{marginLeft:"70px"}}> */}
+    
       <Flex direction="row" style={{flexWrap:"wrap",justifyContent:"space-between",width:"20vw", height:"50vh"}}>
         <Flex align="center" direction="column">
           <Flex>

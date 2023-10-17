@@ -18,18 +18,21 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
+import { backfromthirdstep, clearform } from "../../features/stepperhandling/StepperhandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
   
   const dispatch=useDispatch();
- 
+  const handleClick=()=>{
+    dispatch(backfromthirdstep());
+  }
   const navigate=useNavigate();
 const {id} = useParams();
 const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] : '';
 
   const formik2 = useFormik({
+    enableReinitialize: true,
     initialValues: {
       covidstatus: newData.covidstatus,
       vaccinestatus: newData.vaccineStatus,
@@ -62,7 +65,7 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
         `http://localhost:5000/families/update/${id}`,
         formData
       );
-      console.log(response2)
+     
       if(response2){
         navigate('/');
         dispatch(clearform());
@@ -143,25 +146,35 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
             </FormControl>
 
             <FormControl
-              isInvalid={formik2.errors.infectedDays && formik2.touched.infectedDays}
+              isInvalid={formik2.errors.infected && formik2.touched.infected}
             >
               <FormLabel>Infected Days</FormLabel>
               <Field
                 as={Input}
-                name="infectedDays"
+                name="infected"
                 placeholder="Select Date and Time"
                 size="md"
                 type="date"
                 onChange={formik2.handleChange}
-                value={formik2.values.dob}
+                value={formik2.values.infected}
                 
               />
               <FormErrorMessage>{formik2.errors.dob}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
-          <Button type="submit" colorScheme="blue">
-            Submit
-          </Button>
+          <div style={{ display:"flex",justifyContent:"space-between",width:"13vw" }}>
+
+               
+<div>
+
+<Button onClick={handleClick} colorScheme="blue">
+  Back
+</Button>
+</div>
+<Button type="submit" colorScheme="blue">
+  Submit
+</Button>
+</div>
         </VStack>
       </form>
     </Formik>

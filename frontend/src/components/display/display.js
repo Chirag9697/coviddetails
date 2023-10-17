@@ -42,6 +42,8 @@ const Display = () => {
   const [time, setTime] = useState(false);
   const [date, setDate] = useState("");
 
+  console.log("ehhh", details1)
+
   const dispatch = useDispatch();
 
   const openModal = () => {
