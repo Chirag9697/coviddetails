@@ -22,7 +22,7 @@ export const StepperhandleData = createSlice({
   reducers: {
    
     secondstepformcompleted: (state, action) => {
-      console.log("dataoffamilydetails", action.payload);
+      
       state.fullname = action.payload.fullname;
       state.group = action.payload.group;
       state.address = action.payload.address;
