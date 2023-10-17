@@ -48,13 +48,6 @@
     background-color: rgb(213, 19, 19);
     transition: all 0.25s ease;
   }
-
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: row;
-      text-align: center;
-      padding: 10px;
-    }
   
     .nav-menu {
       flex-direction: row;
@@ -72,4 +65,4 @@
       font-size: 20px;
       padding-top: 15px;
     }
-  }
+  

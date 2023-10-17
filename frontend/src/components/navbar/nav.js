@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './nav.css';
 import { useDispatch } from 'react-redux';
-import { removeemailid } from '../../features/googlesigninemail/GooglesigninSlice';
 import axios from 'axios';
 import { clearform } from '../../features/stepperhandling/Stepperhandledata';
 import { updateProfile } from '../../Pages/ProfileUpdate/ProfileUpdateSlice';
@@ -28,7 +27,6 @@ const Nav = () => {
   
   //handle logout
   const handleLogout = () => {
-    dispatch(removeemailid()); 
     localStorage.clear();
     setIsLoggedOut(true); 
     navigate('/signin'); 

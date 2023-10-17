@@ -25,12 +25,7 @@ th {
   }
 
   
-@media (max-width: 768px) {
-  
-  .main {
-    overflow-x: auto;
-  }
-}
+
 
 .bar-chart-container {
   width: 100%; 
@@ -39,9 +34,4 @@ th {
 
 }
 
-@media (max-width: 768px) {
-  .bar-chart-container {
-    height: 200px; 
-  }
-}
 
