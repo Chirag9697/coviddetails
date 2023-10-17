@@ -1,30 +1,20 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React from "react";
 import { auth, provider } from "../../googlesignin/config";
 import { signInWithPopup } from "firebase/auth";
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeemailid, setemailid } from "./GooglesigninSlice";
+import { setemailid } from "./GooglesigninSlice";
 import Typewriter from "typewriter-effect";
 import Google from "../../image/google.png"
-import { updateProfile } from "../../Pages/ProfileUpdate/ProfileUpdateSlice";
-// import { Machine } from "xstate";
-// import machine from './machine';
+
 import "./Signin.css";
 import axios from "axios";
 // signInWithPopup
 export const Signin = () => {
   const select=useSelector((state)=>state.profileupdate);
 
-  const handleType = (count) => {
-    // Access the word count number
-    // console.log(count);
-  };
-
-  const handleDone = () => {
-    // console.log("Done after 5 loops!");
-  };
+  
   const value = useSelector((state) => state.signin.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,21 +24,18 @@ export const Signin = () => {
     .then((response)=>{
       console.log(response);
       if(response.data.profileDetail){
-        console.log("profile existing");
-        // flag=true;
-        // dispatch(updateProfile(response.data))
-        // console.log("casca",response.data);
+       
+       
         localStorage.setItem("userid",response.data.profileDetail._id);
         return true;
       }
-      // else{
-      // }
+      
     })==true){
       return true;
     }
     return false;
   }
-  // const service=interpret(machine).start();
+
   const handleclick = () => {
 
     signInWithPopup(auth, provider).then((data) => {
@@ -63,36 +50,25 @@ export const Signin = () => {
         phone: "",
         email,
       };
-      // let flag=false;
-      // axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
-      // .then((response)=>{
-      //   console.log(response);
-      //   if(response.data.profileDetail){
-      //     console.log("profile existing");
-      //     flag=true;
-      //     // dispatch(updateProfile(response.data))
-      //     // console.log("casca",response.data);
-      //     localStorage.setItem("userid",response.data.profileDetail._id);
-      //   }
-      // })
+     
       const checkprof=checkprofile();
       console.log(checkprof);
-      // console.log(flag);
+      
       if(checkprof==false){
-        // console.log
+       
         axios.post("http://localhost:5000/profile", newData)
         .then((response)=>{
           console.log("new profile created");
           localStorage.setItem("userid",response.data._id);
         })
       }
-      // console.log(addProfile);
+      
       axios
       .post("http://127.0.0.1:5000/save-email", {
         email: data.user.email,
       })
         .then((response) => {
-          // console.log(response);
+       
           
           navigate("/");
         })
@@ -103,16 +79,8 @@ export const Signin = () => {
     });
   };
 
-  const clicklogout = () => {
-    // console.log("logout");
-    dispatch(removeemailid());
-    localStorage.removeItem("email");
-    // localStorage.removeItem("email");
-    // setValue("");
-  };
-  // useEffect(() => {
-  //   dispatch(setemailid(localStorage.getItem("email")));
-  // });
+  
+
   return (
     <div className="signinhome">
       <div className="App">
@@ -123,7 +91,7 @@ export const Signin = () => {
               '<span style="font-size: 30px; color: white;">To know the Health Status of Your family</span>',
             ],
             autoStart: true,
-            loop: true, // Set loop to true to make it loop
+            loop: true, 
           }}
         />
       </div>

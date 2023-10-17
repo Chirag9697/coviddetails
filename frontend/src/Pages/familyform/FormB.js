@@ -30,7 +30,7 @@ const FormB = () => {
       group: `${select.group}`,
       address:`${select.address}`,
       phone: `${select.phone}`,
-      gender: "",
+      gender: select.gender || "",
       dob: `${select.dob}`,
       email: `${select.email}`,
     },
@@ -133,7 +133,7 @@ const FormB = () => {
               isInvalid={formik1.errors.gender && formik1.touched.gender}
             >
               <FormLabel>Gender</FormLabel>
-              <RadioGroup>
+              <RadioGroup defaultValue={formik1.values.gender} onChange={formik1.handleChange}>
                 <HStack spacing="24px">
                   <Field
                     as={Radio}

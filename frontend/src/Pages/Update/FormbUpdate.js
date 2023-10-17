@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React from "react";
 
 import {
   FormControl,
@@ -40,7 +40,6 @@ const FormbUpdate = () => {
       group: Yup.string().required("Required"),
       address: Yup.string().required("Required"),
       phone: Yup.number().min(10).positive().integer().required("Required"),
-      // gender: Yup.string().required("Required"),
       dob: Yup.date().required("Required"),
       email: Yup.string().email(),
     }),

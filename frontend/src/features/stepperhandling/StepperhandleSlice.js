@@ -17,9 +17,14 @@ export const StepperhandleSlice = createSlice({
     },
   
     clearform:(state)=>{
-      // state.first = true;
+     
       state.second = true;
       state.third = false;
+    },
+    backfromthirdstep:(state)=>{
+      state.second = true;
+      state.third = false;
+
     }
   },
 });
@@ -28,7 +33,7 @@ export const StepperhandleSlice = createSlice({
 export const {
   firststepcompleted,
   secondstepcompleted,
-  backfromsecondstep,
+  // backfromsecondstep,
   backfromthirdstep,
   clearform,
 } = StepperhandleSlice.actions;

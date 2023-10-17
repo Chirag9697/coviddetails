@@ -32,7 +32,6 @@ const Nav = () => {
     localStorage.clear();
     setIsLoggedOut(true); 
     navigate('/signin'); 
-    window.location.reload();
   };
 
   const handleProfile = () => {
@@ -114,7 +113,7 @@ useEffect(()=>{
                       <MenuItem
                         color="#2B6CB0"
                         onClick={handleProfile}
-                        // display={flex}
+                        
                         justifyContent={"space-between"}
                       >
                         Profile

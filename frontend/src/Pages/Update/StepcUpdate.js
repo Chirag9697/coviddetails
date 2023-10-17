@@ -1,5 +1,4 @@
 import {
-    Text,
     Step,
     StepIcon,
     StepIndicator,
@@ -7,7 +6,6 @@ import {
     StepStatus,
     Stepper,
     useSteps,
-    Stack,
     StepNumber,
     StepTitle,
     Box,
