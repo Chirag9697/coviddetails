@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
-import StepcUpdate from "../../Pages/Update/StepcUpdate";
+import StepcUpdate from "./stepcUpdate";
 import axios from "axios";
-import StepBupdate from "./StepBupdate";
+import StepBupdate from "./stepbUpdate";
 import { useDispatch, useSelector } from "react-redux";
 import {
   
   updateformcompleted,
-} from "../../features/stepperhandling/Stepperhandledata";
+} from "../../features/stepperHandling/stepperHandleData";
 import { useParams } from "react-router-dom";
 
 

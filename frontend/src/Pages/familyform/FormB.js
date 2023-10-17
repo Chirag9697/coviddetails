@@ -16,8 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { secondstepcompleted } from "../../features/stepperhandling/StepperhandleSlice";
-import { secondstepformcompleted } from "../../features/stepperhandling/Stepperhandledata";
+import { secondstepcompleted } from "../../features/stepperHandling/stepperHandleSlice";
+import { secondstepformcompleted } from "../../features/stepperHandling/stepperHandleData";
 import { useDispatch, useSelector } from "react-redux";
 
 const FormB = () => {

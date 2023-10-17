@@ -18,7 +18,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { backfromthirdstep, clearform } from "../../features/stepperhandling/StepperhandleSlice";
+import { backfromthirdstep, clearform } from "../../features/stepperHandling/stepperHandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);

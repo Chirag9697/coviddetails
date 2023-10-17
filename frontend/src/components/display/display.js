@@ -23,12 +23,12 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react";
-import BarChart from "../charts/BarChart";
-import ClusterMap from "../maps/Clustermap";
+import BarChart from "../charts/barChart";
+import ClusterMap from "../maps/clusterMap";
 import { useDispatch } from "react-redux";
-import { updateformcompleted } from "../../features/stepperhandling/Stepperhandledata";
+import { updateformcompleted } from "../../features/stepperHandling/stepperHandleData";
 import { format } from "date-fns";
-import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
+import { clearform } from "../../features/stepperHandling/stepperHandleSlice";
 import { useToast } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 

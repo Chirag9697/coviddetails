@@ -13,7 +13,7 @@ import {
   Box,
   StepDescription,
 } from "@chakra-ui/react";
-import FormC from "./FormC";
+import FormC from "./formC";
 
 const steps = [
  

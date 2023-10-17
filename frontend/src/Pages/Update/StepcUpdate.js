@@ -11,7 +11,7 @@ import {
     Box,
     StepDescription,
   } from "@chakra-ui/react";
-  import FormcUpdate from "../../Pages/Update/FormcUpdate";
+  import FormcUpdate from "./formcUpdate";
   
   const steps = [
     { title: "first", description: "Family Details" },

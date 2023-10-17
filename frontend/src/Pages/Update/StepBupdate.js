@@ -13,7 +13,7 @@ import {
   StepDescription,
 } from "@chakra-ui/react";
 
-import FormbUpdate from "../Update/FormbUpdate";
+import FormbUpdate from "./formbUpdate";
 
 const steps = [
  
