@@ -29,17 +29,14 @@ export const MainFormUpdate = () => {
             `http://localhost:5000/families1/${id}`
           );
           if (details) {
-            console.log("Hyaa",details);
             const newdata=details.data.allfamily1;
-            // const memberdata={...newdata.members[0]};
             dispatch(updateformcompleted({...newdata,...newdata.members[0]}))
-            // console.log("data",details.data.allfamily1);
+            
           }
         } catch (err) {
           console.log(err);
         }
       };
-    // alldata()
   },[])
   
 

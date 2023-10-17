@@ -12,7 +12,6 @@ import { Signin } from "./features/googlesigninemail/Signin";
 function App() {
 const navigate = useNavigate()
 const loggedin = localStorage.getItem("email")
-console.log(loggedin);
   useEffect(()=>{
     if (!loggedin) {
       navigate('/signin');
