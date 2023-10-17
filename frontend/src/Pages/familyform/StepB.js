@@ -14,7 +14,7 @@ import {
   StepTitle,
   StepDescription,
 } from "@chakra-ui/react";
-import FormB from "./formB"
+import FormB from "./formB";
 
 const steps = [
  
