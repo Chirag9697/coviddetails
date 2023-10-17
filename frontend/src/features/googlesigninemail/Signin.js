@@ -22,7 +22,7 @@ export const Signin = () => {
     if(
     axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
     .then((response)=>{
-      console.log(response);
+
       if(response.data.profileDetail){
        
        
@@ -52,13 +52,13 @@ export const Signin = () => {
       };
      
       const checkprof=checkprofile();
-      console.log(checkprof);
+     
       
       if(checkprof==false){
        
         axios.post("http://localhost:5000/profile", newData)
         .then((response)=>{
-          console.log("new profile created");
+    
           localStorage.setItem("userid",response.data._id);
         })
       }

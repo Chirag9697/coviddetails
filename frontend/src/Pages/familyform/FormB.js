@@ -22,7 +22,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FormB = () => {
   const select = useSelector((state) => state.stepperformhander);
-  console.log("select",select);
   const formik1 = useFormik({
     
     initialValues: {

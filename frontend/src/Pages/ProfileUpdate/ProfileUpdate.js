@@ -43,7 +43,6 @@ const ProfileUpdate = () => {
           dispatch(updateProfile(userProfile))
           
           
-          console.log("Hello 123",userProfile);
      
         }
       }catch(err){
@@ -77,14 +76,12 @@ const ProfileUpdate = () => {
           dob: values.dob,
         
         };
-        console.log("updated value",updatedData);
 
         const response = await axios.put(
           `http://localhost:5000/edit-profile/${id}`,
           updatedData
         );
         if(response){
-            console.log("updated")
             dispatch(updateProfile(updatedData))
             navigate('/profile')
         }
@@ -96,9 +93,7 @@ const ProfileUpdate = () => {
     },
   });
 
-  console.log("This is it")
-  console.log(formik.initialValues)
-  console.log(select)
+
  
 
   return(

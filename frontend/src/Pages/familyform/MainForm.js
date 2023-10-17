@@ -5,9 +5,7 @@ import StepC from "./StepC";
 export const MainForm = () => {
   const second = useSelector((state) => state.stepperhandling.second);
   const third = useSelector((state) => state.stepperhandling.third);
-  // useEffect(()=>{
-    // dispatch(clearform());
-  // },[])
+
   return (
     <>
       

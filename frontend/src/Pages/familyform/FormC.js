@@ -9,14 +9,12 @@ import {
   SimpleGrid,
   GridItem,
   Button,
-  Box,
   Select,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { Field, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Import styles
 import { useDispatch, useSelector } from "react-redux";
 import { clearform } from "../../features/stepperhandling/StepperhandleSlice";
@@ -24,7 +22,6 @@ import { backfromthirdstep } from "../../features/stepperhandling/StepperhandleS
 const FormC = () => {
   const navigate = useNavigate()
   const newData = useSelector((state) => state.stepperformhander);
-  console.log(newData);
   const dispatch = useDispatch()
 
   const handleClick=()=>{
@@ -45,7 +42,6 @@ const FormC = () => {
       infectedDays: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
-      console.log("hello")
       const formData = {
         groupName: newData.group,
         email: localStorage.getItem("email"),
@@ -66,8 +62,6 @@ const FormC = () => {
         `http://localhost:5000/families/create`,
         formData
       );
-      console.log(response2);
-      console.log("stored in database")
       dispatch(clearform())
       navigate('/')
     },

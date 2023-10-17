@@ -21,7 +21,6 @@ const MyProfile = () => {
         const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
         if (response.data) {
          
-          console.log('sda',response.data);
           setData(response.data.profileDetail);
           
         }
