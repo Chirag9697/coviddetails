@@ -31,9 +31,7 @@ export const StepperhandleSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  firststepcompleted,
   secondstepcompleted,
-  // backfromsecondstep,
   backfromthirdstep,
   clearform,
 } = StepperhandleSlice.actions;
