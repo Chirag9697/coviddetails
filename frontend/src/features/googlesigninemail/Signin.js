@@ -1,12 +1,12 @@
 import React from "react";
-import { auth, provider } from "../../googlesignin/config";
+import { auth, provider } from "../../googleSignIn/config";
 import { signInWithPopup } from "firebase/auth";
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 import Google from "../../image/google.png"
 
-import "./Signin.css";
+import "./signIn.css";
 import axios from "axios";
 // signInWithPopup
 export const Signin = () => {

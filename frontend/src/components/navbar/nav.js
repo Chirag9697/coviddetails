@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './nav.css';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { clearform } from '../../features/stepperhandling/Stepperhandledata';
-import { updateProfile } from '../../Pages/ProfileUpdate/ProfileUpdateSlice';
+import { clearform } from '../../features/stepperHandling/stepperHandleData';
+import { updateProfile } from '../../Pages/profileUpdate/profileUpdateSlice';
 import {
   Avatar,
   AvatarBadge,

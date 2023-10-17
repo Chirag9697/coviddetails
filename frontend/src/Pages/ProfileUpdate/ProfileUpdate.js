@@ -18,7 +18,7 @@ import {
   } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Field, Formik, useFormik } from "formik";
-import { updateProfile } from "../ProfileUpdate/ProfileUpdateSlice";
+import { updateProfile } from "./profileUpdateSlice";
 const ProfileUpdate = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch()
