@@ -5,29 +5,36 @@ const Family = mongoose.model("family");
 const relation = require("../models/relationship");
 const Invite = require("../models/invite");
 const nodemailer = require("nodemailer");
-const family = require("../models/familyGroup");
+    const requireLogin = require("../middlewares/requireLogin");
 
 //Create family
-router.post("/families/create", async (req, res) => {
+router.post("/families/create", requireLogin ,async (req, res) => {
   
   const { groupName, email, members } = req.body;
+ 
   try {
     const newFamily = new Family({ groupName, email, members });
-    const savefamily = await newFamily.save();
-    const newinvite = new Invite({
-      email: email,
-      familyId: savefamily._id,
-      owner: true,
-    });
-    newinvite.save();
-    res.status(201).json(newFamily);
+    const savedFamily = await newFamily.save();
+    
+    res.status(201).json(savedFamily);
+      const newinvite = new Invite({
+        email: email,
+        familyId: savedFamily._id,
+        owner: true,
+      });
+      newinvite.save();
+  
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
+
+  
+ 
 });
 
 //Get families detail for update
-router.get("/families1/:id", async (req, res) => {
+router.get("/families1/:id", requireLogin,async (req, res) => {
   
   const { id } = req.params;
  
@@ -42,7 +49,7 @@ router.get("/families1/:id", async (req, res) => {
 });
 
 //retrieve the list of user's family group
-router.get("/families/:email", async (req, res) => {
+router.get("/families/:email", requireLogin ,async (req, res) => {
   
   const { email } = req.params;
 
@@ -105,6 +112,7 @@ router.get("/confirminvitation/:sender/:receiver", async (req, res) => {
 router.post("/send-mail", async (req, res) => {
   const { sender, receiver } = req.body;
  
+ 
   let mailtransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -128,14 +136,11 @@ router.post("/send-mail", async (req, res) => {
     } else {
       console.log("mail is sent");
     }
-
-    
   });
-  
 });
 
 //delete the data
-router.delete("/deleteRoute/:id", async (req, res) => {
+router.delete("/deleteRoute/:id", requireLogin,async (req, res) => {
   
   try {
     const inviteResult = await Family.deleteOne({ _id: req.params.id });
@@ -146,7 +151,7 @@ router.delete("/deleteRoute/:id", async (req, res) => {
 });
 
 //Update Route
-router.put("/families/update/:id", async (req, res) => {
+router.put("/families/update/:id", requireLogin ,async (req, res) => {
 
   const { id } = req.params;
 
@@ -166,7 +171,7 @@ router.put("/families/update/:id", async (req, res) => {
 });
 
 //Count Date
-router.get("/count-data/:email/:value", async (req, res) => {
+router.get("/count-data/:email/:value", requireLogin ,async (req, res) => {
   
   try {
     const { email, value } = req.params;
@@ -267,7 +272,7 @@ router.get("/count-data/:email/:value", async (req, res) => {
 });
 
 //Group data
-router.get("/getdatabydates/:email", async (req, res) => {
+router.get("/getdatabydates/:email", requireLogin ,async (req, res) => {
   try{ 
    
     const{email}=req.params;

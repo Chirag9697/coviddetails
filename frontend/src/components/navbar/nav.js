@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './nav.css';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { clearform } from '../../features/stepperHandling/stepperHandleData';
-import { updateProfile } from '../../Pages/profileUpdate/profileUpdateSlice';
+import { clearform } from '../../redux/reducers/stepperHandleData';
+import { updateProfile } from '../../redux/reducers/profileUpdateSlice';
 import {
   Avatar,
   AvatarBadge,
@@ -18,18 +18,21 @@ import {
 } from "@chakra-ui/react";
 
 import { EditIcon } from "@chakra-ui/icons";
+import { setUserLogin } from '../../redux/reducers/signInSlice';
+
 const Nav = () => {
   const navigate = useNavigate();
-  const loggedIn = localStorage.getItem("email") 
+  // const loggedIn = localStorage.getItem("email") 
   const dispatch = useDispatch();
 
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   
   //handle logout
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem("user");
     setIsLoggedOut(true); 
     navigate('/signin'); 
+    // dispatch(setUserLogin(false))
   };
 
   const handleProfile = () => {
@@ -37,27 +40,40 @@ const Nav = () => {
   };
 
 //fetching user profile
-useEffect(()=>{
-  const getProfileData = async () => {
-    const email = localStorage.getItem("email");
 
-    try {
-      const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
+  // const getProfileData = async () => {
+  //   const userString = localStorage.getItem('user');
+  //   const user = JSON.parse(userString);
+  //   let id; 
+  //   if (user !== null) {
+  //     id = user._id;
+     
+  // }
+
+  //   try {
+    
+  //     const response =  axios.get(`http://localhost:5000/get-details/${id}`,{
+  //       headers:{
+  //         authorization: "Bearer " + localStorage.getItem("jwt")
+  //       }
+  //     })
    
-      if (response.data.profileDetail) {
-        const userProfile = response.data.profileDetail;
-        dispatch(updateProfile(userProfile))
+  //     if (response.data) {
+  //       const userProfile = response.data.userDetail;
+  //       dispatch(updateProfile(userProfile))
 
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  getProfileData()
-},[])
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // getProfileData()
+
  
   const handleEdit = () => {
-    const id = localStorage.getItem("userid"); 
+    const userString = localStorage.getItem('user');
+    const user = JSON.parse(userString);
+    const id = user._id;
     if (id) {
      
       navigate(`/edit/${id}`); 
@@ -77,9 +93,9 @@ useEffect(()=>{
     }
   }, [isLoggedOut]);
 
-  if (!loggedIn) {
-    return null; 
-  }
+  // if (!loggedIn) {
+  //   return null; 
+  // }
   
   return (
     <div className='navbar'>
@@ -87,7 +103,7 @@ useEffect(()=>{
         <Link to='/'>COVID APP</Link>
       </h1>
       <ul className='nav-menu'>
-        {loggedIn ? (
+       
           <>
             <Link to='/'>
               <li style={{marginTop:"20px"}}>Display</li>
@@ -135,7 +151,7 @@ useEffect(()=>{
               </Box>
             </li>
           </>
-        ) : null}
+       
       </ul>
     </div>
   );

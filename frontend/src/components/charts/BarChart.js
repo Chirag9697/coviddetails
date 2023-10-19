@@ -24,9 +24,15 @@ const BarChart = () => {
   const svgref2 = useRef();
   const getalldata = async () => {
     try {
-      const email=localStorage.getItem("email");
+      const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const email = user.email;
     
-      const details = await axios.get(`http://localhost:5000/getdatabydates/${email}`);
+      const details = await axios.get(`http://localhost:5000/getdatabydates/${email}`,{
+        headers:{
+          authorization: "Bearer " + localStorage.getItem("jwt")
+        } 
+      });
       if (details) {
     
         const maindatacal = details.data.map((item) => {

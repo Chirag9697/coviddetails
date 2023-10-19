@@ -4,7 +4,7 @@ const {ObjectId} = mongoose.Schema.Types;
 
 
 const familySchema = new mongoose.Schema({
-   groupName:{type: String, required: true},
+   groupName:{type: String},
    email: {type: String},
    members:[ 
          {

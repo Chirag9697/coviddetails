@@ -8,15 +8,19 @@ import { MainFormUpdate } from './Pages/update/mainFormUpdate';
 import { MainForm } from './Pages/familyForm/mainForm';
 import Display from './components/display/display';
 import Nav from './components/navbar/nav';
-import { Signin } from "./features/googleSignInEmail/signIn";
+import SignUp from './features/googleSignInEmail/signUp';
+import SignIn from './features/googleSignInEmail/signIn';
+
+
+
 function App() {
 const navigate = useNavigate()
-const loggedin = localStorage.getItem("email")
-  useEffect(()=>{
-    if (!loggedin) {
-      navigate('/signin');
-    }
-  }, [loggedin])
+// const loggedin = localStorage.getItem("email")
+  // useEffect(()=>{
+  //   if (!loggedin) {
+  //     navigate('/signin');
+  //   }
+  // }, [loggedin])
 
   return (
     <div>
@@ -25,7 +29,8 @@ const loggedin = localStorage.getItem("email")
        
           <Route path="/form" element={<MainForm />} />
           <Route path="/update/:id" element={<MainFormUpdate />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Display />} />
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/edit/:id" element={<ProfileUpdate />} />

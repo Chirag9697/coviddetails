@@ -1,107 +1,75 @@
-import React from "react";
-import { auth, provider } from "../../googleSignIn/config";
-import { signInWithPopup } from "firebase/auth";
-import { Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import Typewriter from "typewriter-effect";
-import Google from "../../image/google.png"
+import React,{useState} from 'react'
+import "./signIn.css"
+import { Link, useNavigate } from 'react-router-dom'
+import axios from "axios"
+import { useDispatch } from 'react-redux';
+import { setUserLogin } from '../../redux/reducers/signInSlice';
+import {toast} from 'react-toastify';
 
-import "./signIn.css";
-import axios from "axios";
-// signInWithPopup
-export const Signin = () => {
+const SignIn = () => {
+  const dispatch = useDispatch();
+ 
+  const navigate = useNavigate()
+  const[email,setEmail] = useState("")
+  const[password,setPassword] = useState("")
 
-  const navigate = useNavigate();
-  const checkprofile=()=>{
-    if(
-    axios.get(`http://localhost:5000/get-profile/${localStorage.getItem("email")}`)
-    .then((response)=>{
+//Toast Functions
+const notifyA = (msg)=>toast.error(msg)
+const notifyB = (msg)=>toast.success(msg)
 
-      if(response.data.profileDetail){
-       
-       
-        localStorage.setItem("userid",response.data.profileDetail._id);
-        return true;
-      }
+
+
+
+  const postData = async()=>{
+    try {
+      const res = await axios.post(`http://localhost:5000/signin`, {
+        email: email,
+        password: password
+      });
+    if(res.data){
+      notifyB("Signed In Successfully")
+      console.log(res.data.token)
+      localStorage.setItem("jwt",res.data.token)
+      localStorage.setItem("user",JSON.stringify(res.data.user))
+      dispatch(setUserLogin(true));
+      navigate('/')
       
-    })==true){
-      return true;
     }
-    return false;
+  }catch(error){
+    notifyA("Invalid credentials")
+    console.error("Error:", error);
+  }
+  
   }
 
-  const handleclick = () => {
-
-    signInWithPopup(auth, provider).then((data) => {
-      localStorage.setItem("email", data.user.email);
-      const email = localStorage.getItem("email");
-      const newData = {
-        firstName: "",
-        lastName: "",
-        dob: "",
-        address: "",
-        phone: "",
-        email,
-      };
-     
-      const checkprof=checkprofile();
-     
-      
-      if(checkprof==false){
-       
-        axios.post("http://localhost:5000/profile", newData)
-        .then((response)=>{
-    
-          localStorage.setItem("userid",response.data._id);
-        })
-      }
-      
-      axios
-      .post("http://127.0.0.1:5000/save-email", {
-        email: data.user.email,
-      })
-        .then((response) => {
-       
-          
-          navigate("/");
-        })
-
-        .catch((error) => {
-          console.error("Error saving email:", error);
-        });
-    });
-  };
-
   
-
   return (
-    <div className="signinhome">
-      <div className="App">
-        <Typewriter
-          options={{
-            strings: [
-              '<span style="font-size: 30px; color: yellow;">Welcome to Covid19 App</span>',
-              '<span style="font-size: 30px; color: white;">To know the Health Status of Your family</span>',
-            ],
-            autoStart: true,
-            loop: true, 
-          }}
-        />
+    <div className='signIn'>
+      <div>
+            <div className="loginForm">
+          
+            <div>
+              <input type="email" name="email" id="email" placeholder='email' value={email} onChange={(e)=>{setEmail
+              (e.target.value)}}/>
+            </div>
+            <div>
+              <input type="password" name="password" id="password" placeholder='Password'  value={password} onChange={(e)=>{setPassword
+              (e.target.value)}}/>
+        </div>
+            <input type="submit" id='login-btn' value="Sign In" onClick={()=>{
+                  postData()
+              
+              }}/>
+            </div>
+            <div className="loginForm2">
+                Dont have an account ? 
+                <Link to="/signup">
+                    <span style={{color:"blue", cursor:"pointer"}}> Sign Up</span>
+                </Link>
+            </div>
       </div>
-
-      {!localStorage.getItem("email") && (
-        <Button
-          onClick={handleclick}
-          style={{ fontSize: "19px", borderStyle: "none", marginTop:"15px" }}
-        >
-          Sign in with google
-          <img
-            src={Google}
-            style={{ height: "27px", marginLeft: "5px" }}
-            alt=""
-          />{" "}
-        </Button>
-      )}
     </div>
-  );
-};
+  )
+}
+
+export default SignIn

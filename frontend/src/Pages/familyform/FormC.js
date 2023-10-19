@@ -17,8 +17,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import 'react-datepicker/dist/react-datepicker.css'; // Import styles
 import { useDispatch, useSelector } from "react-redux";
-import { clearform } from "../../features/stepperHandling/stepperHandleSlice";
-import { backfromthirdstep } from "../../features/stepperHandling/stepperHandleSlice";
+import { clearform } from "../../redux/reducers/stepperHandleSlice";
+import { backfromthirdstep } from "../../redux/reducers/stepperHandleSlice";
 const FormC = () => {
   const navigate = useNavigate()
   const newData = useSelector((state) => state.stepperformhander);
@@ -42,9 +42,14 @@ const FormC = () => {
       infectedDays: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
+      //Getting user from localstorage
+      const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const email = user.email;
+       
       const formData = {
         groupName: newData.group,
-        email: localStorage.getItem("email"),
+        email: email,
         members:[{
           fullName: newData.fullname,
           address: newData.address,
@@ -57,13 +62,33 @@ const FormC = () => {
           infectedDays:values.infectedDays,
         }]
       }
-      
-      const response2 = await axios.post(
-        `http://localhost:5000/families/create`,
-        formData
-      );
+      try{
+        const response2 = await axios.post("http://localhost:5000/families/create",formData,
+        {
+            headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+        },
+     
+      })
+      if(response2){
+     
       dispatch(clearform())
       navigate('/')
+    }
+  }catch(err){
+    console.log(err)
+  }     
+      // const response2 = await axios.post(
+      //   `http://localhost:5000/families/create`,
+      //   formData
+      // );
+      
+      // if(response2){
+       
+      //   dispatch(clearform())
+      //   navigate('/')
+      // }
+     
     },
 
   });

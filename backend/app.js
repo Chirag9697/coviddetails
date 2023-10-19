@@ -10,6 +10,7 @@ require("./models/familyGroup")
 
 
 app.use(express.json())
+app.use(require("./routes/userAuth"));
 app.use(require("./routes/familyApi"));
 app.use(require("./routes/profile"));
 

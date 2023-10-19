@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   
   updateformcompleted,
-} from "../../features/stepperHandling/stepperHandleData";
+} from "../../redux/reducers/stepperHandleData";
 import { useParams } from "react-router-dom";
 
 

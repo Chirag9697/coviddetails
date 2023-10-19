@@ -5,33 +5,47 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { FaUser } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
 import { MdPhone } from 'react-icons/md';
 import { MdEvent } from 'react-icons/md';
+import { updateProfile } from "../../redux/reducers/profileUpdateSlice";
 
 const MyProfile = () => {
-  const [data, setData] = useState({}); 
+  const dispatch = useDispatch()
+  const select = useSelector((state) => state.profileupdate);
+ 
+  
   useEffect(() => {
-    const getData = async () => {
+    const getselect = async () => {
      
-      try {
-        const email = localStorage.getItem("email");
-        const response = await axios.get(`http://localhost:5000/get-profile/${email}`);
-        if (response.data) {
-         
-          setData(response.data.profileDetail);
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+     
+      try{
+        const res = await axios.get(`http://localhost:5000/get-details/${userId}`,{
+          headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+          }
+        })
+        console.log("Krishna", res.data.userDetail)
+        if (res.data) {
+          const userProfile = res.data.userDetail;
           
+          dispatch(updateProfile(userProfile))
         }
       } catch (err) {
         console.log(err);
       }
     };
-    getData();
+    getselect();
   }, []);
 
   return (
+   
     <VStack p={10} spacing={10} align="center">
    
     <Heading color="var(--chakra-colors-blue-500);" fontSize="2xl" style={{marginRight:"170px"}}>
@@ -50,7 +64,7 @@ const MyProfile = () => {
             First Name
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{data.firstName}</span>
+          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{select.fullName}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -63,7 +77,7 @@ const MyProfile = () => {
             Last Name
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{data.lastName}</span>
+          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{select.lastName}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -76,7 +90,7 @@ const MyProfile = () => {
             Address:
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ textAlign:"center" }}>{data.address}</span>
+          <span color="red" fontSize="lg" style={{ textAlign:"center" }}>{select.address}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -86,10 +100,10 @@ const MyProfile = () => {
           <MdPhone size={20} style={{ backgroundColor: 'transparent' }}/>
           </Box>
           <Heading as="h5" size="md" fontSize="lg" align="center" marginLeft="10px">
-              Phone
+              Email
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{data.phone}</span>
+          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{select.email}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -102,7 +116,7 @@ const MyProfile = () => {
               Gender
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{data.gender}</span>
+          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{select.gender}</span>
         </Flex>
 
         <Flex align="center" direction="column">
@@ -115,7 +129,7 @@ const MyProfile = () => {
               DOB
           </Heading>
           </Flex>
-          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{data.dob}</span>
+          <span color="red" fontSize="lg" style={{ marginLeft: '10px' }}>{select.dob}</span>
         </Flex>        
       </Flex>
         

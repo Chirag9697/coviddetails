@@ -26,11 +26,12 @@ import {
 import BarChart from "../charts/barChart";
 import ClusterMap from "../maps/clusterMap";
 import { useDispatch } from "react-redux";
-import { updateformcompleted } from "../../features/stepperHandling/stepperHandleData";
+import { updateformcompleted } from "../../redux/reducers/stepperHandleData";
 import { format } from "date-fns";
-import { clearform } from "../../features/stepperHandling/stepperHandleSlice";
+import { clearform } from "../../redux/reducers/stepperHandleSlice";
 import { useToast } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
+import { storeProfile } from "../../redux/reducers/profileUpdateSlice";
 
 const Display = () => {
   const navigate = useNavigate();
@@ -42,6 +43,9 @@ const Display = () => {
   const [time, setTime] = useState(false);
   const [date, setDate] = useState("");
 
+  const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const useremail = user.email;
   
 
   const dispatch = useDispatch();
@@ -56,11 +60,15 @@ const Display = () => {
 
   //get all details
   const getAllDetails = async () => {
-    const email = localStorage.getItem("email");
+
+    
+
     try {
-      const details = await axios.get(
-        `http://localhost:5000/families/${email}`
-      );
+      const details = await axios.get( `http://localhost:5000/families/${useremail}`,{
+    headers:{
+      authorization: "Bearer " + localStorage.getItem("jwt")
+    }
+  });
       if (details) {
       
         setDetails1(details.data.allFamilyDetails);
@@ -74,7 +82,11 @@ const Display = () => {
   const deleteData = async (id) => {
     try {
       const deleteAll = await axios.delete(
-        `http://localhost:5000/deleteRoute/${id}`
+        `http://localhost:5000/deleteRoute/${id}`,{
+          headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+          } 
+        }
       );
       if (deleteAll) {
         toast({
@@ -112,8 +124,11 @@ const Display = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/count-data/${email}/${date === "" ? "120" : date}`
-      );
+        `http://localhost:5000/count-data/${useremail}/${date === "" ? "120" : date}`,{
+          headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+          } 
+        });
 
       if (response.data) {
         
@@ -130,6 +145,10 @@ const Display = () => {
     const sendInvite1 = axios.post("http://localhost:5000/send-mail", {
       sender: localStorage.getItem("email"),
       receiver: email,
+    },{
+      headers:{
+        authorization: "Bearer " + localStorage.getItem("jwt")
+      } 
     });
     if (sendInvite1) {
       closeModal();
@@ -145,7 +164,12 @@ const Display = () => {
   };
 
   const updateDetails = async (email, id) => {
-    const details = await axios.get(`http://localhost:5000/families1/${id}`);
+    const details = await axios.get(`http://localhost:5000/families1/${id}`,{
+      headers:{
+        authorization: "Bearer " + localStorage.getItem("jwt")
+      } 
+    }
+    );
     if (details) {
       const newdata = details.data.allfamily1;
       dispatch(updateformcompleted({ ...newdata, ...newdata.members[0] }));
@@ -156,6 +180,29 @@ const Display = () => {
   const handleChange = (e) => {
     setDate(e.target.value);
   };
+  
+  // useEffect(()=>{
+  //   const getData = async()=>{
+  //     const userString = localStorage.getItem('user');
+  //     const user = JSON.parse(userString);
+  //     const userId = user._id;
+     
+  //     try{
+  //       const res = await axios.get(`http://localhost:5000/get-details/${userId}`,{
+  //         headers:{
+  //           authorization: "Bearer " + localStorage.getItem("jwt")
+  //         }
+  //       })
+  //       if(res){
+  //         console.log("Hello World",res.data.userDetail)
+  //         dispatch(storeProfile(res.data.userDetail))
+  //       }
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }
+  //   getData()
+  //  },[])
 
   return (
     <>

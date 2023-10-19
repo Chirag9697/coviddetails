@@ -18,7 +18,7 @@ import {
   } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Field, Formik, useFormik } from "formik";
-import { updateProfile } from "./profileUpdateSlice";
+import { updateProfile } from "../../redux/reducers/profileUpdateSlice";
 const ProfileUpdate = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch()
@@ -27,23 +27,30 @@ const ProfileUpdate = () => {
  
   
   
-  const id = localStorage.getItem("userid")
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const id = user._id;
   
  
   
   
-  const email = localStorage.getItem("email");
+ 
 
   useEffect(()=>{
     const fetchData = async()=>{
+    
+       
+     
       try{
-        const res = await axios.get(`http://localhost:5000/get-profile/${email}`)
-        if (res.data.profileDetail) {
-          const userProfile = res.data.profileDetail;
+        const res = await axios.get(`http://localhost:5000/get-details/${id}`,{
+          headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+          }
+        })
+        if (res.data.userDetail) {
+          const userProfile = res.data.userDetail
           dispatch(updateProfile(userProfile))
           
-          
-     
         }
       }catch(err){
         console.log(err)
@@ -55,25 +62,23 @@ const ProfileUpdate = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstName: select.firstName,
+      fullName: `${select.fullName}`,
       lastName: `${select.lastName}`,
       address: `${select.address}`,
-      phone: select.phone || "",
-      dob: `${select.dob}`,
-      email: ``,
-      gender: select.gender || "",
+      email: `${select.email}`,
+      // phone: select.phone || "",
+      // gender: select.gender || "",
     },
     validationSchema: Yup.object({
     }),
     onSubmit: async (values) => {
       try {
         const updatedData = {
-          firstName: values.firstName,
+          fullName: values.fullName,
           lastName: values.lastName,
           address: values.address,
-          phone: values.phone,
-          gender: values.gender,
-          dob: values.dob,
+          email: values.email,
+         
         
         };
 
@@ -94,7 +99,7 @@ const ProfileUpdate = () => {
   });
 
 
- 
+
 
   return(
     <div>
@@ -114,19 +119,19 @@ const ProfileUpdate = () => {
               <GridItem colSpan={1}>
                 <FormControl
                   isInvalid={
-                    formik.errors.firstName && formik.touched.firstName
+                    formik.errors.fullName && formik.touched.fullName
                   }
                   style={{width: "600px"}}
                 >
                   <FormLabel>First name</FormLabel>
                   <Field
                     as={Input}
-                    name="firstName"
+                    name="fullName"
                     placeholder="First name"
-                    value={formik.values.firstName}
+                    value={formik.values.fullName}
                     onChange={formik.handleChange}
                   />
-                  <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.fullName}</FormErrorMessage>
                 </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
@@ -160,57 +165,19 @@ const ProfileUpdate = () => {
               </FormControl>
 
               <FormControl
-                isInvalid={formik.errors.phone && formik.touched.phone}
+                isInvalid={formik.errors.email && formik.touched.email}
               >
-                <FormLabel alignSelf="flex-start">Phone Number</FormLabel>
+                <FormLabel alignSelf="flex-start">Email</FormLabel>
                 <Field
                   as={Input}
-                  name="phone"
-                  placeholder="Enter your phone number"
+                  name="email"
+                  placeholder="Enter your email"
                   onChange={formik.handleChange}
-                  value={formik.values.phone}
+                  value={formik.values.email}
                 />
-                <FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={formik.errors.gender && formik.touched.gender}>
-              <FormLabel>Gender</FormLabel>
-              <RadioGroup defaultValue={formik.values.gender} onChange={formik.handleChange}>
-                <HStack spacing="24px">
-                  <Field
-                    as={Radio}
-                    name="gender"
-                    value="Male"
-                    onChange={formik.handleChange}
-                    
-                  >
-                    Male
-                  </Field>
-                  <Field
-                    as={Radio}
-                    name="gender"
-                    value="Female"
-                    onChange={formik.handleChange}
-                  >
-                    Female
-                  </Field>
-                </HStack>
-              </RadioGroup>
-              <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
-            </FormControl>
 
-              <FormControl isInvalid={formik.errors.dob && formik.touched.dob}>
-                <FormLabel>Date Of Birth</FormLabel>
-                <Field
-                  as={Input}
-                  name="dob"
-                  placeholder="Select Date and Time"
-                  size="md"
-                  type="date"
-                  onChange={formik.handleChange}
-                  value={formik.values.dob}
-                />
-                <FormErrorMessage>{formik.errors.dob}</FormErrorMessage>
-              </FormControl>
              
             </SimpleGrid>
             <Button type="submit" colorScheme="blue">

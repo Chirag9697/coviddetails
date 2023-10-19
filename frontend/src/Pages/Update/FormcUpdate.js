@@ -18,7 +18,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { backfromthirdstep, clearform } from "../../features/stepperHandling/stepperHandleSlice";
+import { backfromthirdstep, clearform } from "../../redux/reducers/stepperHandleSlice";
 import { useDispatch } from "react-redux";
 const FormcUpdate = () => {
   const newData = useSelector((state) => state.stepperformhander);
@@ -46,9 +46,12 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
       infected: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
+      const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const email = user.email;
       const formData = {
         groupName: newData.group,
-        email: localStorage.getItem("email"),
+        email: email,
         members:[{
           fullName: newData.fullname,
           address: newData.address,
@@ -62,10 +65,13 @@ const infectedDays = newData.infectedDays ? newData.infectedDays.split('T')[0] :
       }
       
       const response2 = await axios.put(
-        `http://localhost:5000/families/update/${id}`,
-        formData
+        `http://localhost:5000/families/update/${id}`,formData,{
+          headers:{
+            authorization: "Bearer " + localStorage.getItem("jwt")
+          } 
+        }
       );
-     
+  
       if(response2){
         navigate('/');
         dispatch(clearform());

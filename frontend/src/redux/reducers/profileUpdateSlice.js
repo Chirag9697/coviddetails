@@ -4,9 +4,9 @@ const initialState = {
   firstName: "",
   lastName: "",
   address: "",
-  phone: "",
-  gender: "",
-  dob: "",
+  email: "",
+  // gender: "",
+  // dob: "",
  
 };
 
@@ -14,14 +14,15 @@ export const ProfileUpdateSlice = createSlice({
   name: "profileupdatehandler",
   initialState,
   reducers: {
-   
+  
     updateProfile:(state,action)=>{
-      state.firstName = action.payload.firstName;
+      state.fullName = action.payload.fullName;
       state.lastName = action.payload.lastName;
       state.address = action.payload.address;
       state.phone = action.payload.phone;
-      state.gender = action.payload.gender;
-      state.dob = action.payload.dob;
+      state.email = action.payload.email;
+      // state.gender = action.payload.gender;
+      // state.dob = action.payload.dob;
       
       
     }
@@ -31,6 +32,6 @@ export const ProfileUpdateSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {updateProfile} = ProfileUpdateSlice.actions;
+export const {storeProfile,updateProfile} = ProfileUpdateSlice.actions;
 
 export default ProfileUpdateSlice.reducer;

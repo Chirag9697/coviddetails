@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Profile = require("../models/userProfile")
+const Profile = require("../models/userProfile");
+const User = require("../models/user");
+const requireLogin = require("../middlewares/requireLogin");
 
 router.post("/profile",async(req,res)=>{
  
@@ -26,21 +28,21 @@ router.post("/profile",async(req,res)=>{
 //
 
 // Get profile route
-router.get("/get-profile/:email", async (req, res) => {
-    const { email } = req.params;
-    try {
-      const profileDetail = await Profile.findOne({email:email});
-  
-      if (!profileDetail) {
-        
-        return res.json({ error: "Profile not found" });
-      }
-      res.json({ profileDetail });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
+router.get("/get-details/:id",requireLogin,async(req,res)=>{
+  const{id} = req.params;
+  try {
+    const userDetail = await User.findOne({_id:id});
+
+    if (!userDetail) {
+      
+      return res.json({ error: "Profile not found" });
     }
-  });
+    res.json({ userDetail });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+})
   
 
    
@@ -50,7 +52,7 @@ router.put("/edit-profile/:id", async (req, res) => {
     const updatedData = req.body;
    
     try {
-      const updatedProfile = await Profile.findByIdAndUpdate(
+      const updatedProfile = await User.findByIdAndUpdate(
         id,
         updatedData,
         { new: true }
